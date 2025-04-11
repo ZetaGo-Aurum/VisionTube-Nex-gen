@@ -1,0 +1,26 @@
+{
+  "name": "visiontube-api",
+  "version": "1.0.0",
+  "description": "Backend untuk VisionTube dengan Express.js",
+  "main": "api.js",
+  "scripts": {
+    "start": "node api.js",
+    "dev": "nodemon api.js"
+  },
+  "dependencies": {
+    "express": "^4.18.3",
+    "axios": "^1.6.8",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["youtube", "api", "express", "serverless", "vercel"],
+  "author": "Rayhan Dzaky Al Mubarok",
+  "license": "MIT"
+}
+
