@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://www.youtube.com/iframe_api"></script>
     <style>
+        /* Styles tetap di sini... */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #1a1a2e; }
         ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #a29bfe, #7c5cff); border-radius: 10px; }
@@ -58,7 +59,6 @@
     </style>
 </head>
 <body class="antialiased">
-
     <header class="fixed top-0 left-0 right-0 z-50 glassmorphism border-b border-purple-900/30 shadow-lg">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <a href="#" onclick="navigateTo('home'); return false;" class="flex items-center space-x-2 cursor-pointer">
@@ -154,13 +154,12 @@
         <div id="loading-indicator" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[9999] hidden"><div class="loader"></div></div>
         <div id="error-message" class="fixed bottom-4 right-4 bg-red-600/80 text-white p-4 rounded-lg shadow-lg z-[9998] hidden max-w-sm glassmorphism border border-red-800">
             <strong class="font-bold">Waduh! Ada Error 😥</strong><p id="error-text" class="text-sm mt-1"></p>
-            <button onclick="document.getElementById('error-message').classList.add('hidden')" class="absolute top-2 right-2 text-red-200 hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg></button>
+            <button onclick="document.getElementById('error-message').classList.add('hidden')" class="absolute top-2 right-2 text-red-200 hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg></button>
         </div>
     </main>
 
     <script>
         // --- Configuration ---
-        const YOUTUBE_API_KEY = 'AIzaSyBVBHpsUwOFOUX69sW33l4uZq51Iyz90kE';
         const YOUTUBE_API_BASE_URL = 'https://www.googleapis.com/youtube/v3';
         const TRENDING_MAX_RESULTS = 20;
         const SEARCH_MAX_RESULTS = 20;
@@ -240,7 +239,7 @@
         }
         function onPlayerReady(event) { console.log("YouTube Player Ready."); if (videoIdToLoad) { console.log("Loading pending videoId:", videoIdToLoad); event.target.loadVideoById(videoIdToLoad); videoIdToLoad = null; } }
         function onPlayerStateChange(event) { /* console.log("Player State:", event.data); */ }
-        function onPlayerError(event) { console.error("YouTube Player Error:", event.data); showError(`Player Error: Kode ${event.data}. Video mungkin dibatasi.`); }
+        function onPlayerError(event) {console.error("YouTube Player Error:", event.data); showError(`Player Error: Kode ${event.data}. Video mungkin dibatasi.`); }
         function loadVideoIntoPlayer(videoId) {
             if (!videoId) return;
             currentVideoId = videoId;
@@ -264,37 +263,35 @@
         }
 
         // --- API Functions (YouTube Data API v3) ---
+        // Fungsi fetch API dipindah ke server-side (Node.js)
         async function fetchFromYouTubeAPI(endpoint, params) {
-            const url = new URL(`${YOUTUBE_API_BASE_URL}${endpoint}`);
-            params.key = YOUTUBE_API_KEY;
-            Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-            console.log('Sukses fetching dari YouTube');
+            const url = `/api?endpoint=${encodeURIComponent(endpoint)}&${new URLSearchParams(params).toString()}`; // Proxy
+            console.log('Fetching from proxy:', url);
 
-            const isInitialLoad = (endpoint === '/videos' && params.id) || // Detail video
-                                (endpoint === '/search' && !params.pageToken) || // Search awal
-                                (endpoint === '/videos' && params.chart === 'mostPopular' && !params.pageToken); // Trending awal
+            const isInitialLoad = (endpoint === '/videos' && params.id) ||
+                                (endpoint === '/search' && !params.pageToken) ||
+                                (endpoint === '/videos' && params.chart === 'mostPopular' && !params.pageToken);
             if (isInitialLoad) { showLoading(); }
 
             try {
-                const response = await fetch(url.toString());
+                const response = await fetch(url);
                 const data = await response.json();
                 if (!response.ok) {
-                    let errorMsg = `YouTube API Error (${response.status})`;
+                    let errorMsg = `Error (${response.status})`;
                     if (data.error && data.error.message) {
                         errorMsg += `: ${data.error.message}`;
-                        if (data.error.errors && data.error.errors.some(e => e.reason === 'quotaExceeded')) {
-                            errorMsg = "Waduh! Kuota API YouTube habis nih. 💀 Coba lagi besok ya!";
-                        }
                     } else {
                         errorMsg += `: ${response.statusText}`;
                     }
                     throw new Error(errorMsg);
                 }
-                if (isInitialLoad) hideLoading(); // Hide only on initial loads
+                if (isInitialLoad) hideLoading();
                 return data;
             } catch (error) {
-                console.error(`Error fetching from YouTube API (${endpoint}):`, error); showError(`${error.message}`); hideLoading();
-                if (endpoint === '/videos' && params.chart === 'mostPopular') {
+                console.error(`Error fetching from proxy (${endpoint}):`, error);
+                showError(`Failed to fetch data. Please check your network connection. 😥`);
+                hideLoading();
+                 if (endpoint === '/videos' && params.chart === 'mostPopular') {
                     trendingLoadingPlaceholder.classList.add('hidden');
                     isLoadingTrending = false;
                     trendingLoadMoreButton.disabled = false;
@@ -333,25 +330,25 @@
             const params = { part: 'snippet,contentDetails,statistics', chart: 'mostPopular', regionCode: 'ID', maxResults: TRENDING_MAX_RESULTS };
             if (pageToken) { params.pageToken = pageToken; }
 
-            console.log("Fetching trending videos from API...", params); // Log params confirm regionCode
+            console.log("Fetching trending videos from API...", params);
             const data = await fetchFromYouTubeAPI('/videos', params);
 
             trendingLoadingPlaceholder.classList.add('hidden');
             if (pageToken) { trendingLoadMoreButton.innerHTML = 'Muat Lebih Banyak'; trendingLoadMoreButton.disabled = false; }
 
             if (data && data.items && Array.isArray(data.items)) {
-                if (!pageToken) { // Cache hanya halaman pertama
+                if (!pageToken) {
                     console.log("Caching first page trending data.");
                     cachedTrendingData = { items: data.items, nextPageToken: data.nextPageToken };
                     trendingCacheTimestamp = Date.now();
-                    videoGrid.innerHTML = ''; // Pastikan clear sebelum render baru
+                    videoGrid.innerHTML = '';
                 }
                 data.items.forEach(item => { videoGrid.appendChild(createVideoCard(item)); });
                 currentTrendingPageToken = data.nextPageToken;
                 if (currentTrendingPageToken) { trendingLoadMoreContainer.classList.remove('hidden'); } else { trendingLoadMoreContainer.classList.add('hidden'); }
-                if (data.items.length === 0 && !pageToken) { videoGrid.innerHTML = '<p class="text-center text-gray-400 col-span-full py-5">Tidak ada video trending saat ini.</p>'; }
-            } else if (data === null && !pageToken) { videoGrid.innerHTML = '<p class="text-center text-red-400 col-span-full py-5">Gagal memuat trending. Cek error API Key atau kuota.</p>'; cachedTrendingData = null; }
-              else if (!pageToken) { videoGrid.innerHTML = '<p class="text-center text-gray-400 col-span-full py-5">Tidak ada video trending saat ini.</p>'; cachedTrendingData = null; }
+                 if (data.items.length === 0 && !pageToken) { videoGrid.innerHTML = '<p class="text-center text-gray-400 col-span-full py-5">Tidak ada video trending saat ini.</p>'; }
+            } else if (data === null && !pageToken) { videoGrid.innerHTML = '<p class="text-center text-red-400 col-span-full py-5">Gagal memuat trending. Cek error API Key atau kuota.</p>'; cachedTrendingData = null;}
+            else if (!pageToken) { videoGrid.innerHTML = '<p class="text-center text-gray-400 col-span-full py-5">Tidak ada video trending saat ini.</p>'; cachedTrendingData = null; }
 
             isLoadingTrending = false;
         }
@@ -378,7 +375,6 @@
         async function searchVideos(query, pageToken = null) {
             if (isLoadingSearch) return;
             isLoadingSearch = true;
-            // Clear grid hanya jika ini page pertama (pageToken null)
             if (!pageToken) { searchResultsGrid.innerHTML = ''; searchNoResults.classList.add('hidden'); window.scrollTo(0, 0); }
             searchLoadingIndicator.classList.remove('hidden');
 
@@ -393,17 +389,16 @@
             if (data && data.items && Array.isArray(data.items)) {
                  if (data.items.length === 0 && !pageToken) { searchNoResults.classList.remove('hidden'); }
                  else if (data.items.length > 0) { searchNoResults.classList.add('hidden'); data.items.forEach(item => { searchResultsGrid.appendChild(createVideoCardFromSearch(item)); }); }
-                 currentSearchPageToken = data.nextPageToken; // Simpan token untuk halaman berikutnya
+                 currentSearchPageToken = data.nextPageToken;
                  if (!currentSearchPageToken) { console.log("No more search results (no nextPageToken)."); }
-            } else if (data === null && !pageToken) { searchResultsGrid.innerHTML = '<p class="text-center text-red-400 col-span-full py-5">Gagal melakukan pencarian. Cek error API Key atau kuota.</p>'; currentSearchPageToken = null; }
-              else if (!pageToken) { searchNoResults.classList.remove('hidden'); currentSearchPageToken = null; }
+            } else if (data === null && !pageToken)  { searchResultsGrid.innerHTML = '<p class="text-center text-red-400 col-span-full py-5">Gagal melakukan pencarian. Cek error API Key atau kuota.</p>'; currentSearchPageToken = null; }
+            else if (!pageToken) { searchNoResults.classList.remove('hidden'); currentSearchPageToken = null; }
 
             isLoadingSearch = false;
         }
 
         // --- UI Functions ---
         function createVideoCard(videoData) {
-            /* ... unchanged ... */
             const card = document.createElement('div');
             card.className = 'video-card glassmorphism overflow-hidden shadow-lg cursor-pointer flex flex-col h-full rounded-lg border border-purple-900/20 min-h-[250px] sm:min-h-[280px]';
             const videoId = videoData.id;
@@ -431,7 +426,6 @@
             return card;
         }
         function createVideoCardFromSearch(searchItem) {
-            /* ... unchanged ... */
             const card = document.createElement('div');
             card.className = 'video-card glassmorphism overflow-hidden shadow-lg cursor-pointer flex flex-col h-full rounded-lg border border-purple-900/20 min-h-[250px] sm:min-h-[280px]';
             const videoId = searchItem.id?.videoId;
@@ -579,16 +573,25 @@
         function closeSidebar() { mobileSidebar.classList.add('translate-x-full'); sidebarOverlay.classList.add('hidden'); }
 
         // --- Event Listeners ---
-        window.addEventListener('hashchange', () => handleHashChange(false)); // Panggilan dari hashchange event
+        window.addEventListener('hashchange', () => handleHashChange(false));
         document.addEventListener('DOMContentLoaded', () => {
             console.log("DOM Loaded. Initializing YouTube API Mode...");
-            handleHashChange(false); // Proses hash awal saat load
+            handleHashChange(false);
             mobileMenuButton.addEventListener('click', toggleSidebar);
             sidebarOverlay.addEventListener('click', closeSidebar);
             searchFormDesktop.addEventListener('submit', handleSearchSubmit);
             searchFormMobile.addEventListener('submit', handleSearchSubmit);
             window.addEventListener('scroll', handleScroll);
             trendingLoadMoreButton.addEventListener('click', () => { if (currentTrendingPageToken && !isLoadingTrending) { loadTrendingVideos(currentTrendingPageToken); } });
+             if (typeof YT === 'undefined' || !YT.Player) {
+                const tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                const firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+            } else {
+                onYouTubeIframeAPIReady();
+            }
         });
         function handleSearchSubmit(event) { event.preventDefault(); const inputElement = event.target.id === 'search-form-mobile' ? searchInputMobile : searchInputDesktop; const query = inputElement.value.trim(); console.log(`Search submitted with query: ${query}`); if (query) { navigateTo('search', query); inputElement.value = ''; if (event.target.id === 'search-form-mobile') { closeSidebar(); } } }
         function handleScroll() { if (currentView === 'search' && !isLoadingSearch && currentSearchPageToken) { const { scrollTop, scrollHeight, clientHeight } = document.documentElement; if (scrollTop + clientHeight >= scrollHeight - 600) { console.log("Scroll threshold reached, loading more search results..."); searchVideos(currentSearchQuery, currentSearchPageToken); } } }
@@ -602,20 +605,18 @@
             if (!isFullscreen) {
                 if (playerContainer.requestFullscreen) {
                     playerContainer.requestFullscreen();
-                } else if (playerContainer.mozRequestFullScreen) { /* Firefox */
+                } else if (playerContainer.mozRequestFullScreen) {
                     playerContainer.mozRequestFullScreen();
-                } else if (playerContainer.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                } else if (playerContainer.webkitRequestFullscreen) {
                     playerContainer.webkitRequestFullscreen();
-                } else if (playerContainer.msRequestFullscreen) { /* IE/Edge */
+                } else if (playerContainer.msRequestFullscreen) {
                     playerContainer.msRequestFullscreen();
                 }
                 playerContainer.classList.add('fullscreen');
                 isFullscreen = true;
-                // Force landscape orientation saat fullscreen
                 if (screen.orientation && screen.orientation.lock) {
                     screen.orientation.lock("landscape").catch(error => {
                         console.error("Error locking orientation:", error);
-                        // Tampilkan pesan error ke user (opsional)
                         showError("Gagal mengunci layar ke lanskap. Coba putar perangkatmu ya! 😥");
                     });
                 } else {
@@ -625,16 +626,15 @@
             } else {
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
-                } else if (document.mozCancelFullScreen) { /* Firefox */
+                } else if (document.mozCancelFullScreen) {
                     document.mozCancelFullScreen();
-                } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                } else if (document.webkitExitFullscreen) {
                     document.webkitExitFullscreen();
-                } else if (document.msExitFullscreen) { /* IE/Edge */
+                } else if (document.msExitFullscreen) {
                     document.msExitFullscreen();
                 }
                 playerContainer.classList.remove('fullscreen');
                 isFullscreen = false;
-                // Unlock orientation saat keluar dari fullscreen
                 if (screen.orientation && screen.orientation.unlock) {
                     screen.orientation.unlock();
                 }
@@ -658,7 +658,6 @@
         }
 
     </script>
-
 </body>
 </html>
 
