@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisionTube - Nex-gen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a1a2e; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #a29bfe, #7c5cff); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #b1adff, #9174ff); }
+        body { font-family: 'Inter', sans-serif; background-color: #0f0f1a; color: #e0e0e0; }
+        .glassmorphism { background: rgba(26, 26, 46, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(162, 155, 254, 0.2); border-radius: 1rem; }
+        .gradient-text { background: linear-gradient(90deg, #a29bfe, #7c5cff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent; }
+        #video-grid::-webkit-scrollbar, #search-results-grid::-webkit-scrollbar { display: none; }
+        #video-grid, #search-results-grid { -ms-overflow-style: none; scrollbar-width: none; }
+        #mobile-sidebar { transition: transform 0.3s ease-in-out; }
+        #mobile-sidebar.translate-x-full { transform: translateX(100%); }
+        #mobile-sidebar.translate-x-0 { transform: translateX(0); }
+        .loader { border: 4px solid #333; border-top: 4px solid #a29bfe; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        #youtube-player-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; background-color: #000; border-radius: 0.5rem; }
+        /* Pastikan iframe bisa fullscreen */
+        #youtube-player-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .video-card:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 10px 20px rgba(124, 92, 255, 0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .video-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        #video-description a { color: #a29bfe; text-decoration: underline; }
+        #video-description a:hover { color: #b1adff; }
+        button:disabled .loader { width: 1.25rem; height: 1.25rem; }
+        button:disabled { cursor: not-allowed; opacity: 0.7; }
+
+        /* Fullscreen Styles */
+        .fullscreen {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            z-index: 10000;
+            overflow: auto;
+            background-color: #000;
+        }
+        #youtube-player-container.fullscreen {
+            padding-bottom: 0; /* Override padding-bottom untuk aspect ratio */
+        }
+        /* Landscape Styles */
+        @media screen and (orientation: landscape) {
+            #youtube-player-container.fullscreen {
+                width: 100vw;
+                height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="fixed top-0 left-0 right-0 z-50 glassmorphism border-b border-purple-900/30 shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" onclick="navigateTo('home'); return false;" class="flex items-center space-x-2 cursor-pointer">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 gradient-text" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <div><h1 class="text-xl font-bold gradient-text">VisionTube</h1><p class="text-xs text-purple-300">Next-gen</p></div>
+            </a>
+            <div class="hidden md:flex flex-grow max-w-xl mx-4">
+                <form id="search-form-desktop" class="w-full flex">
+                    <input type="search" id="search-input-desktop" placeholder="Cari video..." class="flex-grow px-4 py-2 rounded-l-lg bg-gray-800/50 border border-purple-700/50 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-400">
+                    <button type="submit" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-r-lg hover:from-purple-700 hover:to-indigo-700 transition duration-200"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg></button>
+                </form>
+            </div>
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="#" onclick="navigateTo('home'); return false;" class="text-purple-300 hover:text-white transition duration-200">Trending</a>
+                <a href="#" onclick="navigateTo('about'); return false;" class="text-purple-300 hover:text-white transition duration-200">Tentang</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-purple-300 hover:text-white focus:outline-none"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg></button>
+        </div>
+    </header>
+
+    <aside id="mobile-sidebar" class="fixed top-0 right-0 h-full w-64 glassmorphism border-l border-purple-900/30 shadow-lg z-40 pt-20 px-4 transform translate-x-full md:hidden">
+        <form id="search-form-mobile" class="w-full mb-6">
+            <input type="search" id="search-input-mobile" placeholder="Cari video..." class="w-full px-3 py-2 rounded-md mb-2 bg-gray-800/70 border border-purple-700/50 focus:outline-none focus:ring-1 focus:ring-purple-500 text-white placeholder-gray-400 text-sm">
+            <button type="submit" class="w-full px-3 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-md hover:from-purple-700 hover:to-indigo-700 transition duration-200 flex items-center justify-center text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+                Cari
+            </button>
+        </form>
+        <nav class="flex flex-col space-y-4">
+            <a href="#" onclick="navigateTo('home'); closeSidebar(); return false;" class="text-purple-200 hover:text-white transition duration-200 py-2 px-2 rounded hover:bg-purple-800/30">Trending</a>
+            <a href="#" onclick="navigateTo('about'); closeSidebar(); return false;" class="text-purple-200 hover:text-white transition duration-200 py-2 px-2 rounded hover:bg-purple-800/30">Tentang</a>
+        </nav>
+    </aside>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden" onclick="closeSidebar()"></div>
+
+    <main id="main-content" class="container mx-auto px-4 pt-24 pb-8">
+        <div id="trending-view">
+            <h2 class="text-2xl font-semibold mb-6 gradient-text">Lagi Trending di Indonesia 🔥</h2>
+            <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6">
+                 <div id="trending-loading-placeholder" class="col-span-full text-center py-10"><div class="loader inline-block"></div><p class="mt-3 text-purple-300">Lagi ngambil video trending...</p></div>
+            </div>
+            <div id="trending-load-more-container" class="text-center mt-8 hidden">
+                 <button id="trending-load-more-button" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-2 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition duration-200 disabled:opacity-70 disabled:cursor-not-allowed">
+                     Muat Lebih Banyak
+                 </button>
+             </div>
+        </div>
+        <div id="watch-view" class="hidden">
+             <div class="flex flex-col lg:flex-row gap-6">
+                <div class="lg:w-2/3">
+                    <div id="youtube-player-container" class="mb-4 glassmorphism p-1 aspect-video bg-black rounded-lg shadow-lg">
+                        <div id="youtube-player"></div>
+                       
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 9a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V9zm8-6a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V3zm-8 8a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zm8 6a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="video-details" class="glassmorphism p-4 rounded-lg">
+                        <h1 id="video-title" class="text-xl md:text-2xl font-semibold mb-2 text-white">Judul Video Loading...</h1>
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 text-sm text-purple-300"><p id="video-uploader" class="mb-1 sm:mb-0">Channel Loading...</p><p id="video-stats">Views Loading...</p></div><hr class="border-purple-800/50 my-3">
+                        <p id="video-description" class="text-sm text-gray-300 whitespace-pre-wrap max-h-60 overflow-y-auto">Deskripsi loading...</p>
+                    </div>
+                </div>
+                 <div class="lg:w-1/3">
+                    <h3 class="text-lg font-semibold mb-4 gradient-text">Video Terkait</h3>
+                    <div id="related-videos" class="space-y-3"><p class="text-sm text-gray-400">Fitur video terkait belum diimplementasikan.</p></div>
+                 </div>
+             </div>
+        </div>
+        <div id="search-view" class="hidden">
+            <h2 class="text-2xl font-semibold mb-6">Hasil Pencarian untuk: "<span id="search-query-display" class="gradient-text"></span>"</h2>
+            <div id="search-results-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6"></div>
+             <div id="search-loading-indicator" class="text-center py-6 hidden"><div class="loader inline-block"></div><p class="mt-2 text-purple-300">Memuat lebih banyak video...</p></div>
+             <p id="search-no-results" class="text-center text-gray-400 py-6 hidden">Yah, nggak nemu hasil buat pencarian ini 😥.</p>
+        </div>
+        <div id="about-view" class="hidden glassmorphism p-6 rounded-lg max-w-3xl mx-auto">
+             <h2 class="text-2xl font-semibold mb-4 gradient-text">Tentang VisionTube (YT API Mode) ✨</h2>
+            <p class="mb-4 text-gray-300">Yo! Ini VisionTube versi API YouTube Resmi. Kita pakai API Key buat ambil data video (trending, search, detail) dan muter videonya pake player bawaan YouTube (IFrame Player). 🎬</p>
+            <p class="mb-4 text-gray-300">Fitur kerennya:</p>
+            <ul class="list-disc list-inside mb-4 text-gray-300 space-y-2">
+                <li><strong class="text-purple-300">Interface Next-Gen:</strong> Tampilan tetep kece pake glassmorphism. 😎</li>
+                <li><strong class="text-purple-300">Trending Langsung (ID):</strong> Liat video viral dari YouTube Indonesia langsung. 🔥</li>
+                <li><strong class="text-purple-300">Pencarian YouTube:</strong> Cari video apa aja yang ada di YouTube. 🔍</li>
+                <li><strong class="text-purple-300">Player Resmi:</strong> Nonton langsung pake player YouTube IFrame yang stabil (dukung fullscreen bawaan!).</li>
+                <li><strong class="text-purple-300">Hemat API (Trending):</strong> Data trending awal disimpan sementara (cache) biar nggak boros API.</li>
+                <li><strong class="text-purple-300">Infinite Scroll (Search):</strong> Scroll terus buat liat hasil pencarian lainnya.</li>
+            </ul>
+            <p class="mb-4 text-gray-300">Karena pake API resmi, kita nggak bisa bebas kayak pake Piped/Invidious (misal soal download atau format video), tapi ini cara yang paling 'sah' menurut YouTube.</p>
+            <p class="text-red-400 text-sm font-semibold">PERINGATAN: API Key YouTube Punya TOKEN gratis dengan limit 10.000, Token akan direset setiap 24 jam sekali</p>
+        </div>
+
+        <div id="loading-indicator" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[9999] hidden"><div class="loader"></div></div>
+        <div id="error-message" class="fixed bottom-4 right-4 bg-red-600/80 text-white p-4 rounded-lg shadow-lg z-[9998] hidden max-w-sm glassmorphism border border-red-800">
+            <strong class="font-bold">Waduh! Ada Error 😥</strong><p id="error-text" class="text-sm mt-1"></p>
+            <button onclick="document.getElementById('error-message').classList.add('hidden')" class="absolute top-2 right-2 text-red-200 hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg></button>
+        </div>
+    </main>
+
+    <script>
+        // --- Configuration ---
+        const YOUTUBE_API_KEY = 'AIzaSyBVBHpsUwOFOUX69sW33l4uZq51Iyz90kE';
+        const YOUTUBE_API_BASE_URL = 'https://www.googleapis.com/youtube/v3';
+        const TRENDING_MAX_RESULTS = 20;
+        const SEARCH_MAX_RESULTS = 20;
+        const TRENDING_CACHE_DURATION = 5 * 60 * 1000; // 5 menit
+
+        // --- State Variables ---
+        let currentView = 'home';
+        let currentVideoId = null;
+        let currentSearchQuery = '';
+        let currentSearchPageToken = null;
+        let currentTrendingPageToken = null;
+        let isLoadingSearch = false;
+        let isLoadingTrending = false;
+        let ytPlayer = null;
+        let videoIdToLoad = null;
+        let cachedTrendingData = null;
+        let trendingCacheTimestamp = 0;
+        let isFullscreen = false;
+
+        // --- DOM Elements ---
+        // (Referensi DOM sama)
+        const mainContent = document.getElementById('main-content');
+        const trendingView = document.getElementById('trending-view');
+        const watchView = document.getElementById('watch-view');
+        const searchView = document.getElementById('search-view');
+        const aboutView = document.getElementById('about-view');
+        const videoGrid = document.getElementById('video-grid');
+        const trendingLoadingPlaceholder = document.getElementById('trending-loading-placeholder');
+        const trendingLoadMoreContainer = document.getElementById('trending-load-more-container');
+        const trendingLoadMoreButton = document.getElementById('trending-load-more-button');
+        const searchResultsGrid = document.getElementById('search-results-grid');
+        const searchLoadingIndicator = document.getElementById('search-loading-indicator');
+        const searchNoResults = document.getElementById('search-no-results');
+        const youtubePlayerContainer = document.getElementById('youtube-player-container');
+        const videoTitle = document.getElementById('video-title');
+        const videoUploader = document.getElementById('video-uploader');
+        const videoStats = document.getElementById('video-stats');
+        const videoDescription = document.getElementById('video-description');
+        const relatedVideosContainer = document.getElementById('related-videos');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const errorMessage = document.getElementById('error-message');
+        const errorText = document.getElementById('error-text');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const searchFormDesktop = document.getElementById('search-form-desktop');
+        const searchInputDesktop = document.getElementById('search-input-desktop');
+        const searchFormMobile = document.getElementById('search-form-mobile');
+        const searchInputMobile = document.getElementById('search-input-mobile');
+        const searchQueryDisplay = document.getElementById('search-query-display');
+
+        // --- YouTube IFrame Player API Functions ---
+        function onYouTubeIframeAPIReady() { console.log("YouTube IFrame API Ready."); }
+        function createPlayer(videoId) {
+            console.log("Creating YouTube player for videoId:", videoId);
+            if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+                try {
+                    ytPlayer.loadVideoById(videoId);
+                    return;
+                } catch(e){
+                    console.warn("Error loading video on existing player, recreating.", e);
+                    ytPlayer.destroy();
+                    ytPlayer = null;
+                }
+            }
+            ytPlayer = new YT.Player('youtube-player', {
+                height: '100%',
+                width: '100%',
+                videoId: videoId,
+                playerVars: { 'playsinline': 1 },
+                events: {
+'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange,
+                    'onError': onPlayerError
+                }
+            });
+        }
+        function onPlayerReady(event) { console.log("YouTube Player Ready."); if (videoIdToLoad) { console.log("Loading pending videoId:", videoIdToLoad); event.target.loadVideoById(videoIdToLoad); videoIdToLoad = null; } }
+        function onPlayerStateChange(event) { /* console.log("Player State:", event.data); */ }
+        function onPlayerError(event) { console.error("YouTube Player Error:", event.data); showError(`Player Error: Kode ${event.data}. Video mungkin dibatasi.`); }
+        function loadVideoIntoPlayer(videoId) {
+            if (!videoId) return;
+            currentVideoId = videoId;
+            if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+                console.log("Player exists, loading video:", videoId);
+                try {
+                    ytPlayer.loadVideoById(videoId);
+                } catch (e) {
+                    console.error("Error loading video by ID:", e);
+                    createPlayer(videoId);
+                }
+            } else {
+                console.log("Player not ready or invalid, creating player for video:", videoId);
+                if (typeof YT !== 'undefined' && YT.Player) {
+                    createPlayer(videoId);
+                } else {
+                    console.log("IFrame API not fully loaded yet, queuing videoId:", videoId);
+                    videoIdToLoad = videoId;
+                }
+            }
+        }
+
+        // --- API Functions (YouTube Data API v3) ---
+        async function fetchFromYouTubeAPI(endpoint, params) {
+            const url = new URL(`${YOUTUBE_API_BASE_URL}${endpoint}`);
+            params.key = YOUTUBE_API_KEY;
+            Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+            console.log('Sukses fetching dari YouTube');
+
+            const isInitialLoad = (endpoint === '/videos' && params.id) || // Detail video
+                                (endpoint === '/search' && !params.pageToken) || // Search awal
+                                (endpoint === '/videos' && params.chart === 'mostPopular' && !params.pageToken); // Trending awal
+            if (isInitialLoad) { showLoading(); }
+
+            try {
+                const response = await fetch(url.toString());
+                const data = await response.json();
+                if (!response.ok) {
+                    let errorMsg = `YouTube API Error (${response.status})`;
+                    if (data.error && data.error.message) {
+                        errorMsg += `: ${data.error.message}`;
+                        if (data.error.errors && data.error.errors.some(e => e.reason === 'quotaExceeded')) {
+                            errorMsg = "Waduh! Kuota API YouTube habis nih. 💀 Coba lagi besok ya!";
+                        }
+                    } else {
+                        errorMsg += `: ${response.statusText}`;
+                    }
+                    throw new Error(errorMsg);
+                }
+                if (isInitialLoad) hideLoading(); // Hide only on initial loads
+                return data;
+            } catch (error) {
+                console.error(`Error fetching from YouTube API (${endpoint}):`, error); showError(`${error.message}`); hideLoading();
+                if (endpoint === '/videos' && params.chart === 'mostPopular') {
+                    trendingLoadingPlaceholder.classList.add('hidden');
+                    isLoadingTrending = false;
+                    trendingLoadMoreButton.disabled = false;
+                    trendingLoadMoreButton.innerHTML = 'Muat Lebih Banyak';
+                }
+                else if (endpoint === '/search') {
+                    searchLoadingIndicator.classList.add('hidden');
+                    isLoadingSearch = false;
+                }
+                return null;
+            }
+        }
+
+        // Load trending videos with Caching
+        async function loadTrendingVideos(pageToken = null, forceRefresh = false) {
+            // Cek cache
+            if (!pageToken && !forceRefresh && cachedTrendingData && (Date.now() - trendingCacheTimestamp < TRENDING_CACHE_DURATION)) {
+                console.log("Using cached trending data.");
+                videoGrid.innerHTML = '';
+                cachedTrendingData.items.forEach(item => { videoGrid.appendChild(createVideoCard(item)); });
+                currentTrendingPageToken = cachedTrendingData.nextPageToken;
+                if (currentTrendingPageToken) { trendingLoadMoreContainer.classList.remove('hidden'); } else { trendingLoadMoreContainer.classList.add('hidden'); }
+                trendingLoadingPlaceholder.classList.add('hidden');
+                return;
+            }
+
+            if (isLoadingTrending) return;
+            isLoadingTrending = true;
+
+            if (!pageToken) {
+                videoGrid.innerHTML = ''; trendingLoadingPlaceholder.classList.remove('hidden'); trendingLoadMoreContainer.classList.add('hidden');
+            } else {
+                 trendingLoadMoreButton.innerHTML = '<div class="loader inline-block w-5 h-5"></div>'; trendingLoadMoreButton.disabled = true;
+            }
+
+            const params = { part: 'snippet,contentDetails,statistics', chart: 'mostPopular', regionCode: 'ID', maxResults: TRENDING_MAX_RESULTS };
+            if (pageToken) { params.pageToken = pageToken; }
+
+            console.log("Fetching trending videos from API...", params); // Log params confirm regionCode
+            const data = await fetchFromYouTubeAPI('/videos', params);
+
+            trendingLoadingPlaceholder.classList.add('hidden');
+            if (pageToken) { trendingLoadMoreButton.innerHTML = 'Muat Lebih Banyak'; trendingLoadMoreButton.disabled = false; }
+
+            if (data && data.items && Array.isArray(data.items)) {
+                if (!pageToken) { // Cache hanya halaman pertama
+                    console.log("Caching first page trending data.");
+                    cachedTrendingData = { items: data.items, nextPageToken: data.nextPageToken };
+                    trendingCacheTimestamp = Date.now();
+                    videoGrid.innerHTML = ''; // Pastikan clear sebelum render baru
+                }
+                data.items.forEach(item => { videoGrid.appendChild(createVideoCard(item)); });
+                currentTrendingPageToken = data.nextPageToken;
+                if (currentTrendingPageToken) { trendingLoadMoreContainer.classList.remove('hidden'); } else { trendingLoadMoreContainer.classList.add('hidden'); }
+                if (data.items.length === 0 && !pageToken) { videoGrid.innerHTML = '<p class="text-center text-gray-400 col-span-full py-5">Tidak ada video trending saat ini.</p>'; }
+            } else if (data === null && !pageToken) { videoGrid.innerHTML = '<p class="text-center text-red-400 col-span-full py-5">Gagal memuat trending. Cek error API Key atau kuota.</p>'; cachedTrendingData = null; }
+              else if (!pageToken) { videoGrid.innerHTML = '<p class="text-center text-gray-400 col-span-full py-5">Tidak ada video trending saat ini.</p>'; cachedTrendingData = null; }
+
+            isLoadingTrending = false;
+        }
+
+        // Load video details
+        async function loadVideoDetails(videoId) {
+            videoTitle.textContent = 'Loading Judul...'; videoUploader.textContent = 'Loading Channel...'; videoStats.textContent = 'Loading Stats...'; videoDescription.textContent = 'Loading Deskripsi...';
+            const params = { part: 'snippet,statistics,contentDetails', id: videoId };
+            const data = await fetchFromYouTubeAPI('/videos', params);
+            if (data && data.items && data.items.length > 0) {
+                const video = data.items[0]; const snippet = video.snippet; const stats = video.statistics;
+                videoTitle.textContent = snippet.title || 'Judul Tidak Tersedia';
+                videoUploader.textContent = snippet.channelTitle ? `Oleh: ${snippet.channelTitle}` : 'Channel Tidak Tersedia';
+                const viewsText = stats?.viewCount ? formatViews(stats.viewCount) : 'N/A';
+                const published = snippet.publishedAt ? timeAgo(snippet.publishedAt) : 'Unknown date';
+                videoStats.textContent = `${viewsText} views • ${published}`;
+                videoDescription.textContent = snippet.description || 'Deskripsi tidak tersedia.';
+            } else {
+                videoTitle.textContent = 'Gagal Memuat Detail Video'; videoUploader.textContent = ''; videoStats.textContent = ''; videoDescription.textContent = 'Tidak bisa ambil detail video ini.';
+            }
+        }
+
+        // Search videos
+        async function searchVideos(query, pageToken = null) {
+            if (isLoadingSearch) return;
+            isLoadingSearch = true;
+            // Clear grid hanya jika ini page pertama (pageToken null)
+            if (!pageToken) { searchResultsGrid.innerHTML = ''; searchNoResults.classList.add('hidden'); window.scrollTo(0, 0); }
+            searchLoadingIndicator.classList.remove('hidden');
+
+            const params = { part: 'snippet', q: query, type: 'video', maxResults: SEARCH_MAX_RESULTS };
+            if (pageToken) { params.pageToken = pageToken; }
+
+            console.log(`Searching YouTube API (page token: ${pageToken})...`);
+            const data = await fetchFromYouTubeAPI('/search', params);
+
+            searchLoadingIndicator.classList.add('hidden');
+
+            if (data && data.items && Array.isArray(data.items)) {
+                 if (data.items.length === 0 && !pageToken) { searchNoResults.classList.remove('hidden'); }
+                 else if (data.items.length > 0) { searchNoResults.classList.add('hidden'); data.items.forEach(item => { searchResultsGrid.appendChild(createVideoCardFromSearch(item)); }); }
+                 currentSearchPageToken = data.nextPageToken; // Simpan token untuk halaman berikutnya
+                 if (!currentSearchPageToken) { console.log("No more search results (no nextPageToken)."); }
+            } else if (data === null && !pageToken) { searchResultsGrid.innerHTML = '<p class="text-center text-red-400 col-span-full py-5">Gagal melakukan pencarian. Cek error API Key atau kuota.</p>'; currentSearchPageToken = null; }
+              else if (!pageToken) { searchNoResults.classList.remove('hidden'); currentSearchPageToken = null; }
+
+            isLoadingSearch = false;
+        }
+
+        // --- UI Functions ---
+        function createVideoCard(videoData) {
+            /* ... unchanged ... */
+            const card = document.createElement('div');
+            card.className = 'video-card glassmorphism overflow-hidden shadow-lg cursor-pointer flex flex-col h-full rounded-lg border border-purple-900/20 min-h-[250px] sm:min-h-[280px]';
+            const videoId = videoData.id;
+            const snippet = videoData.snippet;
+            const stats = videoData.statistics;
+            const contentDetails = videoData.contentDetails;
+            card.onclick = () => navigateTo('watch', videoId);
+            const thumbnailUrl = snippet.thumbnails?.medium?.url || snippet.thumbnails?.default?.url || 'https://placehold.co/320x180/0f0f1a/7c5cff?text=No+Thumb';
+            const title = snippet.title || 'Judul Tidak Tersedia';
+            const uploaderName = snippet.channelTitle || 'Channel Misterius';
+            const viewsText = stats?.viewCount ? formatViews(stats.viewCount) : 'N/A';
+            const uploadedText = snippet.publishedAt ? timeAgo(snippet.publishedAt) : 'Beberapa waktu lalu';
+            const durationText = contentDetails?.duration ? formatISO8601Duration(contentDetails.duration) : '';
+            card.innerHTML = `
+                 <div class="relative aspect-video">
+                     <img src="${thumbnailUrl}" alt="Thumbnail for ${title}" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/320x180/0f0f1a/7c5cff?text=Error';">
+                     ${durationText ? `<span class="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1.5 py-0.5 rounded">${durationText}</span>` : ''}
+                 </div>
+                 <div class="p-3 flex flex-col flex-grow">
+                     <h3 class="font-semibold text-sm mb-1 text-white line-clamp-2" title="${title}">${title}</h3>
+                     <p class="text-xs text-purple-300 mb-1 line-clamp-1" title="${uploaderName}">${uploaderName}</p>
+                     <p class="text-xs text-gray-400 mt-auto pt-1">${viewsText} views • ${uploadedText}</p>
+                 </div>
+             `;
+            return card;
+        }
+        function createVideoCardFromSearch(searchItem) {
+            /* ... unchanged ... */
+            const card = document.createElement('div');
+            card.className = 'video-card glassmorphism overflow-hidden shadow-lg cursor-pointer flex flex-col h-full rounded-lg border border-purple-900/20 min-h-[250px] sm:min-h-[280px]';
+            const videoId = searchItem.id?.videoId;
+            const snippet = searchItem.snippet;
+            if (!videoId) {
+                console.warn("Search item missing videoId:", searchItem);
+                return document.createDocumentFragment();
+            }
+            card.onclick = () => navigateTo('watch', videoId);
+            const thumbnailUrl = snippet.thumbnails?.medium?.url || snippet.thumbnails?.default?.url || 'https://placehold.co/320x180/0f0f1a/7c5cff?text=No+Thumb';
+            const title = snippet.title || 'Judul Tidak Tersedia';
+            const uploaderName = snippet.channelTitle || 'Channel Misterius';
+            const uploadedText = snippet.publishedAt ? timeAgo(snippet.publishedAt) : 'Beberapa waktu lalu';
+            const viewsText = 'N/A';
+            const durationText = '';
+            card.innerHTML = `
+                 <div class="relative aspect-video">
+                     <img src="${thumbnailUrl}" alt="Thumbnail for ${title}" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/320x180/0f0f1a/7c5cff?text=Error';">
+                     ${durationText ? `<span class="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1.5 py-0.5 rounded">${durationText}</span>` : ''}
+                 </div>
+                 <div class="p-3 flex flex-col flex-grow">
+                     <h3 class="font-semibold text-sm mb-1 text-white line-clamp-2" title="${title}">${title}</h3>
+                     <p class="text-xs text-purple-300 mb-1 line-clamp-1" title="${uploaderName}">${uploaderName}</p>
+                     <p class="text-xs text-gray-400 mt-auto pt-1">${uploadedText}</p>
+                 </div>
+             `;
+            return card;
+        }
+
+        // updateView - Logic pemanggilan load data disesuaikan
+        function updateView() {
+            console.log(`Updating view to: ${currentView}`);
+            trendingView.classList.add('hidden'); watchView.classList.add('hidden'); searchView.classList.add('hidden'); aboutView.classList.add('hidden');
+
+            if (currentView !== 'watch' && ytPlayer && typeof ytPlayer.stopVideo === 'function') {
+                console.log("Stopping YouTube player.");
+                try {
+                    ytPlayer.stopVideo();
+                } catch(e) {
+                    console.error("Error stopping player:", e);
+                }
+            }
+
+            switch (currentView) {
+                case 'home':
+                    console.log('Switching to home view...'); trendingView.classList.remove('hidden');
+                    // Panggil loadTrendingVideos, biarkan cache logic yg handle fetch/no-fetch
+                    loadTrendingVideos();
+                    break;
+                case 'watch':
+                    console.log('Switching to watch view...'); watchView.classList.remove('hidden');
+                    if (currentVideoId) {
+                        console.log(`Loading video details & player for: ${currentVideoId}`);
+                        loadVideoDetails(currentVideoId);
+                        loadVideoIntoPlayer(currentVideoId);
+                    }
+                    break;
+                case 'search':
+                    console.log('Switching to search view...'); searchView.classList.remove('hidden'); searchQueryDisplay.textContent = currentSearchQuery;
+                    // Trigger search HANYA jika grid kosong (artinya search baru atau refresh)
+                    if (searchResultsGrid.innerHTML === '' && !isLoadingSearch && currentSearchQuery) {
+                        console.log(`Loading initial search results for: ${currentSearchQuery}`);
+                        searchVideos(currentSearchQuery);
+                    }
+                    break;
+                case 'about':
+                    console.log("Switching to About view."); aboutView.classList.remove('hidden'); hideLoading(); break;
+            }
+            // Scroll to top kecuali saat infinite scroll search
+            if (currentView !== 'search' || currentSearchPageToken === null) {
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // navigateTo - Disederhanakan
+        function navigateTo(view, param = null) {
+            console.log(`Navigating to: ${view} with param: ${param}`);
+            let newHash = `#${view}`;
+            if (view === 'watch' && param) { newHash += `?v=${param}`; }
+            else if (view === 'search' && param) { newHash += `?q=${encodeURIComponent(param)}`; }
+            else if (view === 'home') { newHash = '#'; }
+
+            // Hanya set hash jika berbeda, biarkan hashchange handle sisanya
+            if (window.location.hash !== newHash) {
+                window.location.hash = newHash;
+            } else {
+                // Jika hash sama, panggil handleHashChange manual untuk refresh view
+                console.log("Hash is the same, manually triggering handleHashChange for potential refresh.");
+                handleHashChange(true); // Tambah flag 'isManualTrigger'
+            }
+        }
+
+        // handleHashChange - Disederhanakan, selalu update state & view
+        function handleHashChange(isManualTrigger = false) {
+            console.log(`Handling hash change. Current hash: ${window.location.hash}`, `Manual Trigger: ${isManualTrigger}`);
+            const hash = window.location.hash;
+            let intendedView = 'home'; let param = null;
+
+            if (hash.startsWith('#watch?v=')) { intendedView = 'watch'; param = hash.substring(9); }
+            else if (hash.startsWith('#search?q=')) { intendedView = 'search'; param = decodeURIComponent(hash.substring(10)); }
+            else if (hash === '#about') { intendedView = 'about'; }
+            else if (hash === '#' || hash === '') { intendedView = 'home'; }
+
+            console.log(`Determined view: ${intendedView}, Param: ${param}`);
+
+            const previousSearchQuery = currentSearchQuery;
+            const previousView = currentView;
+
+            // Selalu update state berdasarkan hash
+            currentView = intendedView;
+            currentVideoId = (intendedView === 'watch') ? param : null;
+            currentSearchQuery = (intendedView === 'search') ? param : '';
+
+            // Reset token search HANYA jika query berubah atau pindah ke view search dari view lain
+            const isNewSearch = intendedView === 'search' && (currentSearchQuery !== previousSearchQuery || previousView !== 'search');
+            if (isNewSearch) {
+                console.log("New search detected, resetting search page token.");
+                currentSearchPageToken = null;
+                isLoadingSearch = false; // Pastikan bisa loading
+                searchResultsGrid.innerHTML = ''; // Clear hasil lama untuk search baru
+            }
+
+            // Selalu panggil updateView
+            updateView();
+
+            // Jika ini trigger manual karena hash sama (misal klik home lagi)
+            if (isManualTrigger && intendedView === 'home') {
+                 console.log("Manual trigger for home, forcing trending refresh.");
+                 cachedTrendingData = null; // Hapus cache
+                 currentTrendingPageToken = null;
+                 loadTrendingVideos(null, true); // Force refresh
+            }
+        }
+
+
+        // --- Utility Functions ---
+        // (Sama seperti sebelumnya)
+        function formatViews(views) { if (views === undefined || views === null || views < 0) return 'N/A'; if (views === 0) return 'No'; views = parseInt(views, 10); if (isNaN(views)) return 'N/A'; if (views >= 1000000000) return (views / 1000000000).toFixed(1).replace('.0', '') + ' Miliar'; if (views >= 1000000) return (views / 1000000).toFixed(1).replace('.0', '') + ' Juta'; if (views >= 1000) return (views / 1000).toFixed(1).replace('.0', '') + ' Ribu'; return views.toString(); }
+        function timeAgo(isoString) { if (!isoString) return 'Unknown date'; const date = new Date(isoString); if (isNaN(date.getTime())) { return 'Tanggal aneh'; } const now = new Date(); const seconds = Math.floor((now - date) / 1000); if (seconds < 5) return "Baru saja"; let interval = Math.floor(seconds / 31536000); if (interval >= 1) return interval + " tahun lalu"; interval = Math.floor(seconds / 2592000); if (interval >= 1) return interval + " bulan lalu"; interval = Math.floor(seconds / 86400); if (interval >= 1) return interval + " hari lalu"; interval = Math.floor(seconds / 3600); if (interval >= 1) return interval + " jam lalu"; interval = Math.floor(seconds / 60); if (interval >= 1) return interval + " menit lalu"; return Math.floor(seconds) + " detik lalu"; }
+        function formatISO8601Duration(duration) { if (!duration) return ''; const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/); if (!match) return ''; const hours = parseInt(match[1] || 0); const minutes = parseInt(match[2] || 0); const seconds = parseInt(match[3] || 0); let result = ''; if (hours > 0) { result += hours + ':'; result += String(minutes).padStart(2, '0') + ':'; } else { result += minutes + ':'; } result += String(seconds).padStart(2, '0'); return result; }
+        function showLoading() { loadingIndicator.classList.remove('hidden'); }
+        function hideLoading() { setTimeout(() => { loadingIndicator.classList.add('hidden'); }, 50); }
+        function showError(message) { errorText.textContent = message; errorMessage.classList.remove('hidden'); setTimeout(() => { errorMessage.classList.add('hidden'); }, 7000); }
+        function toggleSidebar() { const isOpen = !mobileSidebar.classList.contains('translate-x-full'); if (isOpen) { closeSidebar(); } else { mobileSidebar.classList.remove('translate-x-full'); sidebarOverlay.classList.remove('hidden'); } }
+        function closeSidebar() { mobileSidebar.classList.add('translate-x-full'); sidebarOverlay.classList.add('hidden'); }
+
+        // --- Event Listeners ---
+        window.addEventListener('hashchange', () => handleHashChange(false)); // Panggilan dari hashchange event
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOM Loaded. Initializing YouTube API Mode...");
+            handleHashChange(false); // Proses hash awal saat load
+            mobileMenuButton.addEventListener('click', toggleSidebar);
+            sidebarOverlay.addEventListener('click', closeSidebar);
+            searchFormDesktop.addEventListener('submit', handleSearchSubmit);
+            searchFormMobile.addEventListener('submit', handleSearchSubmit);
+            window.addEventListener('scroll', handleScroll);
+            trendingLoadMoreButton.addEventListener('click', () => { if (currentTrendingPageToken && !isLoadingTrending) { loadTrendingVideos(currentTrendingPageToken); } });
+        });
+        function handleSearchSubmit(event) { event.preventDefault(); const inputElement = event.target.id === 'search-form-mobile' ? searchInputMobile : searchInputDesktop; const query = inputElement.value.trim(); console.log(`Search submitted with query: ${query}`); if (query) { navigateTo('search', query); inputElement.value = ''; if (event.target.id === 'search-form-mobile') { closeSidebar(); } } }
+        function handleScroll() { if (currentView === 'search' && !isLoadingSearch && currentSearchPageToken) { const { scrollTop, scrollHeight, clientHeight } = document.documentElement; if (scrollTop + clientHeight >= scrollHeight - 600) { console.log("Scroll threshold reached, loading more search results..."); searchVideos(currentSearchQuery, currentSearchPageToken); } } }
+
+        // --- Fullscreen Functions ---
+        function toggleFullscreen() {
+            if (!ytPlayer) return;
+
+            const playerContainer = youtubePlayerContainer;
+
+            if (!isFullscreen) {
+                if (playerContainer.requestFullscreen) {
+                    playerContainer.requestFullscreen();
+                } else if (playerContainer.mozRequestFullScreen) { /* Firefox */
+                    playerContainer.mozRequestFullScreen();
+                } else if (playerContainer.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                    playerContainer.webkitRequestFullscreen();
+                } else if (playerContainer.msRequestFullscreen) { /* IE/Edge */
+                    playerContainer.msRequestFullscreen();
+                }
+                playerContainer.classList.add('fullscreen');
+                isFullscreen = true;
+                // Force landscape orientation saat fullscreen
+                if (screen.orientation && screen.orientation.lock) {
+                    screen.orientation.lock("landscape").catch(error => {
+                        console.error("Error locking orientation:", error);
+                        // Tampilkan pesan error ke user (opsional)
+                        showError("Gagal mengunci layar ke lanskap. Coba putar perangkatmu ya! 😥");
+                    });
+                } else {
+                    console.warn("Screen Orientation API is not supported in this browser.");
+                }
+
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) { /* Firefox */
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { /* IE/Edge */
+                    document.msExitFullscreen();
+                }
+                playerContainer.classList.remove('fullscreen');
+                isFullscreen = false;
+                // Unlock orientation saat keluar dari fullscreen
+                if (screen.orientation && screen.orientation.unlock) {
+                    screen.orientation.unlock();
+                }
+            }
+        }
+
+        // Listen for fullscreen change events to update state
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+        document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+        document.addEventListener('msfullscreenchange', handleFullscreenChange);
+
+        function handleFullscreenChange() {
+            isFullscreen = !!(document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+            if (!isFullscreen) {
+                youtubePlayerContainer.classList.remove('fullscreen');
+                 if (screen.orientation && screen.orientation.unlock) {
+                    screen.orientation.unlock();
+                }
+            }
+        }
+
+    </script>
+
+</body>
+</html>
+
