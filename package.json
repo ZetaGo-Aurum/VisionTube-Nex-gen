@@ -4,7 +4,7 @@
   "description": "Backend untuk VisionTube dengan Express.js",
   "main": "api.js",
   "scripts": {
-    "start": "node api.js" // <-- Hapus script "dev"
+    "start": "node api.js"
   },
   "dependencies": {
     "express": "^4.18.3",
