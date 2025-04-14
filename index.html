@@ -101,7 +101,9 @@
         }
 
         #desktop-sidebar-container a {
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             padding: 0.75rem 1rem;
             color: #e0e0e0;
             text-decoration: none;
@@ -141,6 +143,136 @@
                 display: none !important;
             }
         }
+
+        #home-loading-animation {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        #home-loading-animation.hidden {
+            display: none;
+        }
+
+        .fade-out {
+            animation: fadeOut 1s ease-in-out forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Logo Animation */
+        #logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #logo-text {
+            font-size: 1.5em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #a29bfe, #7c5cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .logo-animated {
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        /* Sidebar Link Animation */
+        #desktop-sidebar-container a svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            fill: #a29bfe;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        #desktop-sidebar-container a:hover svg {
+            transform: scale(1.1);
+        }
+
+        #desktop-sidebar-container a:active svg {
+            transform: scale(0.95);
+        }
+
+        #mobile-sidebar nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        #mobile-sidebar nav a svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            fill: #a29bfe;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        #mobile-sidebar nav a:active svg {
+            transform: scale(0.95);
+        }
+
+        /* Save Button Animation */
+        #save-video-button {
+            transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+        }
+
+        #save-video-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Modal Button Animation */
+        .modal-content button[type="submit"],
+        .modal-content button:not([type="submit"]) {
+            transition: transform 0.1s ease-in-out;
+        }
+
+        .modal-content button[type="submit"]:active,
+        .modal-content button:not([type="submit"]):active {
+            transform: scale(0.97);
+        }
+
+        /* Load More Button Animation */
+        #trending-load-more-button {
+            transition: transform 0.15s ease-in-out;
+        }
+
+        #trending-load-more-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Resume Watching Button */
+        #resume-watching-button {
+            background-color: #5865F2; /* Discord blurple */
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        #resume-watching-button:hover {
+            background-color: #4752C4;
+        }
+
+        #resume-watching-button:active {
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -151,7 +283,10 @@
                 <button id="desktop-sidebar-toggle-button" class="flex items-center mr-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" /></svg></button>
                 <a href="#" onclick="navigateTo('home'); return false;" class="flex items-center space-x-2 cursor-pointer flex-shrink-0">
                      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 gradient-text" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <div><h1 class="text-xl font-bold gradient-text">VisionTube</h1><p class="text-xs text-purple-300">Next-gen</p></div>
+                    <div id="logo-container">
+                        <h1 id="logo-text" class="logo-animated">VisionTube</h1>
+                        <p class="text-xs text-purple-300">Next-gen</p>
+                    </div>
                 </a>
             </div>
             <div class="hidden md:flex flex-grow max-w-xl mx-4">
@@ -174,10 +309,22 @@
 
     <aside id="desktop-sidebar-container" class="md:block hidden">
         <nav>
-            <a href="#" onclick="navigateTo('home'); return false;">Trending</a>
-            <a href="#" onclick="navigateTo('recently-viewed'); return false;">Terakhir Dilihat</a>
-            <a href="#" onclick="navigateTo('playlists'); return false;">Playlist Saya</a>
-            <a href="#" onclick="navigateTo('about'); return false;">Tentang</a>
+            <a href="#" onclick="navigateTo('home'); return false;">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8h5z"></path></svg>
+                Trending
+            </a>
+            <a href="#" onclick="navigateTo('recently-viewed'); return false;">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M13.5 20H12V6a1 1 0 0 0-1-1H6V4h6.5a3.5 3.5 0 1 1 3.5 3.5V20h-1.5V7.5a2 2 0 0 0-2-2H7v14h6.5a1 1 0 0 1 1 1v1.5zM18 14v-4h2v4h-2z"></path></svg>
+                Terakhir Dilihat
+            </a>
+            <a href="#" onclick="navigateTo('playlists'); return false;">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>
+                Playlist Saya
+            </a>
+            <a href="#" onclick="navigateTo('about'); return false;">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-6h2v6zm0-8h-2V7h2v4z"></path></svg>
+                Tentang
+            </a>
         </nav>
     </aside>
 
@@ -190,19 +337,35 @@
             </button>
         </form>
         <nav class="flex flex-col space-y-4">
-            <a href="#" onclick="navigateTo('home'); closeSidebar(); return false;" class="text-purple-200 hover:text-white transition duration-200 py-2 px-2 rounded hover:bg-purple-800/30">Trending</a>
-            <a href="#" onclick="navigateTo('recently-viewed'); closeSidebar(); return false;" class="text-purple-200 hover:text-white transition duration-200 py-2 px-2 rounded hover:bg-purple-800/30">Terakhir Dilihat</a>
-            <a href="#" onclick="navigateTo('playlists'); closeSidebar(); return false;" class="text-purple-200 hover:text-white transition duration-200 py-2 px-2 rounded hover:bg-purple-800/30">Playlist Saya</a>
-            <a href="#" onclick="navigateTo('about'); closeSidebar(); return false;" class="text-purple-200 hover:text-white transition duration-200 py-2 px-2 rounded hover:bg-purple-800/30">Tentang</a>
+            <a href="#" onclick="navigateTo('home'); closeSidebar(); return false;" class="text-purple-200 hover:text-white transition duration-200 py-2 px-2 rounded hover:bg-purple-800/30">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8h5z"></path></svg>
+                Trending
+            </a>
+            <a href="#" onclick="navigateTo('recently-viewed'); closeSidebar(); return false;" class="text-purple-200 hover:text-white transition duration-200 py-2 px-2 rounded hover:bg-purple-800/30">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M13.5 20H12V6a1 1 0 0 0-1-1H6V4h6.5a3.5 3.5 0 1 1 3.5 3.5V20h-1.5V7.5a2 2 0 0 0-2-2H7v14h6.5a1 1 0 0 1 1 1v1.5zM18 14v-4h2v4h-2z"></path></svg>
+                Terakhir Dilihat
+            </a>
+            <a href="#" onclick="navigateTo('playlists'); closeSidebar(); return false;" class="text-purple-200 hover:text-white transition duration-200 py-2 px-2 rounded hover:bg-purple-800/30">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>
+                Playlist Saya
+            </a>
+            <a href="#" onclick="navigateTo('about'); closeSidebar(); return false;" class="text-purple-200 hover:text-white transition duration-200 py-2 px-2 rounded hover:bg-purple-800/30">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-6h2v6zm0-8h-2V7h2v4z"></path></svg>
+                Tentang
+            </a>
         </nav>
     </aside>
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden" onclick="closeSidebar()"></div>
 
-    <main id="main-content" class="container mx-auto px-4 pt-24 pb-8">
+    <main id="main-content" class="container mx-auto px-4 pt-24 pb-8 relative">
         <div id="trending-view">
+            <div id="home-loading-animation" class="hidden">
+                <div class="loader inline-block"></div>
+                <p class="mt-3 text-purple-300">Memuat video trending...</p>
+            </div>
             <h2 class="text-2xl font-semibold mb-6 gradient-text">Lagi Trending di Indonesia 🔥</h2>
             <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6">
-                 <div id="trending-loading-placeholder" class="col-span-full text-center py-10"><div class="loader inline-block"></div><p class="mt-3 text-purple-300">Lagi ngambil video trending...</p></div>
+                 <div id="trending-loading-placeholder" class="col-span-full text-center py-10 hidden"><div class="loader inline-block"></div><p class="mt-3 text-purple-300">Lagi ngambil video trending...</p></div>
             </div>
             <div id="trending-load-more-container" class="text-center mt-8 hidden">
                  <button id="trending-load-more-button" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-2 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition duration-200 disabled:opacity-70 disabled:cursor-not-allowed">Muat Lebih Banyak</button>
@@ -222,7 +385,10 @@
                         </div>
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 text-sm text-purple-300"><p id="video-uploader" class="mb-1 sm:mb-0">Channel Loading...</p><p id="video-stats">Views Loading...</p></div>
                         <hr class="border-purple-800/50 my-3">
-                        <p id="video-description" class="text-sm text-gray-300 whitespace-pre-wrap max-h-60 overflow-y-auto">Deskripsi loading...</p>
+                        <div class="flex justify-between items-center mb-3">
+                            <p id="video-description" class="text-sm text-gray-300 whitespace-pre-wrap max-h-60 overflow-y-auto flex-grow"></p>
+                            <button id="resume-watching-button" class="hidden flex-shrink-0 ml-4">Lanjut Nonton</button>
+                        </div>
                     </div>
                 </div>
                  <div class="lg:w-1/3">
@@ -332,6 +498,10 @@
         const RECENTLY_VIEWED_STORAGE_KEY = 'visiontube_recently_viewed';
         const MAX_RECENTLY_VIEWED = 24;
         const PLAYLISTS_STORAGE_KEY = 'visiontube_playlists';
+        const FIRST_VISIT_KEY = 'visiontube_first_visit';
+        const LAST_SEEN_STORAGE_PREFIX = 'visiontube_last_seen_';
+        const SESSION_LAST_PLAYED_TIME = 'visiontube_session_last_played';
+        const SESSION_LAST_PLAYED_VIDEO = 'visiontube_session_last_played_video';
 
         // --- State Variables ---
         let currentView = 'home';
@@ -348,6 +518,8 @@
         let cachedTrendingData = null;
         let trendingCacheTimestamp = 0;
         let isFullscreen = false;
+        let homeLoadingTimeout;
+        let updatePositionInterval = null; // Tambahkan variabel untuk interval update posisi
 
         // --- DOM Elements ---
         // (References remain largely the same, adding notification elements)
@@ -410,23 +582,160 @@
         const desktopSidebarContainer = document.getElementById('desktop-sidebar-container');
         const desktopSidebarToggleButton = document.getElementById('desktop-sidebar-toggle-button');
         const desktopNavContainer = document.getElementById('desktop-nav-container');
+        const homeLoadingAnimation = document.getElementById('home-loading-animation');
+        const resumeWatchingButton = document.getElementById('resume-watching-button');
 
 
         // --- YouTube IFrame Player API Functions ---
-        // (Unchanged from previous version)
         function onYouTubeIframeAPIReady() { console.log("YouTube IFrame API Ready."); if (videoIdToLoad) { createPlayer(videoIdToLoad); } }
-        function createPlayer(videoId) { console.log("Creating player:", videoId); if (ytPlayer && typeof ytPlayer.destroy === 'function') { try { ytPlayer.destroy(); } catch (e) { console.warn("Error destroying player:", e); } ytPlayer = null; } ytPlayer = new YT.Player('youtube-player', { height: '100%', width: '100%', videoId: videoId, playerVars: { 'playsinline': 1, 'autoplay': 1 }, events: { 'onReady': onPlayerReady, 'onStateChange': onPlayerStateChange, 'onError': onPlayerError } }); }
-        function onPlayerReady(event) { console.log("Player Ready."); if (videoIdToLoad && event.target && typeof event.target.loadVideoById === 'function') { console.log("Loading queued video:", videoIdToLoad); event.target.loadVideoById(videoIdToLoad); videoIdToLoad = null; } }
-        function onPlayerStateChange(event) { /* State change handling */ }
+        function createPlayer(videoId, startSeconds = 0) {
+            console.log("Creating player:", videoId, "Start:", startSeconds);
+            if (ytPlayer && typeof ytPlayer.destroy === 'function') {
+                try { ytPlayer.destroy(); } catch (e) { console.warn("Error destroying player:", e); }
+                ytPlayer = null;
+            }
+
+            ytPlayer = new YT.Player('youtube-player', {
+                height: '100%',
+                width: '100%',
+                videoId: videoId,
+                playerVars: { 'playsinline': 1, 'autoplay': 1, 'start': startSeconds },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange,
+                    'onError': onPlayerError
+                }
+            });
+        }
+        function onPlayerReady(event) {
+            console.log("Player Ready.");
+            if (videoIdToLoad && event.target && typeof event.target.loadVideoById === 'function') {
+                console.log("Loading queued video:", videoIdToLoad);
+                event.target.loadVideoById(videoIdToLoad);
+                videoIdToLoad = null;
+            }
+        }
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+                saveLastSeenPosition(currentVideoId, ytPlayer.getCurrentTime());
+                sessionStorage.removeItem(SESSION_LAST_PLAYED_TIME);
+                sessionStorage.removeItem(SESSION_LAST_PLAYED_VIDEO);
+                clearInterval(updatePositionInterval); // Hentikan interval saat video di-pause atau selesai
+                updatePositionInterval = null;
+            } else if (event.data === YT.PlayerState.PLAYING) {
+                sessionStorage.setItem(SESSION_LAST_PLAYED_TIME, ytPlayer.getCurrentTime());
+                sessionStorage.setItem(SESSION_LAST_PLAYED_VIDEO, currentVideoId);
+                resumeWatchingButton.classList.add('hidden'); // Sembunyikan tombol saat bermain
+                // Mulai interval untuk update posisi setiap detik
+                if (!updatePositionInterval) {
+                    updatePositionInterval = setInterval(() => {
+                        const currentTime = ytPlayer.getCurrentTime();
+                        updateRecentlyViewedPosition(currentVideoId, currentTime);
+                    }, 1000);
+                }
+            }
+        }
         function onPlayerError(event) { console.error("Player Error:", event.data); let msg = `Player Error: Kode ${event.data}.`; /* ... error mapping ... */ showError(msg + " Video mungkin dibatasi."); }
-        function loadVideoIntoPlayer(videoId) { if (!videoId) return; currentVideoId = videoId; console.log("Loading video:", videoId); if (typeof YT === 'undefined' || !YT.Player) { console.log("API not ready, queuing:", videoId); videoIdToLoad = videoId; return; } if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') { try { ytPlayer.loadVideoById(videoId); } catch (e) { console.error("Error loading video, recreating:", e); createPlayer(videoId); } } else { console.log("Player invalid, creating:", videoId); createPlayer(videoId); } }
+        function loadVideoIntoPlayer(videoId) {
+            if (!videoId) return;
+            currentVideoId = videoId;
+            console.log("Loading video:", videoId);
+            if (typeof YT === 'undefined' || !YT.Player) {
+                console.log("API not ready, queuing:", videoId);
+                videoIdToLoad = videoId;
+                return;
+            }
+
+            let startAt = 0;
+            const recentlyViewed = getRecentlyViewed();
+            const viewedItem = recentlyViewed.find(item => item.videoId === videoId);
+            if (viewedItem && viewedItem.lastPosition > 0) {
+                startAt = viewedItem.lastPosition;
+                console.log(`Resuming video ${videoId} from position:`, startAt);
+            } else {
+                let lastSeen = getLastSeenPosition(videoId);
+                if (lastSeen) {
+                    resumeWatchingButton.classList.remove('hidden');
+                    resumeWatchingButton.onclick = () => {
+                        const savedTime = getLastSeenPosition(videoId);
+                        if (savedTime && ytPlayer) {
+                            ytPlayer.seekTo(parseFloat(savedTime), true);
+                            showSuccessMessage("Melanjutkan tontonan... 😉");
+                            resumeWatchingButton.classList.add('hidden'); // Sembunyikan tombol setelah melanjutkan
+                        } else {
+                            showError("Gagal melanjutkan. 😥");
+                        }
+                    };
+                } else {
+                    resumeWatchingButton.classList.add('hidden'); // Sembunyikan jika tidak ada posisi terakhir dilihat
+                }
+            }
+
+
+            if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+                try {
+                    ytPlayer.loadVideoById({ videoId: videoId, startSeconds: startAt });
+                } catch (e) {
+                    console.error("Error loading video, recreating:", e);
+                    createPlayer(videoId, startAt);
+                }
+            } else {
+                console.log("Player invalid, creating:", videoId, "Start:", startAt);
+                createPlayer(videoId, startAt);
+            }
+        }
+
+        // --- Last Seen Functions ---
+        function getLastSeenPosition(videoId) {
+            if (!videoId) return null;
+            return localStorage.getItem(LAST_SEEN_STORAGE_PREFIX + videoId);
+        }
+
+        function saveLastSeenPosition(videoId, currentTime) {
+            if (videoId && currentTime) {
+                localStorage.setItem(LAST_SEEN_STORAGE_PREFIX + videoId, currentTime.toString());
+                console.log(`Saved last seen position for ${videoId}:`, currentTime);
+            }
+        }
 
         // --- Recently Viewed Functions ---
-        // (Unchanged from previous version)
         function getRecentlyViewed() { try { const s = localStorage.getItem(RECENTLY_VIEWED_STORAGE_KEY); return s ? JSON.parse(s) : []; } catch (e) { console.error(e); return []; } }
         function saveRecentlyViewed(v) { try { localStorage.setItem(RECENTLY_VIEWED_STORAGE_KEY, JSON.stringify(v)); } catch (e) { console.error(e); showError("Gagal simpan riwayat."); } }
-        function addRecentlyViewed(vd) { if (!vd || !vd.videoId) return; console.log("Adding recent:", vd.videoId); let v = getRecentlyViewed(); v = v.filter(i => i.videoId !== vd.videoId); v.unshift(vd); v = v.slice(0, MAX_RECENTLY_VIEWED); saveRecentlyViewed(v); }
-        function loadRecentlyViewed() { console.log("Loading recent..."); const v = getRecentlyViewed(); recentlyViewedGrid.innerHTML = ''; if (v.length === 0) { recentlyViewedEmpty.classList.remove('hidden'); recentlyViewedGrid.classList.add('hidden'); } else { recentlyViewedEmpty.classList.add('hidden'); recentlyViewedGrid.classList.remove('hidden'); v.forEach(i => recentlyViewedGrid.appendChild(createRecentlyViewedCard(i))); } console.log("Loaded recent:", v.length); }
+        function addRecentlyViewed(vd) {
+            if (!vd || !vd.videoId) return;
+            console.log("Adding recent:", vd.videoId);
+            let v = getRecentlyViewed();
+            v = v.filter(i => i.videoId !== vd.videoId);
+            const currentTime = ytPlayer ? ytPlayer.getCurrentTime() : 0;
+            v.unshift({...vd, lastViewed: Date.now(), lastPosition: currentTime }); // Simpan timestamp dan posisi terakhir dilihat
+            v = v.slice(0, MAX_RECENTLY_VIEWED);
+            saveRecentlyViewed(v);
+        }
+        function updateRecentlyViewedPosition(videoId, position) {
+            if (!videoId) return;
+            let v = getRecentlyViewed();
+            const index = v.findIndex(item => item.videoId === videoId);
+            if (index !== -1) {
+                v[index].lastPosition = position;
+                v[index].lastViewed = Date.now();
+                saveRecentlyViewed(v);
+                // console.log(`Updated position for ${videoId}:`, position); // Bisa diaktifkan untuk debugging
+            }
+        }
+        function loadRecentlyViewed() {
+            console.log("Loading recent...");
+            const v = getRecentlyViewed();
+            recentlyViewedGrid.innerHTML = '';
+            if (v.length === 0) {
+                recentlyViewedEmpty.classList.remove('hidden');
+                recentlyViewedGrid.classList.add('hidden');
+            } else {
+                recentlyViewedEmpty.classList.add('hidden');
+                recentlyViewedGrid.classList.remove('hidden');
+                v.forEach(i => recentlyViewedGrid.appendChild(createRecentlyViewedCard(i)));
+            }
+            console.log("Loaded recent:", v.length);
+        }
 
         // --- Playlist Functions ---
         // (Unchanged logic, just using updated notification functions)
@@ -448,10 +757,28 @@
         async function searchVideos(query, pageToken = null) { if (isLoadingSearch) return; isLoadingSearch = true; if (!pageToken) { searchResultsGrid.innerHTML = ''; searchNoResults.classList.add('hidden'); window.scrollTo(0, 0); } searchLoadingIndicator.classList.remove('hidden'); const params = { part: 'snippet', q: query, type: 'video', maxResults: SEARCH_MAX_RESULTS, pageToken: pageToken }; console.log(`Searching (token: ${pageToken})...`); const data = await fetchFromYouTubeAPI('/search', params); searchLoadingIndicator.classList.add('hidden'); if (data && data.items && Array.isArray(data.items)) { if (data.items.length === 0 && !pageToken) { searchNoResults.classList.remove('hidden'); } else if (data.items.length > 0) { searchNoResults.classList.add('hidden'); data.items.forEach(i => searchResultsGrid.appendChild(createVideoCardFromSearch(i))); } currentSearchPageToken = data.nextPageToken; if (!currentSearchPageToken) console.log("End of search results."); } else if (!pageToken) { searchResultsGrid.innerHTML = '<p class="text-center text-red-400 col-span-full py-5">Gagal cari.</p>'; searchNoResults.classList.add('hidden'); currentSearchPageToken = null; } isLoadingSearch = false; }
 
         // --- UI Functions ---
-        // (createVideoCard, createVideoCardFromSearch, createRecentlyViewedCard, createPlaylistItem, createPlaylistVideoCard remain the same)
+        // (createVideoCard, createVideoCardFromSearch, createPlaylistItem, createPlaylistVideoCard remain the same)
         function createVideoCard(videoData) { const card = document.createElement('div'); card.className = 'video-card glassmorphism overflow-hidden shadow-lg cursor-pointer flex flex-col h-full rounded-lg border border-purple-900/20 min-h-[250px] sm:min-h-[280px]'; const videoId = videoData.id; const snippet = videoData.snippet; const stats = videoData.statistics; const contentDetails = videoData.contentDetails; const title = snippet.title || 'Judul Tidak Tersedia'; const uploaderName = snippet.channelTitle || 'Channel Misterius'; const thumbnailUrl = snippet.thumbnails?.medium?.url || snippet.thumbnails?.default?.url || 'https://placehold.co/320x180/0f0f1a/7c5cff?text=No+Thumb'; const viewsText = stats?.viewCount ? formatViews(stats.viewCount) : 'N/A'; const uploadedText = snippet.publishedAt ? timeAgo(snippet.publishedAt) : 'Beberapa waktu lalu'; const durationText = contentDetails?.duration ? formatISO8601Duration(contentDetails.duration) : ''; card.onclick = () => navigateTo('watch', videoId); card.innerHTML = ` <div class="relative aspect-video bg-black/30"> <img src="${thumbnailUrl}" alt="Thumbnail for ${title}" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/320x180/0f0f1a/7c5cff?text=Error';"> ${durationText ? `<span class="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1.5 py-0.5 rounded">${durationText}</span>` : ''} </div> <div class="p-3 flex flex-col flex-grow"> <h3 class="font-semibold text-sm mb-1 text-white line-clamp-2" title="${title}">${title}</h3> <p class="text-xs text-purple-300 mb-1 line-clamp-1" title="${uploaderName}">${uploaderName}</p> <p class="text-xs text-gray-400 mt-auto pt-1">${viewsText} views • ${uploadedText}</p> </div>`; return card; }
         function createVideoCardFromSearch(searchItem) { const card = document.createElement('div'); card.className = 'video-card glassmorphism overflow-hidden shadow-lg cursor-pointer flex flex-col h-full rounded-lg border border-purple-900/20 min-h-[250px] sm:min-h-[280px]'; const videoId = searchItem.id?.videoId; const snippet = searchItem.snippet; if (!videoId) { console.warn("Search item missing videoId:", searchItem); return document.createDocumentFragment(); } const title = snippet.title || 'Judul Tidak Tersedia'; const uploaderName = snippet.channelTitle || 'Channel Misterius'; const thumbnailUrl = snippet.thumbnails?.medium?.url || snippet.thumbnails?.default?.url || 'https://placehold.co/320x180/0f0f1a/7c5cff?text=No+Thumb'; const uploadedText = snippet.publishedAt ? timeAgo(snippet.publishedAt) : 'Beberapa waktu lalu'; card.onclick = () => navigateTo('watch', videoId); card.innerHTML = ` <div class="relative aspect-video bg-black/30"> <img src="${thumbnailUrl}" alt="Thumbnail for ${title}" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/320x180/0f0f1a/7c5cff?text=Error';"> </div> <div class="p-3 flex flex-col flex-grow"> <h3 class="font-semibold text-sm mb-1 text-white line-clamp-2" title="${title}">${title}</h3> <p class="text-xs text-purple-300 mb-1 line-clamp-1" title="${uploaderName}">${uploaderName}</p> <p class="text-xs text-gray-400 mt-auto pt-1">${uploadedText}</p> </div>`; return card; }
-        function createRecentlyViewedCard(videoData) { const card = document.createElement('div'); card.className = 'video-card glassmorphism overflow-hidden shadow-lg cursor-pointer flex flex-col h-full rounded-lg border border-purple-900/20 min-h-[250px] sm:min-h-[280px]'; const { videoId, title, thumbnailUrl, channelTitle, timestamp } = videoData; const viewedText = timestamp ? timeAgo(timestamp) : 'Beberapa waktu lalu'; card.onclick = () => { navigateTo('watch', videoId); }; card.innerHTML = ` <div class="relative aspect-video bg-black/30"> <img src="${thumbnailUrl}" alt="Thumbnail for ${title}" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/320x180/0f0f1a/7c5cff?text=Error';"> </div> <div class="p-3 flex flex-col flex-grow"> <h3 class="font-semibold text-sm mb-1 text-white line-clamp-2" title="${title}">${title}</h3> <p class="text-xs text-purple-300 mb-1 line-clamp-1" title="${channelTitle}">${channelTitle}</p> <p class="text-xs text-gray-400 mt-auto pt-1">Dilihat: ${viewedText}</p> </div>`; return card; }
+        function createRecentlyViewedCard(videoData) {
+            const card = document.createElement('div');
+            card.className = 'video-card glassmorphism overflow-hidden shadow-lg cursor-pointer flex flex-col h-full rounded-lg border border-purple-900/20 min-h-[250px] sm:min-h-[280px]';
+            const { videoId, title, thumbnailUrl, channelTitle, lastViewed, lastPosition } = videoData;
+            const viewedText = lastViewed ? `Terakhir dilihat: ${timeAgo(lastViewed)}` : 'Beberapa waktu lalu';
+            const durationText = lastPosition ? formatTime(lastPosition) : ''; // Tampilkan durasi terakhir dilihat
+            card.onclick = () => { navigateTo('watch', videoId); };
+            card.innerHTML = `
+                <div class="relative aspect-video bg-black/30">
+                    <img src="${thumbnailUrl}" alt="Thumbnail for ${title}" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/320x180/0f0f1a/7c5cff?text=Error';">
+                     ${durationText ? `<span class="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1.5 py-0.5 rounded">${durationText}</span>` : ''}
+                </div>
+                <div class="p-3 flex flex-col flex-grow">
+                    <h3 class="font-semibold text-sm mb-1 text-white line-clamp-2" title="${title}">${title}</h3>
+                    <p class="text-xs text-purple-300 mb-1 line-clamp-1" title="${channelTitle}">${channelTitle}</p>
+                    <p class="text-xs text-gray-400 mt-auto pt-1">${viewedText}</p>
+                </div>`;
+            return card;
+        }
         function createPlaylistItem(playlist) { const item = document.createElement('div'); item.className = 'playlist-item glassmorphism p-4 rounded-lg flex justify-between items-center transition duration-200'; const videoCount = playlist.videos?.length || 0; item.innerHTML = ` <div class="flex-1 mr-4 cursor-pointer" onclick="navigateTo('playlist-detail', '${playlist.id}')"> <h4 class="font-semibold text-white mb-1 line-clamp-1">${playlist.name}</h4> <p class="text-xs text-gray-400">${videoCount} video</p> </div> <div class="flex space-x-2 flex-shrink-0"> <button onclick="openRenamePlaylistModal('${playlist.id}', '${escapeSingleQuotes(playlist.name)}')" class="p-1.5 rounded-md bg-yellow-600/30 hover:bg-yellow-500/40 text-yellow-300 transition duration-200" title="Ubah Nama"> <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"> <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path></svg> </button> <button onclick="deletePlaylist('${playlist.id}')" class="p-1.5 rounded-md bg-red-600/30 hover:bg-red-500/40 text-red-300 transition duration-200" title="Hapus Playlist"> <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 000-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg> </button> </div>`; return item; }
         function createPlaylistVideoCard(videoData, playlistId) { const card = document.createElement('div'); card.className = 'video-card glassmorphism overflow-hidden shadow-lg flex flex-col h-full rounded-lg border border-purple-900/20 min-h-[250px] sm:min-h-[280px] relative group'; const { videoId, title, thumbnailUrl, channelTitle, addedAt } = videoData; const addedText = addedAt ? `Ditambahkan: ${timeAgo(addedAt)}` : ''; const contentDiv = document.createElement('div'); contentDiv.className = 'cursor-pointer flex flex-col flex-grow'; contentDiv.onclick = () => navigateTo('watch', videoId); contentDiv.innerHTML = ` <div class="relative aspect-video bg-black/30"> <img src="${thumbnailUrl}" alt="Thumbnail for ${title}" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/320x180/0f0f1a/7c5cff?text=Error';"> </div> <div class="p-3 flex flex-col flex-grow"> <h3 class="font-semibold text-sm mb-1 text-white line-clamp-2" title="${title}">${title}</h3> <p class="text-xs text-purple-300 mb-1 line-clamp-1" title="${channelTitle}">${channelTitle}</p> <p class="text-xs text-gray-400 mt-auto pt-1">${addedText}</p> </div>`; const removeButton = document.createElement('button'); removeButton.className = 'absolute top-2 right-2 p-1 rounded-full bg-red-600/70 hover:bg-red-500/90 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10'; removeButton.title = 'Hapus dari Playlist Ini'; removeButton.onclick = (e) => { e.stopPropagation(); removeVideoFromPlaylist(playlistId, videoId); }; removeButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>`; card.appendChild(contentDiv); card.appendChild(removeButton); return card; }
 
@@ -472,11 +799,24 @@
 
         // --- Update View logic ---
         // (Unchanged from previous version)
-        function updateView() { console.log(`Updating view: ${currentView}, Playlist: ${currentPlaylistId}`); trendingView.classList.add('hidden'); watchView.classList.add('hidden'); searchView.classList.add('hidden'); aboutView.classList.add('hidden'); recentlyViewedView.classList.add('hidden'); playlistsView.classList.add('hidden'); playlistDetailView.classList.add('hidden'); if (currentView !== 'watch' && ytPlayer && typeof ytPlayer.stopVideo === 'function') { try { const state = ytPlayer.getPlayerState(); if (state === 1 || state === 2 || state === 3) ytPlayer.stopVideo(); } catch(e) { console.warn("Stop player error:", e); } } switch (currentView) { case 'home': trendingView.classList.remove('hidden'); loadTrendingVideos(); break; case 'watch': watchView.classList.remove('hidden'); if (currentVideoId) { loadVideoDetails(currentVideoId); loadVideoIntoPlayer(currentVideoId); } break; case 'search': searchView.classList.remove('hidden'); searchQueryDisplay.textContent = currentSearchQuery; if (searchResultsGrid.innerHTML === '' && !isLoadingSearch && currentSearchQuery) searchVideos(currentSearchQuery); break; case 'recently-viewed': recentlyViewedView.classList.remove('hidden'); loadRecentlyViewed(); break; case 'playlists': playlistsView.classList.remove('hidden'); loadPlaylists(); break; case 'playlist-detail': playlistDetailView.classList.remove('hidden'); if (currentPlaylistId) loadPlaylistDetails(currentPlaylistId); else navigateTo('playlists'); break; case 'about': aboutView.classList.remove('hidden'); hideLoading(); break; } if (currentView !== 'search' || currentSearchPageToken === null) window.scrollTo(0, 0); }
+        function updateView() { console.log(`Updating view: ${currentView}, Playlist: ${currentPlaylistId}`); trendingView.classList.add('hidden'); watchView.classList.add('hidden'); searchView.classList.add('hidden'); aboutView.classList.add('hidden'); recentlyViewedView.classList.add('hidden'); playlistsView.classList.add('hidden'); playlistDetailView.classList.add('hidden'); if (currentView !== 'watch' && ytPlayer && typeof ytPlayer.stopVideo === 'function') { try { const state = ytPlayer.getPlayerState(); if (state === 1 || state === 2 || state === 3) ytPlayer.stopVideo(); } catch(e) { console.warn("Stop player error:", e); } } switch (currentView) { case 'home': trendingView.classList.remove('hidden'); const isFirstVisit = localStorage.getItem(FIRST_VISIT_KEY) === null; if (isFirstVisit) { homeLoadingAnimation.classList.remove('hidden'); trendingLoadingPlaceholder.classList.add('hidden'); trendingLoadMoreContainer.classList.add('hidden'); homeLoadingTimeout = setTimeout(() => { loadTrendingVideos(); homeLoadingAnimation.classList.add('fade-out'); setTimeout(() => { homeLoadingAnimation.classList.add('hidden'); homeLoadingAnimation.classList.remove('fade-out'); }, 1000); localStorage.setItem(FIRST_VISIT_KEY, 'true'); }, 1500); } else { loadTrendingVideos(); homeLoadingAnimation.classList.add('hidden'); } break; case 'watch': watchView.classList.remove('hidden'); if (currentVideoId) { loadVideoDetails(currentVideoId); loadVideoIntoPlayer(currentVideoId); } break; case 'search': searchView.classList.remove('hidden'); searchQueryDisplay.textContent = currentSearchQuery; if (searchResultsGrid.innerHTML === '' && !isLoadingSearch && currentSearchQuery) searchVideos(currentSearchQuery); break; case 'recently-viewed': recentlyViewedView.classList.remove('hidden'); loadRecentlyViewed(); break; case 'playlists': playlistsView.classList.remove('hidden'); loadPlaylists(); break; case 'playlist-detail': playlistDetailView.classList.remove('hidden'); if (currentPlaylistId) loadPlaylistDetails(currentPlaylistId); else navigateTo('playlists'); break; case 'about': aboutView.classList.remove('hidden'); hideLoading(); break; } if (currentView !== 'search' || currentSearchPageToken === null) window.scrollTo(0, 0); }
 
         // --- Navigation function ---
         // (Unchanged from previous version)
-        function navigateTo(view, param = null) { console.log(`Navigating to: ${view}, Param: ${param}`); let hash = `#${view}`; if (view === 'watch' && param) hash += `?v=${param}`; else if (view === 'search' && param) hash += `?q=${encodeURIComponent(param)}`; else if (view === 'playlist-detail' && param) hash += `?id=${param}`; else if (view === 'home') hash = '#'; if (window.location.hash !== hash) window.location.hash = hash; else { console.log("Hash same, manual trigger."); handleHashChange(true); } }
+        function navigateTo(view, param = null) {
+            console.log(`Navigating to: ${view}, Param: ${param}`);
+            if (currentView === 'watch' && ytPlayer && currentVideoId) {
+                sessionStorage.setItem(SESSION_LAST_PLAYED_TIME, ytPlayer.getCurrentTime());
+                sessionStorage.setItem(SESSION_LAST_PLAYED_VIDEO, currentVideoId);
+            }
+            let hash = `#${view}`;
+            if (view === 'watch' && param) hash += `?v=${param}`;
+            else if (view === 'search' && param) hash += `?q=${encodeURIComponent(param)}`;
+            else if (view === 'playlist-detail' && param) hash += `?id=${param}`;
+            else if (view === 'home') hash = '#';
+            if (window.location.hash !== hash) window.location.hash = hash;
+            else { console.log("Hash same, manual trigger."); handleHashChange(true); }
+        }
 
         // --- Hash change handler ---
         // (Unchanged from previous version)
@@ -493,6 +833,18 @@
         function toggleSidebar() { const isOpen = !mobileSidebar.classList.contains('translate-x-full'); if (isOpen) closeSidebar(); else { mobileSidebar.classList.remove('translate-x-full'); sidebarOverlay.classList.remove('hidden'); } }
         function closeSidebar() { mobileSidebar.classList.add('translate-x-full'); sidebarOverlay.classList.add('hidden'); }
         function escapeSingleQuotes(str) { return str.replace(/'/g, "\\'"); }
+        function formatTime(seconds) {
+            const hrs = Math.floor(seconds / 3600);
+            const mins = Math.floor((seconds % 3600) / 60);
+            const secs = Math.floor(seconds % 60);
+            let result = '';
+            if (hrs > 0) {
+                result += hrs + ':' + (mins < 10 ? '0' : '');
+            }
+            result += mins + ':' + (secs < 10 ? '0' : '');
+            result += secs;
+            return result;
+        }
 
         /** Displays a notification message (error or success). (UPDATED) */
         function showNotification(message, type = 'error', duration = 5000) {
@@ -503,15 +855,15 @@
             notificationMessage.classList.remove('bg-red-600/80', 'border-red-800', 'bg-green-600/80', 'border-green-800');
 
             if (type === 'success') {
-                notificationTitle.textContent = 'Sukses! ✨'; // Success title
+                notificationTitle.textContent = 'Sukses! ✨'; // Judul sukses
                 notificationMessage.classList.add('bg-green-600/80', 'border-green-800');
-            } else { // Default to error
-                notificationTitle.textContent = 'Waduh! 😥'; // Error title
+            } else { // Default ke error
+                notificationTitle.textContent = 'Waduh! 😥'; // Judul error
                 notificationMessage.classList.add('bg-red-600/80', 'border-red-800');
             }
 
             notificationMessage.classList.remove('hidden');
-            // Auto-hide after duration
+            // Auto-hide setelah durasi
             setTimeout(() => {
                 notificationMessage.classList.add('hidden');
             }, duration);
@@ -519,10 +871,10 @@
 
         // Replace old showError and showSuccessMessage with the unified function
         function showError(message) {
-            showNotification(message, 'error', 7000); // Longer duration for errors
+            showNotification(message, 'error', 7000); // Durasi lebih lama untuk error
         }
         function showSuccessMessage(message) {
-            showNotification(message, 'success', 4000); // Shorter duration for success
+            showNotification(message, 'success', 4000); // Durasi lebih singkat untuk sukses
         }
 
 
@@ -546,6 +898,11 @@
             desktopNavContainer.querySelector('nav').innerHTML = '';
 
             desktopSidebarToggleButton.addEventListener('click', toggleDesktopSidebar);
+
+            // Load YouTube API asynchronously
+            const tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            document.body.appendChild(tag);
 
         });
         function handleSearchSubmit(e) { e.preventDefault(); const input = e.target.id === 'search-form-mobile' ? searchInputMobile : searchInputDesktop; const q = input.value.trim(); if (q) { navigateTo('search', q); input.value = ''; if (e.target.id === 'search-form-mobile') closeSidebar(); } }
