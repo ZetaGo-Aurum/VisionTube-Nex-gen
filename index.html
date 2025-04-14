@@ -82,22 +82,22 @@
         .playlist-item:hover { background-color: rgba(162, 155, 254, 0.1); /* Consider using accent color alpha */ }
 
         /* Desktop Sidebar */
-        #desktop-sidebar-container { position: fixed; top: 0; left: 0; /* Pindah ke kiri */ height: 100%; width: 240px; background-color: #0f0f1a; border-right: 1px solid rgba(162, 155, 254, 0.2); /* Border kanan */ box-shadow: 5px 0 10px rgba(0, 0, 0, 0.3); /* Shadow kanan */ z-index: 60; padding-top: 70px; /* Sesuaikan padding atas */ transform: translateX(-100%); /* Awalnya di luar layar, ke kiri */ transition: transform 0.3s ease-in-out; }
+        #desktop-sidebar-container { position: fixed; top: 0; left: 0; height: 100%; width: 240px; background-color: #0f0f1a; border-right: 1px solid rgba(162, 155, 254, 0.2); box-shadow: 5px 0 10px rgba(0, 0, 0, 0.3); z-index: 60; padding-top: 70px; transform: translateX(-100%); transition: transform 0.3s ease-in-out; }
         #desktop-sidebar-container.open { transform: translateX(0); }
         #desktop-sidebar-container nav { padding: 1rem; }
         #desktop-sidebar-container a { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; color: #e0e0e0; text-decoration: none; border-radius: 0.5rem; transition: background-color 0.2s ease, color 0.2s ease; }
-        #desktop-sidebar-container a:hover { background-color: rgba(162, 155, 254, 0.1); /* Alpha accent */ color: var(--accent-text-color); }
-        #desktop-sidebar-container a svg { width: 1.25rem; height: 1.25rem; fill: currentColor; /* Inherit color from link */ transition: transform 0.2s ease-in-out; }
+        #desktop-sidebar-container a:hover { background-color: rgba(162, 155, 254, 0.1); color: var(--accent-text-color); }
+        #desktop-sidebar-container a svg { width: 1.25rem; height: 1.25rem; fill: currentColor; transition: transform 0.2s ease-in-out; }
         #desktop-sidebar-container a:hover svg { transform: scale(1.1); }
         #desktop-sidebar-container a:active svg { transform: scale(0.95); }
 
         /* Header Adjustments for Desktop Sidebar */
-        #desktop-sidebar-toggle-button { display: none; /* Sembunyikan di mobile */ }
-        @media (min-width: 768px) { /* Tampil hanya di desktop */
+        #desktop-sidebar-toggle-button { display: none; }
+        @media (min-width: 768px) {
             #desktop-sidebar-toggle-button { display: flex; align-items: center; padding: 0.5rem; background: none; border: none; color: var(--accent-text-color); cursor: pointer; outline: none; }
-            #mobile-menu-button { display: none; } /* Sembunyikan tombol mobile di desktop */
+            #mobile-menu-button { display: none; }
             #main-content.sidebar-open { margin-left: 240px; transition: margin-left 0.3s ease-in-out; }
-            #main-content { transition: margin-left 0.3s ease-in-out; } /* Transisi saat sidebar ditutup */
+            #main-content { transition: margin-left 0.3s ease-in-out; }
             header.sidebar-open { padding-left: 240px; transition: padding-left 0.3s ease-in-out; }
             header { transition: padding-left 0.3s ease-in-out; }
         }
@@ -123,55 +123,48 @@
         .btn-primary { background: var(--button-bg-gradient); color: white; transition: background 0.3s ease, transform 0.1s ease; }
         .btn-primary:hover { background: var(--button-bg-gradient-hover); }
         .btn-primary:active { transform: scale(0.97); }
-
-        .btn-secondary { background-color: rgba(107, 114, 128, 0.5); /* Grayish */ color: #e0e0e0; transition: background-color 0.2s ease, transform 0.1s ease; }
+        .btn-secondary { background-color: rgba(107, 114, 128, 0.5); color: #e0e0e0; transition: background-color 0.2s ease, transform 0.1s ease; }
         .btn-secondary:hover { background-color: rgba(107, 114, 128, 0.7); }
         .btn-secondary:active { transform: scale(0.97); }
-
-        .btn-danger { background-color: #ef4444; color: white; transition: background-color 0.2s ease, transform 0.1s ease; } /* Red */
+        .btn-danger { background-color: #ef4444; color: white; transition: background-color 0.2s ease, transform 0.1s ease; }
         .btn-danger:hover { background-color: #dc2626; }
         .btn-danger:active { transform: scale(0.97); }
-
-        .btn-warning { background-color: #f59e0b; color: white; transition: background-color 0.2s ease, transform 0.1s ease; } /* Amber */
+        .btn-warning { background-color: #f59e0b; color: white; transition: background-color 0.2s ease, transform 0.1s ease; }
         .btn-warning:hover { background-color: #d97706; }
         .btn-warning:active { transform: scale(0.97); }
-
-        .btn-success { background-color: #10b981; color: white; transition: background-color 0.2s ease, transform 0.1s ease; } /* Emerald */
+        .btn-success { background-color: #10b981; color: white; transition: background-color 0.2s ease, transform 0.1s ease; }
         .btn-success:hover { background-color: #059669; }
         .btn-success:active { transform: scale(0.97); }
 
         /* Input Focus Ring */
-        input[type="search"]:focus, input[type="text"]:focus, input[type="color"]:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px var(--focus-ring-color);
-            border-color: var(--focus-ring-color);
-        }
-        input[type="checkbox"]:focus {
-             box-shadow: 0 0 0 2px var(--focus-ring-color);
-        }
-        input[type="checkbox"]:checked {
-            background-color: var(--accent-color-1);
-            border-color: var(--accent-color-1);
-        }
+        input[type="search"]:focus, input[type="text"]:focus, input[type="color"]:focus { outline: none; box-shadow: 0 0 0 2px var(--focus-ring-color); border-color: var(--focus-ring-color) !important; /* Use important to override Tailwind */ }
+        input[type="checkbox"]:focus { box-shadow: 0 0 0 2px var(--focus-ring-color); }
+        input[type="checkbox"]:checked { background-color: var(--accent-color-1); border-color: var(--accent-color-1); }
 
         /* Notification Styling */
-        #notification-message.success { background-color: rgba(16, 185, 129, 0.8); border-color: #059669; } /* Emerald */
-        #notification-message.error { background-color: rgba(239, 68, 68, 0.8); border-color: #dc2626; } /* Red */
+        #notification-message.success { background-color: rgba(16, 185, 129, 0.8); border-color: #059669; }
+        #notification-message.error { background-color: rgba(239, 68, 68, 0.8); border-color: #dc2626; }
 
+        /* About Section Styling */
+        #about-view ul li { margin-bottom: 0.75rem; } /* Add spacing between list items */
+        #about-view strong { color: var(--accent-text-color); } /* Use accent color for strong tags */
+        #about-view .special-thanks { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(162, 155, 254, 0.2); }
     </style>
 </head>
 <body class="antialiased">
 
-    <header id="app-header" class="fixed top-0 left-0 right-0 z-50 glassmorphism border-b border-purple-900/30 shadow-lg">
+    <header id="app-header" class="fixed top-0 left-0 right-0 z-50 glassmorphism border-b border-gray-700/30 shadow-lg">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center">
-                <button id="desktop-sidebar-toggle-button" title="Toggle Sidebar">
+                <button id="desktop-sidebar-toggle-button" title="Toggle Sidebar" class="text-[color:var(--accent-text-color)] hover:text-[color:var(--accent-text-color-hover)]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" /></svg>
                 </button>
-                <a href="#" onclick="navigateTo('home'); return false;" class="flex items-center space-x-2 cursor-pointer flex-shrink-0 ml-2 md:ml-0"> <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 gradient-text" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <a href="#" onclick="navigateTo('home'); return false;" class="flex items-center space-x-2 cursor-pointer flex-shrink-0 ml-2 md:ml-0">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 gradient-text" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     <div id="logo-container">
                         <h1 id="logo-text" class="logo-animated">VisionTube</h1>
-                        <p class="text-xs text-gray-400">Next-gen</p> </div>
+                        <p class="text-xs text-gray-400">Next-gen</p>
+                    </div>
                 </a>
             </div>
             <div class="hidden md:flex flex-grow max-w-xl mx-4">
@@ -186,196 +179,81 @@
 
     <aside id="desktop-sidebar-container">
         <nav class="flex flex-col space-y-2">
-            <a href="#" onclick="navigateTo('home'); return false;">
-                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8h5z"></path></svg>
-                <span>Trending</span>
-            </a>
-            <a href="#" onclick="navigateTo('recently-viewed'); return false;">
-                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path></svg> <span>Terakhir Dilihat</span>
-            </a>
-            <a href="#" onclick="navigateTo('playlists'); return false;">
-                 <svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 10h11v2H3zm0-4h11v2H3zm0 8h7v2H3zm13-1v8l6-4z"></path></svg> <span>Playlist Saya</span>
-            </a>
-             <a href="#" onclick="navigateTo('settings'); return false;">
-                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.83c.09-.23.13-.48.13-.73v-2.92c0-.42-.25-.8-.69-.95l-2.18-.83c-.3-.12-.62-.19-.95-.19-.32 0-.64.07-.95.19l-2.18.83c-.44.15-.69.53-.69.95v2.92c0 .25.04.5.13.73l2.11 1.83c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.83c-.09.23-.13.48-.13.73v2.92c0 .42.25.8.69.95l2.18.83c.3.12.62.19.95.19.32 0 .64-.07.95-.19l2.18-.83c.44-.15.69-.53.69-.95v-2.92c0-.25-.04-.5-.13-.73l-2.11-1.83zM12 15.17c-1.79 0-3.23-1.44-3.23-3.23s1.44-3.23 3.23-3.23 3.23 1.44 3.23 3.23-1.44 3.23-3.23 3.23z"></path></svg>
-                <span>Setelan</span>
-            </a>
-            <a href="#" onclick="navigateTo('about'); return false;">
-                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-6h2v6zm0-8h-2V7h2v4z"></path></svg>
-                <span>Tentang</span>
-            </a>
+            <a href="#" onclick="navigateTo('home'); return false;"> <svg viewBox="0 0 24 24"><path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8h5z"></path></svg> <span>Trending</span> </a>
+            <a href="#" onclick="navigateTo('recently-viewed'); return false;"> <svg viewBox="0 0 24 24"><path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path></svg> <span>Terakhir Dilihat</span> </a>
+            <a href="#" onclick="navigateTo('playlists'); return false;"> <svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 10h11v2H3zm0-4h11v2H3zm0 8h7v2H3zm13-1v8l6-4z"></path></svg> <span>Playlist Saya</span> </a>
+            <a href="#" onclick="navigateTo('settings'); return false;"> <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.83c.09-.23.13-.48.13-.73v-2.92c0-.42-.25-.8-.69-.95l-2.18-.83c-.3-.12-.62-.19-.95-.19-.32 0-.64.07-.95.19l-2.18.83c-.44.15-.69.53-.69.95v2.92c0 .25.04.5.13.73l2.11 1.83c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.83c-.09.23-.13.48-.13.73v2.92c0 .42.25.8.69.95l2.18.83c.3.12.62.19.95.19.32 0 .64-.07.95-.19l2.18-.83c.44-.15.69-.53.69-.95v-2.92c0-.25-.04-.5-.13-.73l-2.11-1.83zM12 15.17c-1.79 0-3.23-1.44-3.23-3.23s1.44-3.23 3.23-3.23 3.23 1.44 3.23 3.23-1.44 3.23-3.23 3.23z"></path></svg> <span>Setelan</span> </a>
+            <a href="#" onclick="navigateTo('about'); return false;"> <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-6h2v6zm0-8h-2V7h2v4z"></path></svg> <span>Tentang</span> </a>
         </nav>
     </aside>
 
-    <aside id="mobile-sidebar" class="fixed top-0 right-0 h-full w-64 glassmorphism border-l border-purple-900/30 shadow-lg z-[70] pt-20 px-4 transform translate-x-full md:hidden">
+    <aside id="mobile-sidebar" class="fixed top-0 right-0 h-full w-64 glassmorphism border-l border-gray-700/30 shadow-lg z-[70] pt-20 px-4 transform translate-x-full md:hidden">
         <form id="search-form-mobile" class="w-full mb-6">
             <input type="search" id="search-input-mobile" placeholder="Cari video..." class="w-full px-3 py-2 rounded-md mb-2 bg-gray-800/70 border border-gray-700 focus:border-[var(--focus-ring-color)] focus:ring-0 text-white placeholder-gray-400 text-sm">
-            <button type="submit" class="w-full px-3 py-2 btn-primary rounded-md text-sm flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
-                Cari
-            </button>
+            <button type="submit" class="w-full px-3 py-2 btn-primary rounded-md text-sm flex items-center justify-center"> <svg class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg> Cari </button>
         </form>
         <nav class="flex flex-col space-y-2">
-             <a href="#" onclick="navigateTo('home'); closeSidebar(); return false;" class="text-gray-200 hover:text-[color:var(--accent-text-color)] hover:bg-gray-700/50 transition duration-200 py-2 px-2 rounded">
-                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8h5z"></path></svg>
-                <span>Trending</span>
-            </a>
-            <a href="#" onclick="navigateTo('recently-viewed'); closeSidebar(); return false;" class="text-gray-200 hover:text-[color:var(--accent-text-color)] hover:bg-gray-700/50 transition duration-200 py-2 px-2 rounded">
-                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path></svg>
-                <span>Terakhir Dilihat</span>
-            </a>
-            <a href="#" onclick="navigateTo('playlists'); closeSidebar(); return false;" class="text-gray-200 hover:text-[color:var(--accent-text-color)] hover:bg-gray-700/50 transition duration-200 py-2 px-2 rounded">
-                 <svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 10h11v2H3zm0-4h11v2H3zm0 8h7v2H3zm13-1v8l6-4z"></path></svg>
-                <span>Playlist Saya</span>
-            </a>
-             <a href="#" onclick="navigateTo('settings'); closeSidebar(); return false;" class="text-gray-200 hover:text-[color:var(--accent-text-color)] hover:bg-gray-700/50 transition duration-200 py-2 px-2 rounded">
-                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.83c.09-.23.13-.48.13-.73v-2.92c0-.42-.25-.8-.69-.95l-2.18-.83c-.3-.12-.62-.19-.95-.19-.32 0-.64.07-.95.19l-2.18.83c-.44.15-.69.53-.69.95v2.92c0 .25.04.5.13.73l2.11 1.83c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.83c-.09.23-.13.48-.13.73v2.92c0 .42.25.8.69.95l2.18.83c.3.12.62.19.95.19.32 0 .64-.07.95-.19l2.18-.83c.44-.15.69-.53.69-.95v-2.92c0-.25-.04-.5-.13-.73l-2.11-1.83zM12 15.17c-1.79 0-3.23-1.44-3.23-3.23s1.44-3.23 3.23-3.23 3.23 1.44 3.23 3.23-1.44 3.23-3.23 3.23z"></path></svg>
-                <span>Setelan</span>
-            </a>
-            <a href="#" onclick="navigateTo('about'); closeSidebar(); return false;" class="text-gray-200 hover:text-[color:var(--accent-text-color)] hover:bg-gray-700/50 transition duration-200 py-2 px-2 rounded">
-                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-6h2v6zm0-8h-2V7h2v4z"></path></svg>
-                <span>Tentang</span>
-            </a>
+             <a href="#" onclick="navigateTo('home'); closeSidebar(); return false;" class="text-gray-200 hover:text-[color:var(--accent-text-color)] hover:bg-gray-700/50 transition duration-200 py-2 px-2 rounded"> <svg viewBox="0 0 24 24"><path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8h5z"></path></svg> <span>Trending</span> </a>
+             <a href="#" onclick="navigateTo('recently-viewed'); closeSidebar(); return false;" class="text-gray-200 hover:text-[color:var(--accent-text-color)] hover:bg-gray-700/50 transition duration-200 py-2 px-2 rounded"> <svg viewBox="0 0 24 24"><path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path></svg> <span>Terakhir Dilihat</span> </a>
+             <a href="#" onclick="navigateTo('playlists'); closeSidebar(); return false;" class="text-gray-200 hover:text-[color:var(--accent-text-color)] hover:bg-gray-700/50 transition duration-200 py-2 px-2 rounded"> <svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 10h11v2H3zm0-4h11v2H3zm0 8h7v2H3zm13-1v8l6-4z"></path></svg> <span>Playlist Saya</span> </a>
+             <a href="#" onclick="navigateTo('settings'); closeSidebar(); return false;" class="text-gray-200 hover:text-[color:var(--accent-text-color)] hover:bg-gray-700/50 transition duration-200 py-2 px-2 rounded"> <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.83c.09-.23.13-.48.13-.73v-2.92c0-.42-.25-.8-.69-.95l-2.18-.83c-.3-.12-.62-.19-.95-.19-.32 0-.64.07-.95.19l-2.18.83c-.44.15-.69.53-.69.95v2.92c0 .25.04.5.13.73l2.11 1.83c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.83c-.09.23-.13.48-.13.73v2.92c0 .42.25.8.69.95l2.18.83c.3.12.62.19.95.19.32 0 .64-.07.95-.19l2.18-.83c.44-.15.69-.53.69-.95v-2.92c0-.25-.04-.5-.13-.73l-2.11-1.83zM12 15.17c-1.79 0-3.23-1.44-3.23-3.23s1.44-3.23 3.23-3.23 3.23 1.44 3.23 3.23-1.44 3.23-3.23 3.23z"></path></svg> <span>Setelan</span> </a>
+             <a href="#" onclick="navigateTo('about'); closeSidebar(); return false;" class="text-gray-200 hover:text-[color:var(--accent-text-color)] hover:bg-gray-700/50 transition duration-200 py-2 px-2 rounded"> <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-6h2v6zm0-8h-2V7h2v4z"></path></svg> <span>Tentang</span> </a>
         </nav>
     </aside>
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-[65] hidden md:hidden" onclick="closeSidebar()"></div>
 
-    <main id="main-content" class="container mx-auto px-4 pt-24 pb-8 relative md:ml-0"> <div id="trending-view">
-            <div id="home-loading-animation" class="hidden"><div class="loader inline-block"></div><p class="mt-3 text-[color:var(--accent-text-color)]">Memuat video trending...</p></div>
-            <h2 class="text-2xl font-semibold mb-6 gradient-text">Lagi Trending di Indonesia 🔥</h2>
-            <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6">
-                 <div id="trending-loading-placeholder" class="col-span-full text-center py-10 hidden"><div class="loader inline-block"></div><p class="mt-3 text-[color:var(--accent-text-color)]">Lagi ngambil video trending...</p></div>
-            </div>
-            <div id="trending-load-more-container" class="text-center mt-8 hidden">
-                 <button id="trending-load-more-button" class="px-6 py-2 rounded-lg btn-primary">Muat Lebih Banyak</button>
-             </div>
-        </div>
-        <div id="watch-view" class="hidden">
-             <div class="flex flex-col lg:flex-row gap-6">
-                <div class="lg:w-2/3">
-                    <div id="youtube-player-container" class="mb-4 glassmorphism p-1 aspect-video bg-black rounded-lg shadow-lg"><div id="youtube-player"></div></div>
-                    <div id="video-details" class="glassmorphism p-4 rounded-lg">
-                        <div class="flex justify-between items-start mb-2">
-                            <h1 id="video-title" class="text-xl md:text-2xl font-semibold text-white flex-1 mr-4">Judul...</h1>
-                            <button id="save-video-button" onclick="openSaveVideoModal()" class="flex-shrink-0 bg-gradient-to-r from-blue-500 to-[color:var(--accent-color-2)] hover:from-blue-600 hover:to-[color:var(--accent-color-2-hover)] text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center space-x-1.5 transition duration-200" title="Simpan ke Playlist">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" /></svg>
-                                <span>Simpan</span>
-                            </button>
-                        </div>
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 text-sm text-gray-400"><p id="video-uploader" class="mb-1 sm:mb-0">Channel...</p><p id="video-stats">Views...</p></div>
-                        <hr class="border-gray-700/50 my-3">
-                        <p id="video-description" class="text-sm text-gray-300 whitespace-pre-wrap max-h-60 overflow-y-auto">Deskripsi...</p>
-                        </div>
-                </div>
-                 <div class="lg:w-1/3">
-                    <h3 class="text-lg font-semibold mb-4 gradient-text">Video Terkait</h3>
-                    <div id="related-videos" class="space-y-3"><p class="text-sm text-gray-400">Fitur terkait belum ada.</p></div>
-                 </div>
-             </div>
-        </div>
-        <div id="search-view" class="hidden">
-            <h2 class="text-2xl font-semibold mb-6">Hasil Pencarian: "<span id="search-query-display" class="gradient-text"></span>"</h2>
-            <div id="search-results-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6"></div>
-             <div id="search-loading-indicator" class="text-center py-6 hidden"><div class="loader inline-block"></div><p class="mt-2 text-[color:var(--accent-text-color)]">Memuat...</p></div>
-             <p id="search-no-results" class="text-center text-gray-400 py-6 hidden">Yah, nggak nemu 😥.</p>
-        </div>
-        <div id="recently-viewed-view" class="hidden">
-            <h2 class="text-2xl font-semibold mb-6 gradient-text">Terakhir Dilihat ⏱️</h2>
-            <div id="recently-viewed-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6"></div>
-            <p id="recently-viewed-empty" class="text-center text-gray-400 py-10 hidden">Belum ada riwayat tontonan 🚀</p>
-        </div>
-        <div id="playlists-view" class="hidden">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-semibold gradient-text">Playlist Saya 📚</h2>
-                <button onclick="openCreatePlaylistModal()" class="px-4 py-2 rounded-lg text-sm font-medium flex items-center space-x-1.5 btn-success">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
-                    <span>Buat Playlist Baru</span>
-                </button>
-            </div>
-            <div id="playlists-list" class="space-y-4"></div>
-            <p id="playlists-empty" class="text-center text-gray-400 py-10 hidden">Belum punya playlist ✨</p>
-        </div>
-        <div id="playlist-detail-view" class="hidden">
-            <div class="flex items-center mb-6">
-                <button onclick="navigateTo('playlists')" class="text-[color:var(--accent-text-color)] hover:text-white mr-3 p-1 rounded-full hover:bg-gray-700/50 transition duration-200" title="Kembali">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
-                </button>
-                <h2 id="playlist-detail-name" class="text-2xl font-semibold gradient-text">Playlist...</h2>
-            </div>
-            <div id="playlist-videos-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6"></div>
-            <p id="playlist-videos-empty" class="text-center text-gray-400 py-10 hidden">Playlist ini kosong 👀</p>
-        </div>
+    <main id="main-content" class="container mx-auto px-4 pt-24 pb-8 relative md:ml-0">
+        <div id="trending-view"> <div id="home-loading-animation" class="hidden"><div class="loader inline-block"></div><p class="mt-3 text-[color:var(--accent-text-color)]">Memuat video trending...</p></div> <h2 class="text-2xl font-semibold mb-6 gradient-text">Lagi Trending di Indonesia 🔥</h2> <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6"> <div id="trending-loading-placeholder" class="col-span-full text-center py-10 hidden"><div class="loader inline-block"></div><p class="mt-3 text-[color:var(--accent-text-color)]">Lagi ngambil video trending...</p></div> </div> <div id="trending-load-more-container" class="text-center mt-8 hidden"> <button id="trending-load-more-button" class="px-6 py-2 rounded-lg btn-primary">Muat Lebih Banyak</button> </div> </div>
+         <div id="watch-view" class="hidden"> <div class="flex flex-col lg:flex-row gap-6"> <div class="lg:w-2/3"> <div id="youtube-player-container" class="mb-4 glassmorphism p-1 aspect-video bg-black rounded-lg shadow-lg"><div id="youtube-player"></div></div> <div id="video-details" class="glassmorphism p-4 rounded-lg"> <div class="flex justify-between items-start mb-2"> <h1 id="video-title" class="text-xl md:text-2xl font-semibold text-white flex-1 mr-4">Judul...</h1> <button id="save-video-button" onclick="openSaveVideoModal()" class="flex-shrink-0 bg-gradient-to-r from-blue-500 to-[color:var(--accent-color-2)] hover:from-blue-600 hover:to-[color:var(--accent-color-2-hover)] text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center space-x-1.5 transition duration-200" title="Simpan ke Playlist"> <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" /></svg> <span>Simpan</span> </button> </div> <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 text-sm text-gray-400"><p id="video-uploader" class="mb-1 sm:mb-0">Channel...</p><p id="video-stats">Views...</p></div> <hr class="border-gray-700/50 my-3"> <p id="video-description" class="text-sm text-gray-300 whitespace-pre-wrap max-h-60 overflow-y-auto">Deskripsi...</p> </div> </div> <div class="lg:w-1/3"> <h3 class="text-lg font-semibold mb-4 gradient-text">Video Terkait</h3> <div id="related-videos" class="space-y-3"><p class="text-sm text-gray-400">Fitur terkait belum ada.</p></div> </div> </div> </div>
+         <div id="search-view" class="hidden"> <h2 class="text-2xl font-semibold mb-6">Hasil Pencarian: "<span id="search-query-display" class="gradient-text"></span>"</h2> <div id="search-results-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6"></div> <div id="search-loading-indicator" class="text-center py-6 hidden"><div class="loader inline-block"></div><p class="mt-2 text-[color:var(--accent-text-color)]">Memuat...</p></div> <p id="search-no-results" class="text-center text-gray-400 py-6 hidden">Yah, nggak nemu 😥.</p> </div>
+         <div id="recently-viewed-view" class="hidden"> <h2 class="text-2xl font-semibold mb-6 gradient-text">Terakhir Dilihat ⏱️</h2> <div id="recently-viewed-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6"></div> <p id="recently-viewed-empty" class="text-center text-gray-400 py-10 hidden">Belum ada riwayat tontonan 🚀</p> </div>
+         <div id="playlists-view" class="hidden"> <div class="flex justify-between items-center mb-6"> <h2 class="text-2xl font-semibold gradient-text">Playlist Saya 📚</h2> <button onclick="openCreatePlaylistModal()" class="px-4 py-2 rounded-lg text-sm font-medium flex items-center space-x-1.5 btn-success"> <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg> <span>Buat Playlist Baru</span> </button> </div> <div id="playlists-list" class="space-y-4"></div> <p id="playlists-empty" class="text-center text-gray-400 py-10 hidden">Belum punya playlist ✨</p> </div>
+         <div id="playlist-detail-view" class="hidden"> <div class="flex items-center mb-6"> <button onclick="navigateTo('playlists')" class="text-[color:var(--accent-text-color)] hover:text-white mr-3 p-1 rounded-full hover:bg-gray-700/50 transition duration-200" title="Kembali"> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg> </button> <h2 id="playlist-detail-name" class="text-2xl font-semibold gradient-text">Playlist...</h2> </div> <div id="playlist-videos-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6"></div> <p id="playlist-videos-empty" class="text-center text-gray-400 py-10 hidden">Playlist ini kosong 👀</p> </div>
+
         <div id="about-view" class="hidden glassmorphism p-6 rounded-lg max-w-3xl mx-auto">
-            <h2 class="text-2xl font-semibold mb-4 gradient-text">Tentang VisionTube ✨</h2>
-             <p class="mb-4 text-gray-300">Hai kamu! 👋 Selamat datang di VisionTube...</p>
-             </div>
+             <h2 class="text-2xl font-semibold mb-6 gradient-text">Tentang VisionTube ✨</h2>
+            <p class="mb-4 text-gray-300">Yo, Wazzup! 👋 Selamat datang di VisionTube, tempat nongkrong baru buat nonton YouTube dengan gaya paling kece abad ini! 😎 Kita sulap pengalaman nontonmu jadi lebih asik, mulus, dan pastinya... beda dari yang lain! 😉</p>
+            <p class="mb-6 text-gray-300">Penasaran ada apa aja di sini? Cekidot fitur-fitur andalan VisionTube:</p>
+            <ul class="list-disc list-inside mb-6 text-gray-300 space-y-3">
+                <li><strong>Interface Next-Gen</strong> ✨: Tampilannya? Beuh! Kayak liat masa depan, tapi lebih adem di mata dan gampang dipake. Dijamin betah scroll seharian sampe lupa waktu! 😎 (Warning: bisa bikin nagih!)</li>
+                <li><strong>Trending Langsung (ID)</strong> 🔥: Gak bakal FOMO (Fear Of Missing Out) lagi! Langsung intip video paling viral se-Indonesia Raya. Update terus, biar kamu tetep jadi anak paling gaul di tongkrongan! 🇮🇩</li>
+                <li><strong>Pencarian YouTube Sakti</strong> 🔍: Nyari video apa aja? Tinggal ketik! Kayak punya jin pribadi, tapi khusus buat nyari video YouTube. *Cring!* Langsung ketemu! ✨ (Jin-nya lagi cuti kalo API error ya 😜 Maap!)</li>
+                <li><strong>Terakhir Dilihat (Anti Amnesia!)</strong> ⏱️: Lupa tadi nonton video apa sampe ketiduran? Tenang! Ada contekan video terakhir yang kamu buka, lengkap sama posisi terakhir kamu nonton. Gak perlu panik nyari lagi, tinggal klik, langsung lanjut! Praktis abis! 😎</li>
+                <li><strong>Playlist Saya (Koleksi Pribadi!)</strong> 📚: Bikin playlist video favoritmu sendiri! Mau lagu galau 😭, tutorial masak mie instan level dewa 🍜, atau kumpulan video kucing oyen barbar 🐈? Bebaaaas! Atur sesukamu, biar koleksi videomu makin rapi!</li>
+                 <li><strong>Player Resmi + Bebas Iklan!</strong> 🎉: Nonton pake player asli YouTube, tapi... *jeng jeng*... GAK ADA IKLAN GANGGU! 🥳 Nonton jadi lancar jaya tanpa jeda sponsor yang bikin kzl! Mantap jiwa! (Kecuali iklan di dalem videonya ya, itu mah bawaan dari sononya 😅)</li>
+                <li><strong>Hemat Kuota API (Biar Gak Tekor!)</strong> 💡: Kita pinter loh! Untuk fitur trending, data videonya kita simpen bentar (cache), jadi nggak perlu minta data baru terus ke YouTube. Cerdas kan? 😉 Bikin web tetep ngebut tanpa boros kuota API (dan dompet 💸)!</li>
+                <li><strong>Infinite Scroll (Scroll Sampe Bosen!)</strong> 🖱️👇: Males klik tombol "next page"? Sama! Di halaman pencarian, scroll aja terus ke bawah, video baru bakal muncul otomatis. Kayak feed sosmed, tapi isinya video semua! Scroll sampe jempol pegel! 😂</li>
+                 <li><strong>Setelan Kustom (Gaya Kamu Banget!)</strong> ⚙️: Bosen sama tampilan gitu-gitu aja? Atur warna aksen sesukamu! Mau pake API Key YouTube punya sendiri? Bisa juga! VisionTube ngertiin kamu banget deh! 😉</li>
+            </ul>
+
+             <p class="text-red-400 text-sm font-semibold mb-4">🚨 AWAS! PERINGATAN PENTING! 🚨</p>
+            <p class="mb-4 text-gray-300">Karena kita pake 'jasa' API dari Mbah YouTube, ada aturannya nih. Kita dikasih jatah kuota **10.000** permintaan per hari. Kedengeran banyak? Eits, tapi kalo dipake rame-rame bisa cepet abis juga! 🤣 Kalau tiba-tiba ada error aneh atau video nggak muncul, kemungkinan besar kuotanya lagi K.O. 💀</p>
+            <p class="mb-6 text-gray-300">Tapi jangan panik! Kuota ini bakal diisi ulang tiap hari jam **2 siang (14:00 WIB)**. Jadi, kalo lagi apes, sabar aja bentar trus coba lagi yaaa~ 🙏</p>
+
+            <div class="special-thanks">
+                <h3 class="text-lg font-semibold mb-3 gradient-text">Spesial Thanks To: 🙏💖</h3>
+                <ul class="list-disc list-inside text-sm text-gray-400 space-y-1">
+                    <li><strong>Vercel:</strong> Makasih udah kasih tumpangan hosting gratis yang ngebut! Kalian ajiib! 🚀</li>
+                    <li><strong>YouTube:</strong> Makasih API-nya, meski kuotanya terbatas, tapi tetep keren! 👍</li>
+                    <li><strong>Tailwind CSS:</strong> Makasih udah bikin styling jadi gampang dan hasilnya kece parah! 💅</li>
+                    <li><strong>Kamu (Iya, Kamu!):</strong> Makasih banyak udah nyobain dan pake VisionTube! Kehadiranmu bikin project ini makin berarti! Lop yu pull! ❤️😊</li>
+                </ul>
+            </div>
+        </div>
+
         <div id="settings-view" class="hidden glassmorphism p-6 rounded-lg max-w-md mx-auto">
             <h2 class="text-2xl font-semibold mb-6 gradient-text">Setelan VisionTube ⚙️</h2>
-            <div class="mb-6 border-b border-gray-700/50 pb-6">
-                <h3 class="text-lg font-semibold mb-3 text-white">Aksen Warna</h3>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label for="accent-color-picker-1" class="block text-gray-300 text-sm mb-1">Warna Aksen 1:</label>
-                        <input type="color" id="accent-color-picker-1" class="w-full h-10 rounded-lg border-0 bg-gray-800 cursor-pointer p-1">
-                    </div>
-                     <div>
-                        <label for="accent-color-picker-2" class="block text-gray-300 text-sm mb-1">Warna Aksen 2:</label>
-                        <input type="color" id="accent-color-picker-2" class="w-full h-10 rounded-lg border-0 bg-gray-800 cursor-pointer p-1">
-                    </div>
-                </div>
-                 <button id="reset-colors-button" class="px-4 py-2 rounded-lg text-sm mt-3 btn-secondary w-full">Reset Warna Default</button>
-                <p class="text-xs text-gray-400 mt-1">Pilih dua warna aksen favoritmu!</p>
-            </div>
-            <div class="mb-6 border-b border-gray-700/50 pb-6">
-                <h3 class="text-lg font-semibold mb-3 text-white">API YouTube Kustom</h3>
-                <label for="custom-api-key" class="block text-gray-300 text-sm mb-1">Kunci API Anda:</label>
-                <input type="text" id="custom-api-key" placeholder="Masukkan API Key YouTube (opsional)" class="w-full px-3 py-2 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-[var(--focus-ring-color)] focus:ring-0 text-white placeholder-gray-400 text-sm">
-                <button id="save-api-key-button" class="px-4 py-2 rounded-lg text-sm mt-2 btn-primary w-full">Simpan API Key</button>
-                <p class="text-xs text-gray-400 mt-1">Kosongkan untuk pakai API Key default.</p>
-            </div>
-            <div class="mb-4">
-                <h3 class="text-lg font-semibold mb-3 text-white">Data & Cache</h3>
-                 <button id="clear-cache-button" class="px-4 py-2 rounded-lg text-sm mb-2 btn-warning w-full">Bersihkan Cache Trending</button>
-                 <button id="clear-all-data-button" class="px-4 py-2 rounded-lg text-sm btn-danger w-full">Hapus Semua Data Lokal</button>
-                <p class="text-xs text-gray-400 mt-1">Hapus riwayat, playlist, setelan, cache.</p>
-            </div>
+            <div class="mb-6 border-b border-gray-700/50 pb-6"> <h3 class="text-lg font-semibold mb-3 text-white">Aksen Warna</h3> <div class="grid grid-cols-2 gap-4"> <div> <label for="accent-color-picker-1" class="block text-gray-300 text-sm mb-1">Warna Aksen 1:</label> <input type="color" id="accent-color-picker-1" class="w-full h-10 rounded-lg border-0 bg-gray-800 cursor-pointer p-1"> </div> <div> <label for="accent-color-picker-2" class="block text-gray-300 text-sm mb-1">Warna Aksen 2:</label> <input type="color" id="accent-color-picker-2" class="w-full h-10 rounded-lg border-0 bg-gray-800 cursor-pointer p-1"> </div> </div> <button id="reset-colors-button" class="px-4 py-2 rounded-lg text-sm mt-3 btn-secondary w-full">Reset Warna Default</button> <p class="text-xs text-gray-400 mt-1">Pilih dua warna aksen favoritmu!</p> </div>
+            <div class="mb-6 border-b border-gray-700/50 pb-6"> <h3 class="text-lg font-semibold mb-3 text-white">API YouTube Kustom</h3> <label for="custom-api-key" class="block text-gray-300 text-sm mb-1">Kunci API Anda:</label> <input type="text" id="custom-api-key" placeholder="Masukkan API Key YouTube (opsional)" class="w-full px-3 py-2 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-[var(--focus-ring-color)] focus:ring-0 text-white placeholder-gray-400 text-sm"> <button id="save-api-key-button" class="px-4 py-2 rounded-lg text-sm mt-2 btn-primary w-full">Simpan API Key</button> <p class="text-xs text-gray-400 mt-1">Kosongkan untuk pakai API Key default.</p> </div>
+            <div class="mb-4"> <h3 class="text-lg font-semibold mb-3 text-white">Data & Cache</h3> <button id="clear-cache-button" class="px-4 py-2 rounded-lg text-sm mb-2 btn-warning w-full">Bersihkan Cache Trending</button> <button id="clear-all-data-button" class="px-4 py-2 rounded-lg text-sm btn-danger w-full">Hapus Semua Data Lokal</button> <p class="text-xs text-gray-400 mt-1">Hapus riwayat, playlist, setelan, cache.</p> </div>
         </div>
 
         <div id="loading-indicator" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[9999] hidden"><div class="loader"></div></div>
-        <div id="notification-message" class="fixed bottom-4 right-4 text-white p-4 rounded-lg shadow-lg z-[9998] hidden max-w-sm glassmorphism border">
-            <strong id="notification-title" class="font-bold block mb-1"></strong><p id="notification-text" class="text-sm"></p>
-            <button onclick="document.getElementById('notification-message').classList.add('hidden')" class="absolute top-2 right-2 text-gray-200 hover:text-white"> <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg></button>
-        </div>
+        <div id="notification-message" class="fixed bottom-4 right-4 text-white p-4 rounded-lg shadow-lg z-[9998] hidden max-w-sm glassmorphism border"> <strong id="notification-title" class="font-bold block mb-1"></strong><p id="notification-text" class="text-sm"></p> <button onclick="document.getElementById('notification-message').classList.add('hidden')" class="absolute top-2 right-2 text-gray-200 hover:text-white"> <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg></button> </div>
 
-        <div id="save-video-modal" class="modal hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[10000]">
-            <div class="modal-content glassmorphism p-6 rounded-lg max-w-md w-full mx-4">
-                <div class="flex justify-between items-center mb-4"><h3 class="text-lg font-semibold gradient-text">Simpan ke Playlist</h3><button onclick="closeSaveVideoModal()" class="text-gray-400 hover:text-white">×</button></div>
-                <div id="save-modal-video-info" class="mb-4 p-3 bg-gray-800/30 rounded-lg flex items-center space-x-3"><img id="save-modal-thumbnail" src="https://placehold.co/60x34/0f0f1a/7c5cff?text=Thumb" alt="Video Thumbnail" class="w-16 h-9 object-cover rounded flex-shrink-0"><div><p id="save-modal-title" class="text-sm font-medium text-white line-clamp-1">Judul...</p><p id="save-modal-channel" class="text-xs text-gray-400 line-clamp-1">Channel...</p></div></div>
-                <form id="save-video-form">
-                    <p class="text-sm text-gray-300 mb-2">Pilih playlist:</p><div id="save-modal-playlist-list" class="space-y-2 max-h-40 overflow-y-auto mb-4 pr-2"><p class="text-xs text-gray-400">Loading...</p></div>
-                    <div class="border-t border-gray-700/50 pt-4"><label for="new-playlist-name-modal" class="text-sm text-gray-300 block mb-1">Atau buat playlist baru:</label><div class="flex space-x-2"><input type="text" id="new-playlist-name-modal" placeholder="Nama Playlist Baru..." class="flex-grow px-3 py-1.5 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-[var(--focus-ring-color)] focus:ring-0 text-white placeholder-gray-400 text-sm"><button type="button" onclick="createNewPlaylistFromModal()" class="px-3 py-1.5 rounded-lg text-sm flex-shrink-0 btn-success">Buat</button></div></div>
-                    <div class="mt-6 flex justify-end space-x-3"><button type="button" onclick="closeSaveVideoModal()" class="px-4 py-1.5 rounded-lg btn-secondary text-sm">Batal</button><button type="submit" class="px-4 py-1.5 rounded-lg btn-primary text-sm">Selesai</button></div>
-                </form>
-            </div>
-        </div>
-        <div id="create-playlist-modal" class="modal hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[10000]">
-            <div class="modal-content glassmorphism p-6 rounded-lg max-w-sm w-full mx-4">
-                <div class="flex justify-between items-center mb-4"><h3 class="text-lg font-semibold gradient-text">Buat Playlist Baru</h3><button onclick="closeCreatePlaylistModal()" class="text-gray-400 hover:text-white">×</button></div>
-                <form id="create-playlist-form">
-                    <label for="new-playlist-name-main" class="text-sm text-gray-300 block mb-1">Nama Playlist:</label><input type="text" id="new-playlist-name-main" required placeholder="Contoh: Musik Favorit 🎶" class="w-full px-3 py-1.5 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-[var(--focus-ring-color)] focus:ring-0 text-white placeholder-gray-400 text-sm mb-4">
-                    <div class="flex justify-end space-x-3"><button type="button" onclick="closeCreatePlaylistModal()" class="px-4 py-1.5 rounded-lg btn-secondary text-sm">Batal</button><button type="submit" class="px-4 py-1.5 rounded-lg btn-success text-sm">Buat Playlist</button></div>
-                </form>
-            </div>
-        </div>
-        <div id="rename-playlist-modal" class="modal hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[10000]">
-            <div class="modal-content glassmorphism p-6 rounded-lg max-w-sm w-full mx-4">
-                 <div class="flex justify-between items-center mb-4"><h3 class="text-lg font-semibold gradient-text">Ubah Nama Playlist</h3><button onclick="closeRenamePlaylistModal()" class="text-gray-400 hover:text-white">×</button></div>
-                <form id="rename-playlist-form">
-                    <input type="hidden" id="rename-playlist-id"><label for="rename-playlist-name" class="text-sm text-gray-300 block mb-1">Nama Baru:</label><input type="text" id="rename-playlist-name" required class="w-full px-3 py-1.5 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-[var(--focus-ring-color)] focus:ring-0 text-white placeholder-gray-400 text-sm mb-4">
-                    <div class="flex justify-end space-x-3"><button type="button" onclick="closeRenamePlaylistModal()" class="px-4 py-1.5 rounded-lg btn-secondary text-sm">Batal</button><button type="submit" class="px-4 py-1.5 rounded-lg btn-warning text-sm">Simpan</button></div>
-                </form>
-            </div>
-        </div>
+        <div id="save-video-modal" class="modal hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[10000]"> <div class="modal-content glassmorphism p-6 rounded-lg max-w-md w-full mx-4"> <div class="flex justify-between items-center mb-4"><h3 class="text-lg font-semibold gradient-text">Simpan ke Playlist</h3><button onclick="closeSaveVideoModal()" class="text-gray-400 hover:text-white">×</button></div> <div id="save-modal-video-info" class="mb-4 p-3 bg-gray-800/30 rounded-lg flex items-center space-x-3"><img id="save-modal-thumbnail" src="https://placehold.co/60x34/0f0f1a/7c5cff?text=Thumb" alt="Thumbnail" class="w-16 h-9 object-cover rounded flex-shrink-0"><div><p id="save-modal-title" class="text-sm font-medium text-white line-clamp-1">Judul...</p><p id="save-modal-channel" class="text-xs text-gray-400 line-clamp-1">Channel...</p></div></div> <form id="save-video-form"> <p class="text-sm text-gray-300 mb-2">Pilih playlist:</p><div id="save-modal-playlist-list" class="space-y-2 max-h-40 overflow-y-auto mb-4 pr-2"><p class="text-xs text-gray-400">Loading...</p></div> <div class="border-t border-gray-700/50 pt-4"><label for="new-playlist-name-modal" class="text-sm text-gray-300 block mb-1">Atau buat playlist baru:</label><div class="flex space-x-2"><input type="text" id="new-playlist-name-modal" placeholder="Nama Playlist Baru..." class="flex-grow px-3 py-1.5 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-[var(--focus-ring-color)] focus:ring-0 text-white placeholder-gray-400 text-sm"><button type="button" onclick="createNewPlaylistFromModal()" class="px-3 py-1.5 rounded-lg text-sm flex-shrink-0 btn-success">Buat</button></div></div> <div class="mt-6 flex justify-end space-x-3"><button type="button" onclick="closeSaveVideoModal()" class="px-4 py-1.5 rounded-lg btn-secondary text-sm">Batal</button><button type="submit" class="px-4 py-1.5 rounded-lg btn-primary text-sm">Selesai</button></div> </form> </div> </div>
+        <div id="create-playlist-modal" class="modal hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[10000]"> <div class="modal-content glassmorphism p-6 rounded-lg max-w-sm w-full mx-4"> <div class="flex justify-between items-center mb-4"><h3 class="text-lg font-semibold gradient-text">Buat Playlist Baru</h3><button onclick="closeCreatePlaylistModal()" class="text-gray-400 hover:text-white">×</button></div> <form id="create-playlist-form"> <label for="new-playlist-name-main" class="text-sm text-gray-300 block mb-1">Nama Playlist:</label><input type="text" id="new-playlist-name-main" required placeholder="Contoh: Musik Favorit 🎶" class="w-full px-3 py-1.5 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-[var(--focus-ring-color)] focus:ring-0 text-white placeholder-gray-400 text-sm mb-4"> <div class="flex justify-end space-x-3"><button type="button" onclick="closeCreatePlaylistModal()" class="px-4 py-1.5 rounded-lg btn-secondary text-sm">Batal</button><button type="submit" class="px-4 py-1.5 rounded-lg btn-success text-sm">Buat Playlist</button></div> </form> </div> </div>
+        <div id="rename-playlist-modal" class="modal hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[10000]"> <div class="modal-content glassmorphism p-6 rounded-lg max-w-sm w-full mx-4"> <div class="flex justify-between items-center mb-4"><h3 class="text-lg font-semibold gradient-text">Ubah Nama Playlist</h3><button onclick="closeRenamePlaylistModal()" class="text-gray-400 hover:text-white">×</button></div> <form id="rename-playlist-form"> <input type="hidden" id="rename-playlist-id"><label for="rename-playlist-name" class="text-sm text-gray-300 block mb-1">Nama Baru:</label><input type="text" id="rename-playlist-name" required class="w-full px-3 py-1.5 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-[var(--focus-ring-color)] focus:ring-0 text-white placeholder-gray-400 text-sm mb-4"> <div class="flex justify-end space-x-3"><button type="button" onclick="closeRenamePlaylistModal()" class="px-4 py-1.5 rounded-lg btn-secondary text-sm">Batal</button><button type="submit" class="px-4 py-1.5 rounded-lg btn-warning text-sm">Simpan</button></div> </form> </div> </div>
 
     <script>
         // --- Configuration ---
@@ -410,7 +288,7 @@
         let cachedTrendingData = null;
         let trendingCacheTimestamp = 0;
         let isFullscreen = false;
-        let savePositionIntervalId = null; // Interval ID for saving position (NEW)
+        let savePositionIntervalId = null; // Interval ID for saving position
 
         // --- DOM Elements ---
         // (References including settings and new notification elements)
@@ -488,63 +366,49 @@
         function onYouTubeIframeAPIReady() { console.log("YT API Ready."); if (videoIdToLoad) { createPlayer(videoIdToLoad); } }
         function createPlayer(videoId, startSeconds = 0) {
             console.log("Creating player:", videoId, "Start:", startSeconds);
-            // Clear any existing interval before creating a new player
             if (savePositionIntervalId) { clearInterval(savePositionIntervalId); savePositionIntervalId = null; }
             if (ytPlayer && typeof ytPlayer.destroy === 'function') { try { ytPlayer.destroy(); } catch (e) { console.warn("Destroy player error:", e); } ytPlayer = null; }
             ytPlayer = new YT.Player('youtube-player', {
                 height: '100%', width: '100%', videoId: videoId,
-                playerVars: { 'playsinline': 1, 'autoplay': 1, 'start': Math.floor(startSeconds) }, // Ensure startSeconds is integer
+                playerVars: { 'playsinline': 1, 'autoplay': 1, 'start': Math.floor(startSeconds) },
                 events: { 'onReady': onPlayerReady, 'onStateChange': onPlayerStateChange, 'onError': onPlayerError }
             });
         }
         function onPlayerReady(event) {
             console.log("Player Ready.");
-            // If a video was queued, load it now (this might be redundant with startSeconds, but safe)
             if (videoIdToLoad && event.target && typeof event.target.loadVideoById === 'function') {
                 const startAt = parseFloat(getLastSeenPosition(videoIdToLoad) || '0');
                 console.log("Loading queued video in onReady:", videoIdToLoad, "Start:", startAt);
                 event.target.loadVideoById({ videoId: videoIdToLoad, startSeconds: Math.floor(startAt) });
                 videoIdToLoad = null;
             }
-            // Sometimes the player needs a nudge even with autoplay=1
-             setTimeout(() => {
-                 if (event.target && typeof event.target.playVideo === 'function') {
-                     event.target.playVideo();
-                 }
-             }, 100); // Small delay
+             setTimeout(() => { if (event.target && typeof event.target.playVideo === 'function') event.target.playVideo(); }, 150); // Slightly longer delay maybe needed
         }
         function onPlayerStateChange(event) {
-            const videoId = currentVideoId; // Capture current video ID
-            if (!videoId) return; // Don't do anything if no video is loaded
+            const videoId = currentVideoId;
+            if (!videoId) return;
 
             if (event.data === YT.PlayerState.PLAYING) {
                 console.log("Player playing:", videoId);
-                // Clear any existing interval before starting a new one
-                if (savePositionIntervalId) { clearInterval(savePositionIntervalId); }
-                // Start saving position periodically
+                if (savePositionIntervalId) clearInterval(savePositionIntervalId);
                 savePositionIntervalId = setInterval(() => {
                     if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
                         const currentTime = ytPlayer.getCurrentTime();
-                        // console.log("Interval save:", videoId, currentTime); // Debug log
                         saveLastSeenPosition(videoId, currentTime);
                     }
                 }, SAVE_POSITION_INTERVAL);
-                // Add to recently viewed when playback starts (if data available)
                 if (currentVideoDataForSave && currentVideoDataForSave.videoId === videoId) {
-                    addRecentlyViewed(currentVideoDataForSave);
+                    addRecentlyViewed(currentVideoDataForSave); // Add to history on play start
                 }
             } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
                 console.log("Player paused/ended:", videoId);
-                // Clear the interval
                 if (savePositionIntervalId) { clearInterval(savePositionIntervalId); savePositionIntervalId = null; }
-                // Save final position on pause or end
                 if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
                     const currentTime = ytPlayer.getCurrentTime();
-                     // Don't save position near the end if video ended naturally
                     const duration = ytPlayer.getDuration ? ytPlayer.getDuration() : 0;
                     if (event.data === YT.PlayerState.ENDED || (duration > 0 && currentTime >= duration - 1.5)) {
-                         console.log("Video ended or near end, removing last seen position.");
-                         localStorage.removeItem(LAST_SEEN_STORAGE_PREFIX + videoId); // Remove position if video finished
+                         console.log("Video ended, removing last seen position.");
+                         localStorage.removeItem(LAST_SEEN_STORAGE_PREFIX + videoId);
                     } else {
                         console.log("Final save on pause:", videoId, currentTime);
                         saveLastSeenPosition(videoId, currentTime);
@@ -552,24 +416,19 @@
                 }
             } else if (event.data === YT.PlayerState.BUFFERING) {
                  console.log("Player buffering:", videoId);
-                 // Optionally clear interval during buffering? Maybe not necessary.
+                 // Stop interval during buffering to avoid saving inaccurate times?
+                 // if (savePositionIntervalId) { clearInterval(savePositionIntervalId); savePositionIntervalId = null; }
             }
         }
-        function onPlayerError(event) { console.error("Player Error:", event.data); let msg = `Player Error: Kode ${event.data}.`; /* ... error mapping ... */ showError(msg + " Video mungkin dibatasi."); if (savePositionIntervalId) { clearInterval(savePositionIntervalId); savePositionIntervalId = null; } } // Clear interval on error too
+        function onPlayerError(event) { console.error("Player Error:", event.data); let msg = `Player Error: Kode ${event.data}.`; /* ... error mapping ... */ showError(msg + " Video mungkin dibatasi."); if (savePositionIntervalId) { clearInterval(savePositionIntervalId); savePositionIntervalId = null; } }
         function loadVideoIntoPlayer(videoId) {
             if (!videoId) return;
-            currentVideoId = videoId; // Set current video ID immediately
+            currentVideoId = videoId;
             console.log("Loading video:", videoId);
-
-            // Clear any previous save interval before loading new video
             if (savePositionIntervalId) { clearInterval(savePositionIntervalId); savePositionIntervalId = null; }
-
             if (typeof YT === 'undefined' || !YT.Player) { console.log("API not ready, queuing:", videoId); videoIdToLoad = videoId; return; }
-
-            // Get last seen position *before* creating/loading
             const startAt = parseFloat(getLastSeenPosition(videoId) || '0');
-             console.log(`Attempting to start ${videoId} at ${startAt} seconds.`);
-
+            console.log(`Attempting to start ${videoId} at ${startAt} seconds.`);
             if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
                 console.log("Player exists, loading video with start time.");
                 try { ytPlayer.loadVideoById({ videoId: videoId, startSeconds: Math.floor(startAt) }); }
@@ -579,21 +438,12 @@
 
         // --- Last Seen Functions ---
         function getLastSeenPosition(videoId) { if (!videoId) return null; return localStorage.getItem(LAST_SEEN_STORAGE_PREFIX + videoId); }
-        function saveLastSeenPosition(videoId, currentTime) {
-            // Add checks for valid videoId and currentTime
-            if (videoId && typeof currentTime === 'number' && currentTime >= 0) {
-                localStorage.setItem(LAST_SEEN_STORAGE_PREFIX + videoId, currentTime.toString());
-                // console.log(`Saved position for ${videoId}: ${currentTime}`); // Optional debug
-            } else {
-                 // console.warn(`Invalid data for saveLastSeenPosition: videoId=${videoId}, currentTime=${currentTime}`);
-            }
-        }
+        function saveLastSeenPosition(videoId, currentTime) { if (videoId && typeof currentTime === 'number' && currentTime >= 0) { localStorage.setItem(LAST_SEEN_STORAGE_PREFIX + videoId, currentTime.toString()); } }
 
         // --- Recently Viewed Functions ---
-        // (No major changes needed here, position is saved via saveLastSeenPosition)
         function getRecentlyViewed() { try { const s = localStorage.getItem(RECENTLY_VIEWED_STORAGE_KEY); return s ? JSON.parse(s) : []; } catch (e) { console.error(e); return []; } }
         function saveRecentlyViewed(v) { try { localStorage.setItem(RECENTLY_VIEWED_STORAGE_KEY, JSON.stringify(v)); } catch (e) { console.error(e); showError("Gagal simpan riwayat."); } }
-        function addRecentlyViewed(vd) { if (!vd || !vd.videoId) return; let v = getRecentlyViewed(); const existingIndex = v.findIndex(i => i.videoId === vd.videoId); if (existingIndex > -1) { v.splice(existingIndex, 1); } v.unshift({...vd, lastViewed: Date.now() }); v = v.slice(0, MAX_RECENTLY_VIEWED); saveRecentlyViewed(v); }
+        function addRecentlyViewed(vd) { if (!vd || !vd.videoId) return; let v = getRecentlyViewed(); const existingIndex = v.findIndex(i => i.videoId === vd.videoId); if (existingIndex > -1) v.splice(existingIndex, 1); v.unshift({...vd, lastViewed: Date.now() }); v = v.slice(0, MAX_RECENTLY_VIEWED); saveRecentlyViewed(v); } // Position saved separately
         function loadRecentlyViewed() { console.log("Loading recent..."); const v = getRecentlyViewed(); recentlyViewedGrid.innerHTML = ''; if (v.length === 0) { recentlyViewedEmpty.classList.remove('hidden'); recentlyViewedGrid.classList.add('hidden'); } else { recentlyViewedEmpty.classList.add('hidden'); recentlyViewedGrid.classList.remove('hidden'); v.forEach(i => recentlyViewedGrid.appendChild(createRecentlyViewedCard(i))); } }
 
         // --- Playlist Functions ---
@@ -612,29 +462,27 @@
         async function fetchFromYouTubeAPI(endpoint, params) {
             const url = new URL(`${YOUTUBE_API_BASE_URL}${endpoint}`);
             const customKey = localStorage.getItem(CUSTOM_API_KEY_STORAGE_KEY);
-            params.key = customKey || DEFAULT_YOUTUBE_API_KEY; // Use custom or default API key
+            params.key = customKey || DEFAULT_YOUTUBE_API_KEY;
             Object.keys(params).forEach(key => { if (params[key] !== null && params[key] !== undefined) { url.searchParams.append(key, params[key]); } });
             console.log(`Fetching: ${endpoint}`, params.key === customKey ? '(Custom Key)' : '(Default Key)');
             const isInitial = (endpoint === '/videos' && params.id) || (endpoint === '/search' && !params.pageToken) || (endpoint === '/videos' && params.chart === 'mostPopular' && !params.pageToken);
             if (isInitial) showLoading();
             try {
-                const r = await fetch(url.toString());
-                const d = await r.json();
-                if (!r.ok) { let msg = `API Error (${r.status})`; if (d.error && d.error.message) { msg += `: ${d.error.message}`; if (d.error.errors && d.error.errors.some(e => e.reason === 'quotaExceeded')) msg = "Kuota API habis! 💀 Coba lagi besok."; } else msg += `: ${r.statusText || 'Unknown'}`; throw new Error(msg); }
+                const r = await fetch(url.toString()); const d = await r.json();
+                if (!r.ok) { let msg = `API Error (${r.status})`; if (d.error && d.error.message) { msg += `: ${d.error.message}`; if (d.error.errors && d.error.errors.some(e => e.reason === 'quotaExceeded')) msg = "Kuota API habis! 💀 Coba lagi besok (14:00 WIB)."; } else msg += `: ${r.statusText || 'Unknown'}`; throw new Error(msg); }
                 if (isInitial) hideLoading(); return d;
-            } catch (e) { console.error(`API Fetch Error (${endpoint}):`, e); showError(`${e.message}`); hideLoading(); if (endpoint === '/videos' && params.chart === 'mostPopular') { /* reset trending state */ } else if (endpoint === '/search') { /* reset search state */ } return null; }
+            } catch (e) { console.error(`API Fetch Error (${endpoint}):`, e); showError(`${e.message}`); hideLoading(); if (endpoint === '/videos' && params.chart === 'mostPopular') { isLoadingTrending = false; if(trendingLoadMoreButton) { trendingLoadMoreButton.disabled=false; trendingLoadMoreButton.innerHTML = 'Muat Lebih Banyak';} trendingLoadingPlaceholder.classList.add('hidden'); } else if (endpoint === '/search') { isLoadingSearch = false; searchLoadingIndicator.classList.add('hidden'); } return null; }
         }
-        async function loadTrendingVideos(pageToken = null, forceRefresh = false) { /* ... unchanged ... */ if (!pageToken && !forceRefresh && cachedTrendingData && (Date.now() - trendingCacheTimestamp < TRENDING_CACHE_DURATION)) { console.log("Using cached trending."); videoGrid.innerHTML = ''; cachedTrendingData.items.forEach(i => videoGrid.appendChild(createVideoCard(i))); currentTrendingPageToken = cachedTrendingData.nextPageToken; trendingLoadMoreContainer.classList.toggle('hidden', !currentTrendingPageToken); trendingLoadingPlaceholder.classList.add('hidden'); return; } if (isLoadingTrending) return; isLoadingTrending = true; if (!pageToken) { videoGrid.innerHTML = ''; trendingLoadingPlaceholder.classList.remove('hidden'); trendingLoadMoreContainer.classList.add('hidden'); } else { trendingLoadMoreButton.innerHTML = '<div class="loader inline-block w-5 h-5 border-3"></div>'; trendingLoadMoreButton.disabled = true; } const params = { part: 'snippet,contentDetails,statistics', chart: 'mostPopular', regionCode: 'ID', maxResults: TRENDING_MAX_RESULTS, pageToken: pageToken }; console.log("Fetching trending...", params); const data = await fetchFromYouTubeAPI('/videos', params); trendingLoadingPlaceholder.classList.add('hidden'); if (pageToken && trendingLoadMoreButton) { trendingLoadMoreButton.innerHTML = 'Muat Lebih Banyak'; trendingLoadMoreButton.disabled = false; } if (data && data.items && Array.isArray(data.items)) { if (!pageToken) { console.log("Caching trending."); cachedTrendingData = { items: [...data.items], nextPageToken: data.nextPageToken }; trendingCacheTimestamp = Date.now(); videoGrid.innerHTML = ''; } data.items.forEach(i => videoGrid.appendChild(createVideoCard(i))); currentTrendingPageToken = data.nextPageToken; trendingLoadMoreContainer.classList.toggle('hidden', !currentTrendingPageToken); if (data.items.length === 0 && !pageToken) { videoGrid.innerHTML = '<p class="text-center text-gray-400 col-span-full py-5">Trending kosong.</p>'; cachedTrendingData = null; } } else if (!pageToken) { videoGrid.innerHTML = '<p class="text-center text-red-400 col-span-full py-5">Gagal load trending.</p>'; cachedTrendingData = null; } isLoadingTrending = false; }
-        async function loadVideoDetails(videoId) { /* ... unchanged ... */ videoTitle.textContent='Loading...'; videoUploader.textContent='Loading...'; videoStats.textContent='Loading...'; videoDescription.textContent='Loading...'; currentVideoDataForSave=null; const params={part:'snippet,statistics,contentDetails',id:videoId}; const data=await fetchFromYouTubeAPI('/videos',params); if(data&&data.items&&data.items.length>0){ const v=data.items[0]; const s=v.snippet; const st=v.statistics; const t=s.title||'N/A'; const c=s.channelTitle||'N/A'; const th=s.thumbnails?.medium?.url||s.thumbnails?.default?.url; videoTitle.textContent=t; videoUploader.textContent=c?`Oleh: ${c}`:'N/A'; const vt=st?.viewCount?formatViews(st.viewCount):'N/A'; const p=s.publishedAt?timeAgo(s.publishedAt):'?'; videoStats.textContent=`${vt} views • ${p}`; const dHtml=(s.description||'N/A').replace(/(https?:\/\/[^\s]+)/g,'<a href="$1" target="_blank" rel="noopener noreferrer" class="text-[color:var(--accent-text-color)] hover:text-[color:var(--accent-text-color-hover)] underline">$1</a>'); videoDescription.innerHTML=dHtml; currentVideoDataForSave={videoId:videoId,title:t,thumbnailUrl:th||'https://placehold.co/60x34/0f0f1a/7c5cff?text=Thumb',channelTitle:c}; /* Add to recently viewed is now handled by onPlayerStateChange */ } else { videoTitle.textContent='Gagal Load'; videoUploader.textContent=''; videoStats.textContent=''; videoDescription.textContent='Video tak ditemukan.'; } }
-        async function searchVideos(query, pageToken = null) { /* ... unchanged ... */ if (isLoadingSearch) return; isLoadingSearch = true; if (!pageToken) { searchResultsGrid.innerHTML = ''; searchNoResults.classList.add('hidden'); window.scrollTo(0, 0); } searchLoadingIndicator.classList.remove('hidden'); const params = { part: 'snippet', q: query, type: 'video', maxResults: SEARCH_MAX_RESULTS, pageToken: pageToken }; console.log(`Searching (token: ${pageToken})...`); const data = await fetchFromYouTubeAPI('/search', params); searchLoadingIndicator.classList.add('hidden'); if (data && data.items && Array.isArray(data.items)) { if (data.items.length === 0 && !pageToken) { searchNoResults.classList.remove('hidden'); } else if (data.items.length > 0) { searchNoResults.classList.add('hidden'); data.items.forEach(i => searchResultsGrid.appendChild(createVideoCardFromSearch(i))); } currentSearchPageToken = data.nextPageToken; if (!currentSearchPageToken) console.log("End of search results."); } else if (!pageToken) { searchResultsGrid.innerHTML = '<p class="text-center text-red-400 col-span-full py-5">Gagal cari.</p>'; searchNoResults.classList.add('hidden'); currentSearchPageToken = null; } isLoadingSearch = false; }
+        async function loadTrendingVideos(pageToken = null, forceRefresh = false) { if (!pageToken && !forceRefresh && cachedTrendingData && (Date.now() - trendingCacheTimestamp < TRENDING_CACHE_DURATION)) { console.log("Using cached trending."); videoGrid.innerHTML = ''; cachedTrendingData.items.forEach(i => videoGrid.appendChild(createVideoCard(i))); currentTrendingPageToken = cachedTrendingData.nextPageToken; trendingLoadMoreContainer.classList.toggle('hidden', !currentTrendingPageToken); trendingLoadingPlaceholder.classList.add('hidden'); return; } if (isLoadingTrending) return; isLoadingTrending = true; if (!pageToken) { videoGrid.innerHTML = ''; trendingLoadingPlaceholder.classList.remove('hidden'); trendingLoadMoreContainer.classList.add('hidden'); } else { trendingLoadMoreButton.innerHTML = '<div class="loader inline-block w-5 h-5 border-3"></div>'; trendingLoadMoreButton.disabled = true; } const params = { part: 'snippet,contentDetails,statistics', chart: 'mostPopular', regionCode: 'ID', maxResults: TRENDING_MAX_RESULTS, pageToken: pageToken }; console.log("Fetching trending...", params); const data = await fetchFromYouTubeAPI('/videos', params); trendingLoadingPlaceholder.classList.add('hidden'); if (pageToken && trendingLoadMoreButton) { trendingLoadMoreButton.innerHTML = 'Muat Lebih Banyak'; trendingLoadMoreButton.disabled = false; } if (data && data.items && Array.isArray(data.items)) { if (!pageToken) { console.log("Caching trending."); cachedTrendingData = { items: [...data.items], nextPageToken: data.nextPageToken }; trendingCacheTimestamp = Date.now(); videoGrid.innerHTML = ''; } data.items.forEach(i => videoGrid.appendChild(createVideoCard(i))); currentTrendingPageToken = data.nextPageToken; trendingLoadMoreContainer.classList.toggle('hidden', !currentTrendingPageToken); if (data.items.length === 0 && !pageToken) { videoGrid.innerHTML = '<p class="text-center text-gray-400 col-span-full py-5">Trending kosong.</p>'; cachedTrendingData = null; } } else if (!pageToken) { videoGrid.innerHTML = '<p class="text-center text-red-400 col-span-full py-5">Gagal load trending.</p>'; cachedTrendingData = null; } isLoadingTrending = false; }
+        async function loadVideoDetails(videoId) { videoTitle.textContent='Loading...'; videoUploader.textContent='Loading...'; videoStats.textContent='Loading...'; videoDescription.textContent='Loading...'; currentVideoDataForSave=null; const params={part:'snippet,statistics,contentDetails',id:videoId}; const data=await fetchFromYouTubeAPI('/videos',params); if(data&&data.items&&data.items.length>0){ const v=data.items[0]; const s=v.snippet; const st=v.statistics; const t=s.title||'N/A'; const c=s.channelTitle||'N/A'; const th=s.thumbnails?.medium?.url||s.thumbnails?.default?.url; videoTitle.textContent=t; videoUploader.textContent=c?`Oleh: ${c}`:'N/A'; const vt=st?.viewCount?formatViews(st.viewCount):'N/A'; const p=s.publishedAt?timeAgo(s.publishedAt):'?'; videoStats.textContent=`${vt} views • ${p}`; const dHtml=(s.description||'N/A').replace(/(https?:\/\/[^\s]+)/g,'<a href="$1" target="_blank" rel="noopener noreferrer" class="text-[color:var(--accent-text-color)] hover:text-[color:var(--accent-text-color-hover)] underline">$1</a>'); videoDescription.innerHTML=dHtml; currentVideoDataForSave={videoId:videoId,title:t,thumbnailUrl:th||'https://placehold.co/60x34/0f0f1a/7c5cff?text=Thumb',channelTitle:c}; /* addRecentlyViewed moved to onPlayerStateChange */ } else { videoTitle.textContent='Gagal Load'; videoUploader.textContent=''; videoStats.textContent=''; videoDescription.textContent='Video tak ditemukan.'; } }
+        async function searchVideos(query, pageToken = null) { if (isLoadingSearch) return; isLoadingSearch = true; if (!pageToken) { searchResultsGrid.innerHTML = ''; searchNoResults.classList.add('hidden'); window.scrollTo(0, 0); } searchLoadingIndicator.classList.remove('hidden'); const params = { part: 'snippet', q: query, type: 'video', maxResults: SEARCH_MAX_RESULTS, pageToken: pageToken }; console.log(`Searching (token: ${pageToken})...`); const data = await fetchFromYouTubeAPI('/search', params); searchLoadingIndicator.classList.add('hidden'); if (data && data.items && Array.isArray(data.items)) { if (data.items.length === 0 && !pageToken) { searchNoResults.classList.remove('hidden'); } else if (data.items.length > 0) { searchNoResults.classList.add('hidden'); data.items.forEach(i => searchResultsGrid.appendChild(createVideoCardFromSearch(i))); } currentSearchPageToken = data.nextPageToken; if (!currentSearchPageToken) console.log("End of search results."); } else if (!pageToken) { searchResultsGrid.innerHTML = '<p class="text-center text-red-400 col-span-full py-5">Gagal cari.</p>'; searchNoResults.classList.add('hidden'); currentSearchPageToken = null; } isLoadingSearch = false; }
 
         // --- UI Functions ---
-        // (Card creation functions mostly unchanged, just using accent colors where applicable)
-        function createVideoCard(videoData) { const card = document.createElement('div'); card.className = 'video-card glassmorphism overflow-hidden shadow-lg cursor-pointer flex flex-col h-full rounded-lg border border-gray-700/30 min-h-[250px] sm:min-h-[280px]'; const videoId = videoData.id; const snippet = videoData.snippet; const stats = videoData.statistics; const contentDetails = videoData.contentDetails; const title = snippet.title || 'N/A'; const uploaderName = snippet.channelTitle || 'N/A'; const thumbnailUrl = snippet.thumbnails?.medium?.url || snippet.thumbnails?.default?.url || 'https://placehold.co/320x180/0f0f1a/7c5cff?text=Thumb'; const viewsText = stats?.viewCount ? formatViews(stats.viewCount) : 'N/A'; const uploadedText = snippet.publishedAt ? timeAgo(snippet.publishedAt) : '?'; const durationText = contentDetails?.duration ? formatISO8601Duration(contentDetails.duration) : ''; card.onclick = () => navigateTo('watch', videoId); card.innerHTML = ` <div class="relative aspect-video bg-black/30"> <img src="${thumbnailUrl}" alt="${title}" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/320x180/0f0f1a/7c5cff?text=Error';"> ${durationText ? `<span class="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1.5 py-0.5 rounded">${durationText}</span>` : ''} </div> <div class="p-3 flex flex-col flex-grow"> <h3 class="font-semibold text-sm mb-1 text-white line-clamp-2" title="${title}">${title}</h3> <p class="text-xs text-gray-400 mb-1 line-clamp-1" title="${uploaderName}">${uploaderName}</p> <p class="text-xs text-gray-500 mt-auto pt-1">${viewsText} views • ${uploadedText}</p> </div>`; return card; }
-        function createVideoCardFromSearch(searchItem) { const card = document.createElement('div'); card.className = 'video-card glassmorphism overflow-hidden shadow-lg cursor-pointer flex flex-col h-full rounded-lg border border-gray-700/30 min-h-[250px] sm:min-h-[280px]'; const videoId = searchItem.id?.videoId; const snippet = searchItem.snippet; if (!videoId) return document.createDocumentFragment(); const title = snippet.title || 'N/A'; const uploaderName = snippet.channelTitle || 'N/A'; const thumbnailUrl = snippet.thumbnails?.medium?.url || snippet.thumbnails?.default?.url || 'https://placehold.co/320x180/0f0f1a/7c5cff?text=Thumb'; const uploadedText = snippet.publishedAt ? timeAgo(snippet.publishedAt) : '?'; card.onclick = () => navigateTo('watch', videoId); card.innerHTML = ` <div class="relative aspect-video bg-black/30"> <img src="${thumbnailUrl}" alt="${title}" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/320x180/0f0f1a/7c5cff?text=Error';"> </div> <div class="p-3 flex flex-col flex-grow"> <h3 class="font-semibold text-sm mb-1 text-white line-clamp-2" title="${title}">${title}</h3> <p class="text-xs text-gray-400 mb-1 line-clamp-1" title="${uploaderName}">${uploaderName}</p> <p class="text-xs text-gray-500 mt-auto pt-1">${uploadedText}</p> </div>`; return card; }
-        function createRecentlyViewedCard(videoData) { const card = document.createElement('div'); card.className = 'video-card glassmorphism overflow-hidden shadow-lg cursor-pointer flex flex-col h-full rounded-lg border border-gray-700/30 min-h-[250px] sm:min-h-[280px]'; const { videoId, title, thumbnailUrl, channelTitle, lastViewed } = videoData; const viewedText = lastViewed ? `Dilihat: ${timeAgo(lastViewed)}` : '?'; card.onclick = () => { navigateTo('watch', videoId); }; card.innerHTML = ` <div class="relative aspect-video bg-black/30"> <img src="${thumbnailUrl}" alt="${title}" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/320x180/0f0f1a/7c5cff?text=Error';"> </div> <div class="p-3 flex flex-col flex-grow"> <h3 class="font-semibold text-sm mb-1 text-white line-clamp-2" title="${title}">${title}</h3> <p class="text-xs text-gray-400 mb-1 line-clamp-1" title="${channelTitle}">${channelTitle}</p> <p class="text-xs text-gray-500 mt-auto pt-1">${viewedText}</p> </div>`; return card; }
-        function createPlaylistItem(playlist) { const item = document.createElement('div'); item.className = 'playlist-item glassmorphism p-4 rounded-lg flex justify-between items-center transition duration-200 border border-gray-700/30'; const count = playlist.videos?.length || 0; item.innerHTML = ` <div class="flex-1 mr-4 cursor-pointer" onclick="navigateTo('playlist-detail', '${playlist.id}')"> <h4 class="font-semibold text-white mb-1 line-clamp-1">${playlist.name}</h4> <p class="text-xs text-gray-400">${count} video</p> </div> <div class="flex space-x-2 flex-shrink-0"> <button onclick="openRenamePlaylistModal('${playlist.id}', '${escapeSingleQuotes(playlist.name)}')" class="p-1.5 rounded-md bg-yellow-600/30 hover:bg-yellow-500/40 text-yellow-300 transition duration-200" title="Ubah Nama"> <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path></svg> </button> <button onclick="deletePlaylist('${playlist.id}')" class="p-1.5 rounded-md bg-red-600/30 hover:bg-red-500/40 text-red-300 transition duration-200" title="Hapus"> <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg> </button> </div>`; return item; }
-        function createPlaylistVideoCard(videoData, playlistId) { const card = document.createElement('div'); card.className = 'video-card glassmorphism overflow-hidden shadow-lg flex flex-col h-full rounded-lg border border-gray-700/30 min-h-[250px] sm:min-h-[280px] relative group'; const { videoId, title, thumbnailUrl, channelTitle, addedAt } = videoData; const addedText = addedAt ? `Ditambahkan: ${timeAgo(addedAt)}` : ''; const content = document.createElement('div'); content.className = 'cursor-pointer flex flex-col flex-grow'; content.onclick = () => navigateTo('watch', videoId); content.innerHTML = ` <div class="relative aspect-video bg-black/30"> <img src="${thumbnailUrl}" alt="${title}" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/320x180/0f0f1a/7c5cff?text=Error';"> </div> <div class="p-3 flex flex-col flex-grow"> <h3 class="font-semibold text-sm mb-1 text-white line-clamp-2" title="${title}">${title}</h3> <p class="text-xs text-gray-400 mb-1 line-clamp-1" title="${channelTitle}">${channelTitle}</p> <p class="text-xs text-gray-500 mt-auto pt-1">${addedText}</p> </div>`; const removeBtn = document.createElement('button'); removeBtn.className = 'absolute top-2 right-2 p-1 rounded-full bg-red-600/70 hover:bg-red-500/90 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10'; removeBtn.title = 'Hapus dari Playlist'; removeBtn.onclick = (e) => { e.stopPropagation(); removeVideoFromPlaylist(playlistId, videoId); }; removeBtn.innerHTML = `<svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>`; card.appendChild(content); card.appendChild(removeBtn); return card; }
+        function createVideoCard(videoData) { /* ... uses accent colors implicitly via CSS vars ... */ const card = document.createElement('div'); card.className = 'video-card glassmorphism overflow-hidden shadow-lg cursor-pointer flex flex-col h-full rounded-lg border border-gray-700/30 min-h-[250px] sm:min-h-[280px]'; const videoId = videoData.id; const snippet = videoData.snippet; const stats = videoData.statistics; const contentDetails = videoData.contentDetails; const title = snippet.title || 'N/A'; const uploaderName = snippet.channelTitle || 'N/A'; const thumbnailUrl = snippet.thumbnails?.medium?.url || snippet.thumbnails?.default?.url || 'https://placehold.co/320x180/0f0f1a/7c5cff?text=Thumb'; const viewsText = stats?.viewCount ? formatViews(stats.viewCount) : 'N/A'; const uploadedText = snippet.publishedAt ? timeAgo(snippet.publishedAt) : '?'; const durationText = contentDetails?.duration ? formatISO8601Duration(contentDetails.duration) : ''; card.onclick = () => navigateTo('watch', videoId); card.innerHTML = ` <div class="relative aspect-video bg-black/30"> <img src="${thumbnailUrl}" alt="${title}" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/320x180/0f0f1a/7c5cff?text=Error';"> ${durationText ? `<span class="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1.5 py-0.5 rounded">${durationText}</span>` : ''} </div> <div class="p-3 flex flex-col flex-grow"> <h3 class="font-semibold text-sm mb-1 text-white line-clamp-2" title="${title}">${title}</h3> <p class="text-xs text-gray-400 mb-1 line-clamp-1" title="${uploaderName}">${uploaderName}</p> <p class="text-xs text-gray-500 mt-auto pt-1">${viewsText} views • ${uploadedText}</p> </div>`; return card; }
+        function createVideoCardFromSearch(searchItem) { /* ... uses accent colors implicitly via CSS vars ... */ const card = document.createElement('div'); card.className = 'video-card glassmorphism overflow-hidden shadow-lg cursor-pointer flex flex-col h-full rounded-lg border border-gray-700/30 min-h-[250px] sm:min-h-[280px]'; const videoId = searchItem.id?.videoId; const snippet = searchItem.snippet; if (!videoId) return document.createDocumentFragment(); const title = snippet.title || 'N/A'; const uploaderName = snippet.channelTitle || 'N/A'; const thumbnailUrl = snippet.thumbnails?.medium?.url || snippet.thumbnails?.default?.url || 'https://placehold.co/320x180/0f0f1a/7c5cff?text=Thumb'; const uploadedText = snippet.publishedAt ? timeAgo(snippet.publishedAt) : '?'; card.onclick = () => navigateTo('watch', videoId); card.innerHTML = ` <div class="relative aspect-video bg-black/30"> <img src="${thumbnailUrl}" alt="${title}" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/320x180/0f0f1a/7c5cff?text=Error';"> </div> <div class="p-3 flex flex-col flex-grow"> <h3 class="font-semibold text-sm mb-1 text-white line-clamp-2" title="${title}">${title}</h3> <p class="text-xs text-gray-400 mb-1 line-clamp-1" title="${uploaderName}">${uploaderName}</p> <p class="text-xs text-gray-500 mt-auto pt-1">${uploadedText}</p> </div>`; return card; }
+        function createRecentlyViewedCard(videoData) { /* ... uses accent colors implicitly via CSS vars ... */ const card = document.createElement('div'); card.className = 'video-card glassmorphism overflow-hidden shadow-lg cursor-pointer flex flex-col h-full rounded-lg border border-gray-700/30 min-h-[250px] sm:min-h-[280px]'; const { videoId, title, thumbnailUrl, channelTitle, lastViewed } = videoData; const viewedText = lastViewed ? `Dilihat: ${timeAgo(lastViewed)}` : '?'; card.onclick = () => { navigateTo('watch', videoId); }; card.innerHTML = ` <div class="relative aspect-video bg-black/30"> <img src="${thumbnailUrl}" alt="${title}" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/320x180/0f0f1a/7c5cff?text=Error';"> </div> <div class="p-3 flex flex-col flex-grow"> <h3 class="font-semibold text-sm mb-1 text-white line-clamp-2" title="${title}">${title}</h3> <p class="text-xs text-gray-400 mb-1 line-clamp-1" title="${channelTitle}">${channelTitle}</p> <p class="text-xs text-gray-500 mt-auto pt-1">${viewedText}</p> </div>`; return card; }
+        function createPlaylistItem(playlist) { /* ... uses accent colors implicitly via CSS vars ... */ const item = document.createElement('div'); item.className = 'playlist-item glassmorphism p-4 rounded-lg flex justify-between items-center transition duration-200 border border-gray-700/30'; const count = playlist.videos?.length || 0; item.innerHTML = ` <div class="flex-1 mr-4 cursor-pointer" onclick="navigateTo('playlist-detail', '${playlist.id}')"> <h4 class="font-semibold text-white mb-1 line-clamp-1">${playlist.name}</h4> <p class="text-xs text-gray-400">${count} video</p> </div> <div class="flex space-x-2 flex-shrink-0"> <button onclick="openRenamePlaylistModal('${playlist.id}', '${escapeSingleQuotes(playlist.name)}')" class="p-1.5 rounded-md bg-yellow-600/30 hover:bg-yellow-500/40 text-yellow-300 transition duration-200" title="Ubah Nama"> <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path></svg> </button> <button onclick="deletePlaylist('${playlist.id}')" class="p-1.5 rounded-md bg-red-600/30 hover:bg-red-500/40 text-red-300 transition duration-200" title="Hapus"> <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg> </button> </div>`; return item; }
+        function createPlaylistVideoCard(videoData, playlistId) { /* ... uses accent colors implicitly via CSS vars ... */ const card = document.createElement('div'); card.className = 'video-card glassmorphism overflow-hidden shadow-lg flex flex-col h-full rounded-lg border border-gray-700/30 min-h-[250px] sm:min-h-[280px] relative group'; const { videoId, title, thumbnailUrl, channelTitle, addedAt } = videoData; const addedText = addedAt ? `Ditambahkan: ${timeAgo(addedAt)}` : ''; const content = document.createElement('div'); content.className = 'cursor-pointer flex flex-col flex-grow'; content.onclick = () => navigateTo('watch', videoId); content.innerHTML = ` <div class="relative aspect-video bg-black/30"> <img src="${thumbnailUrl}" alt="${title}" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/320x180/0f0f1a/7c5cff?text=Error';"> </div> <div class="p-3 flex flex-col flex-grow"> <h3 class="font-semibold text-sm mb-1 text-white line-clamp-2" title="${title}">${title}</h3> <p class="text-xs text-gray-400 mb-1 line-clamp-1" title="${channelTitle}">${channelTitle}</p> <p class="text-xs text-gray-500 mt-auto pt-1">${addedText}</p> </div>`; const removeBtn = document.createElement('button'); removeBtn.className = 'absolute top-2 right-2 p-1 rounded-full bg-red-600/70 hover:bg-red-500/90 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10'; removeBtn.title = 'Hapus dari Playlist'; removeBtn.onclick = (e) => { e.stopPropagation(); removeVideoFromPlaylist(playlistId, videoId); }; removeBtn.innerHTML = `<svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>`; card.appendChild(content); card.appendChild(removeBtn); return card; }
 
         // --- Modal Functions ---
         // (Unchanged logic)
@@ -652,29 +500,13 @@
         // --- Update View logic ---
         function updateView() {
             console.log(`Updating view: ${currentView}, Playlist: ${currentPlaylistId}`);
-            // Hide all views
             [trendingView, watchView, searchView, aboutView, recentlyViewedView, playlistsView, playlistDetailView, settingsView].forEach(v => v.classList.add('hidden'));
-
-            // Stop video if navigating away from watch view
             if (currentView !== 'watch' && ytPlayer && typeof ytPlayer.stopVideo === 'function') {
-                try {
-                    const state = ytPlayer.getPlayerState();
-                    if (state === YT.PlayerState.PLAYING || state === YT.PlayerState.BUFFERING) {
-                         // Save final position before stopping
-                         if (currentVideoId && typeof ytPlayer.getCurrentTime === 'function') {
-                            saveLastSeenPosition(currentVideoId, ytPlayer.getCurrentTime());
-                         }
-                         ytPlayer.stopVideo();
-                         console.log("Player stopped.");
-                    }
-                     // Clear interval regardless of state if navigating away
-                    if (savePositionIntervalId) { clearInterval(savePositionIntervalId); savePositionIntervalId = null; }
-                } catch(e) { console.warn("Stop player error:", e); }
+                try { const state = ytPlayer.getPlayerState(); if (state === YT.PlayerState.PLAYING || state === YT.PlayerState.BUFFERING) { if (currentVideoId && typeof ytPlayer.getCurrentTime === 'function') saveLastSeenPosition(currentVideoId, ytPlayer.getCurrentTime()); ytPlayer.stopVideo(); console.log("Player stopped."); } if (savePositionIntervalId) { clearInterval(savePositionIntervalId); savePositionIntervalId = null; } }
+                catch(e) { console.warn("Stop player error:", e); }
             }
-
-            // Show the current view and load data
             switch (currentView) {
-                case 'home': trendingView.classList.remove('hidden'); loadTrendingVideos(); break; // Removed first visit logic for simplicity now
+                case 'home': trendingView.classList.remove('hidden'); loadTrendingVideos(); break;
                 case 'watch': watchView.classList.remove('hidden'); if (currentVideoId) { loadVideoDetails(currentVideoId); loadVideoIntoPlayer(currentVideoId); } break;
                 case 'search': searchView.classList.remove('hidden'); searchQueryDisplay.textContent = currentSearchQuery; if (searchResultsGrid.innerHTML === '' && !isLoadingSearch && currentSearchQuery) searchVideos(currentSearchQuery); break;
                 case 'recently-viewed': recentlyViewedView.classList.remove('hidden'); loadRecentlyViewed(); break;
@@ -684,19 +516,14 @@
                 case 'about': aboutView.classList.remove('hidden'); hideLoading(); break;
             }
             if (currentView !== 'search' || currentSearchPageToken === null) window.scrollTo(0, 0);
+            // Close desktop sidebar on navigation if open
+            if (desktopSidebarContainer.classList.contains('open')) { toggleDesktopSidebar(); }
         }
 
         // --- Navigation function ---
         function navigateTo(view, param = null) {
             console.log(`Navigating to: ${view}, Param: ${param}`);
-             // Save position before navigating away from watch view
-            if (currentView === 'watch' && ytPlayer && currentVideoId && typeof ytPlayer.getCurrentTime === 'function') {
-                 const state = ytPlayer.getPlayerState();
-                 if (state === YT.PlayerState.PLAYING || state === YT.PlayerState.PAUSED) {
-                     saveLastSeenPosition(currentVideoId, ytPlayer.getCurrentTime());
-                 }
-                 if (savePositionIntervalId) { clearInterval(savePositionIntervalId); savePositionIntervalId = null; } // Clear interval on navigation
-            }
+            if (currentView === 'watch' && ytPlayer && currentVideoId && typeof ytPlayer.getCurrentTime === 'function') { const state = ytPlayer.getPlayerState(); if (state === YT.PlayerState.PLAYING || state === YT.PlayerState.PAUSED) saveLastSeenPosition(currentVideoId, ytPlayer.getCurrentTime()); if (savePositionIntervalId) { clearInterval(savePositionIntervalId); savePositionIntervalId = null; } }
             let hash = `#${view}`;
             if (view === 'watch' && param) hash += `?v=${param}`;
             else if (view === 'search' && param) hash += `?q=${encodeURIComponent(param)}`;
@@ -709,15 +536,7 @@
         // --- Hash change handler ---
         function handleHashChange(isManual = false) {
             console.log(`Hash change. Hash: ${window.location.hash}, Manual: ${isManual}`);
-            // Save position if navigating away from watch view via back/forward buttons
-            if (currentView === 'watch' && ytPlayer && currentVideoId && typeof ytPlayer.getCurrentTime === 'function') {
-                 const state = ytPlayer.getPlayerState();
-                 if (state === YT.PlayerState.PLAYING || state === YT.PlayerState.PAUSED) {
-                     saveLastSeenPosition(currentVideoId, ytPlayer.getCurrentTime());
-                 }
-                 if (savePositionIntervalId) { clearInterval(savePositionIntervalId); savePositionIntervalId = null; }
-            }
-
+            if (currentView === 'watch' && ytPlayer && currentVideoId && typeof ytPlayer.getCurrentTime === 'function') { const state = ytPlayer.getPlayerState(); if (state === YT.PlayerState.PLAYING || state === YT.PlayerState.PAUSED) saveLastSeenPosition(currentVideoId, ytPlayer.getCurrentTime()); if (savePositionIntervalId) { clearInterval(savePositionIntervalId); savePositionIntervalId = null; } }
             const hash = window.location.hash; let view = 'home'; let param = null;
             if (hash.startsWith('#watch?v=')) { view = 'watch'; param = hash.substring(9); }
             else if (hash.startsWith('#search?q=')) { view = 'search'; param = decodeURIComponent(hash.substring(10)); }
@@ -727,16 +546,10 @@
             else if (hash === '#settings') view = 'settings';
             else if (hash === '#about') view = 'about';
             else if (hash === '#' || hash === '') view = 'home';
-
-            console.log(`Determined view: ${view}, Param: ${param}`);
-            const prevQuery = currentSearchQuery; const prevView = currentView;
-            currentView = view; currentVideoId = (view === 'watch') ? param : null; currentPlaylistId = (view === 'playlist-detail') ? param : null; currentSearchQuery = (view === 'search') ? param : '';
-            const newSearch = view === 'search' && (currentSearchQuery !== prevQuery || prevView !== 'search');
-            if (newSearch) { console.log("New search, reset state."); currentSearchPageToken = null; isLoadingSearch = false; searchResultsGrid.innerHTML = ''; }
+            console.log(`Determined view: ${view}, Param: ${param}`); const prevQuery = currentSearchQuery; const prevView = currentView; currentView = view; currentVideoId = (view === 'watch') ? param : null; currentPlaylistId = (view === 'playlist-detail') ? param : null; currentSearchQuery = (view === 'search') ? param : ''; const newSearch = view === 'search' && (currentSearchQuery !== prevQuery || prevView !== 'search'); if (newSearch) { console.log("New search, reset state."); currentSearchPageToken = null; isLoadingSearch = false; searchResultsGrid.innerHTML = ''; }
             updateView();
             if (isManual && view === 'home') { console.log("Manual home refresh."); cachedTrendingData = null; currentTrendingPageToken = null; loadTrendingVideos(null, true); }
         }
-
 
         // --- Utility Functions ---
         function formatViews(v) { if (v === undefined || v === null || v < 0) return 'N/A'; if (v === 0) return 'No'; v = parseInt(v, 10); if (isNaN(v)) return 'N/A'; if (v >= 1e9) return (v / 1e9).toFixed(1).replace('.0', '') + ' M'; if (v >= 1e6) return (v / 1e6).toFixed(1).replace('.0', '') + ' Jt'; if (v >= 1e3) return (v / 1e3).toFixed(1).replace('.0', '') + ' Rb'; return v.toString(); }
@@ -746,105 +559,29 @@
         function hideLoading() { setTimeout(() => { loadingIndicator.classList.add('hidden'); }, 50); }
         function toggleSidebar() { const isOpen = !mobileSidebar.classList.contains('translate-x-full'); if (isOpen) closeSidebar(); else { mobileSidebar.classList.remove('translate-x-full'); sidebarOverlay.classList.remove('hidden'); } }
         function closeSidebar() { mobileSidebar.classList.add('translate-x-full'); sidebarOverlay.classList.add('hidden'); }
-        function escapeSingleQuotes(str) { return str ? str.replace(/'/g, "\\'") : ''; } // Add check for null/undefined str
+        function escapeSingleQuotes(str) { return str ? str.replace(/'/g, "\\'") : ''; }
         function formatTime(seconds) { if (isNaN(seconds) || seconds < 0) return ''; const hrs = Math.floor(seconds / 3600); const mins = Math.floor((seconds % 3600) / 60); const secs = Math.floor(seconds % 60); let result = ''; if (hrs > 0) { result += hrs + ':' + (mins < 10 ? '0' : ''); } result += mins + ':' + (secs < 10 ? '0' : ''); result += secs; return result; }
-        function showNotification(message, type = 'error', duration = 5000) { console.log(`Notify (${type}):`, message); notificationText.textContent = message; notificationMessage.classList.remove('success', 'error', 'bg-red-600/80', 'border-red-800', 'bg-green-600/80', 'border-green-800'); if (type === 'success') { notificationTitle.textContent = 'Sukses! ✨'; notificationMessage.classList.add('success'); } else { notificationTitle.textContent = 'Waduh! 😥'; notificationMessage.classList.add('error'); } notificationMessage.classList.remove('hidden'); setTimeout(() => { notificationMessage.classList.add('hidden'); }, duration); }
+        function showNotification(message, type = 'error', duration = 5000) { console.log(`Notify (${type}):`, message); notificationText.textContent = message; notificationMessage.classList.remove('success', 'error'); if (type === 'success') { notificationTitle.textContent = 'Sukses! ✨'; notificationMessage.classList.add('success'); } else { notificationTitle.textContent = 'Waduh! 😥'; notificationMessage.classList.add('error'); } notificationMessage.classList.remove('hidden'); setTimeout(() => { notificationMessage.classList.add('hidden'); }, duration); }
         function showError(message) { showNotification(message, 'error', 7000); }
         function showSuccessMessage(message) { showNotification(message, 'success', 4000); }
-        // Helper to adjust color brightness (simple version)
         function adjustColorBrightness(hex, percent) { if (!hex || hex.length < 7) return '#ffffff'; let R = parseInt(hex.substring(1,3),16); let G = parseInt(hex.substring(3,5),16); let B = parseInt(hex.substring(5,7),16); R = parseInt(R * (100 + percent) / 100); G = parseInt(G * (100 + percent) / 100); B = parseInt(B * (100 + percent) / 100); R = (R<255)?R:255; G = (G<255)?G:255; B = (B<255)?B:255; R = Math.round(R); G = Math.round(G); B = Math.round(B); const RR = ((R.toString(16).length==1)?"0"+R.toString(16):R.toString(16)); const GG = ((G.toString(16).length==1)?"0"+G.toString(16):G.toString(16)); const BB = ((B.toString(16).length==1)?"0"+B.toString(16):B.toString(16)); return "#"+RR+GG+BB; }
-        // Function to apply colors globally
-        function applyAccentColors(color1, color2) {
-            document.documentElement.style.setProperty('--accent-color-1', color1);
-            document.documentElement.style.setProperty('--accent-color-2', color2);
-            // Generate and set hover colors (example: lighter by 15%)
-            document.documentElement.style.setProperty('--accent-color-1-hover', adjustColorBrightness(color1, 15));
-            document.documentElement.style.setProperty('--accent-color-2-hover', adjustColorBrightness(color2, 15));
-            // Set text color (use color 1 as default)
-            document.documentElement.style.setProperty('--accent-text-color', color1);
-            document.documentElement.style.setProperty('--accent-text-color-hover', adjustColorBrightness(color1, 15));
-            // Set focus ring color
-             document.documentElement.style.setProperty('--focus-ring-color', color1);
-        }
+        function applyAccentColors(color1, color2) { document.documentElement.style.setProperty('--accent-color-1', color1); document.documentElement.style.setProperty('--accent-color-2', color2); document.documentElement.style.setProperty('--accent-color-1-hover', adjustColorBrightness(color1, 15)); document.documentElement.style.setProperty('--accent-color-2-hover', adjustColorBrightness(color2, 15)); document.documentElement.style.setProperty('--accent-text-color', color1); document.documentElement.style.setProperty('--accent-text-color-hover', adjustColorBrightness(color1, 15)); document.documentElement.style.setProperty('--focus-ring-color', color1); }
 
         // --- Settings Functions ---
-        function loadSettings() {
-            const customKey = localStorage.getItem(CUSTOM_API_KEY_STORAGE_KEY);
-            customApiKeyInput.value = customKey || ''; // Set empty string if null
-
-            const color1 = localStorage.getItem(ACCENT_COLOR_1_STORAGE_KEY) || DEFAULT_ACCENT_COLOR_1;
-            const color2 = localStorage.getItem(ACCENT_COLOR_2_STORAGE_KEY) || DEFAULT_ACCENT_COLOR_2;
-            accentColorPicker1.value = color1;
-            accentColorPicker2.value = color2;
-            applyAccentColors(color1, color2); // Apply loaded or default colors
-        }
+        function loadSettings() { const key = localStorage.getItem(CUSTOM_API_KEY_STORAGE_KEY); customApiKeyInput.value = key || ''; const c1 = localStorage.getItem(ACCENT_COLOR_1_STORAGE_KEY) || DEFAULT_ACCENT_COLOR_1; const c2 = localStorage.getItem(ACCENT_COLOR_2_STORAGE_KEY) || DEFAULT_ACCENT_COLOR_2; accentColorPicker1.value = c1; accentColorPicker2.value = c2; applyAccentColors(c1, c2); }
         function saveCustomApiKey() { const key = customApiKeyInput.value.trim(); if (key) { localStorage.setItem(CUSTOM_API_KEY_STORAGE_KEY, key); showSuccessMessage("API Key kustom disimpan!"); } else { localStorage.removeItem(CUSTOM_API_KEY_STORAGE_KEY); showSuccessMessage("API Key kustom dihapus."); } }
-        function clearAllData() { if (confirm("Yakin hapus SEMUA data VisionTube?")) { localStorage.clear(); sessionStorage.clear(); showSuccessMessage("Semua data dihapus!"); navigateTo('home'); location.reload(); } } // Reload to apply default settings
+        function clearAllData() { if (confirm("Yakin hapus SEMUA data VisionTube?")) { localStorage.clear(); sessionStorage.clear(); showSuccessMessage("Semua data dihapus!"); navigateTo('home'); location.reload(); } }
         function clearCache() { cachedTrendingData = null; trendingCacheTimestamp = 0; showSuccessMessage("Cache trending dibersihkan!"); if (currentView === 'home') loadTrendingVideos(null, true); }
-        function handleAccentColorChange(event) {
-            const color1 = accentColorPicker1.value;
-            const color2 = accentColorPicker2.value;
-            applyAccentColors(color1, color2);
-            localStorage.setItem(ACCENT_COLOR_1_STORAGE_KEY, color1);
-            localStorage.setItem(ACCENT_COLOR_2_STORAGE_KEY, color2);
-            // No notification needed on every input change, maybe only on modal close/save button?
-        }
-        function resetAccentColors() {
-            applyAccentColors(DEFAULT_ACCENT_COLOR_1, DEFAULT_ACCENT_COLOR_2);
-            accentColorPicker1.value = DEFAULT_ACCENT_COLOR_1;
-            accentColorPicker2.value = DEFAULT_ACCENT_COLOR_2;
-            localStorage.removeItem(ACCENT_COLOR_1_STORAGE_KEY);
-            localStorage.removeItem(ACCENT_COLOR_2_STORAGE_KEY);
-            showSuccessMessage("Warna aksen direset ke default! 🎨");
-        }
+        function handleAccentColorChange() { const c1 = accentColorPicker1.value; const c2 = accentColorPicker2.value; applyAccentColors(c1, c2); localStorage.setItem(ACCENT_COLOR_1_STORAGE_KEY, c1); localStorage.setItem(ACCENT_COLOR_2_STORAGE_KEY, c2); }
+        function resetAccentColors() { applyAccentColors(DEFAULT_ACCENT_COLOR_1, DEFAULT_ACCENT_COLOR_2); accentColorPicker1.value = DEFAULT_ACCENT_COLOR_1; accentColorPicker2.value = DEFAULT_ACCENT_COLOR_2; localStorage.removeItem(ACCENT_COLOR_1_STORAGE_KEY); localStorage.removeItem(ACCENT_COLOR_2_STORAGE_KEY); showSuccessMessage("Warna aksen direset! 🎨"); }
 
         // --- Desktop Sidebar Toggle ---
-        function toggleDesktopSidebar() {
-            desktopSidebarContainer.classList.toggle('open');
-            mainContent.classList.toggle('sidebar-open'); // Adjust main content margin
-            appHeader.classList.toggle('sidebar-open'); // Adjust header padding
-        }
+        function toggleDesktopSidebar() { desktopSidebarContainer.classList.toggle('open'); mainContent.classList.toggle('sidebar-open'); appHeader.classList.toggle('sidebar-open'); }
 
         // --- Event Listeners ---
         window.addEventListener('hashchange', () => handleHashChange(false));
-        // Save position before unloading the page
-        window.addEventListener('beforeunload', () => {
-            if (currentView === 'watch' && ytPlayer && currentVideoId && typeof ytPlayer.getCurrentTime === 'function') {
-                 const state = ytPlayer.getPlayerState();
-                 if (state === YT.PlayerState.PLAYING || state === YT.PlayerState.PAUSED) {
-                    saveLastSeenPosition(currentVideoId, ytPlayer.getCurrentTime());
-                 }
-            }
-        });
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log("DOM Loaded. Init VisionTube v2...");
-            loadSettings(); // Load settings including colors first
-            handleHashChange(false); // Handle initial route
-            // Mobile sidebar listeners
-            mobileMenuButton.addEventListener('click', toggleSidebar);
-            sidebarOverlay.addEventListener('click', closeSidebar);
-            // Desktop sidebar listener
-            desktopSidebarToggleButton.addEventListener('click', toggleDesktopSidebar);
-            // Search listeners
-            searchFormDesktop.addEventListener('submit', handleSearchSubmit);
-            searchFormMobile.addEventListener('submit', handleSearchSubmit);
-            // Scroll listener
-            window.addEventListener('scroll', handleScroll);
-            // Trending listener
-            trendingLoadMoreButton.addEventListener('click', () => { if (currentTrendingPageToken && !isLoadingTrending) loadTrendingVideos(currentTrendingPageToken); });
-            // Fullscreen listeners
-            document.addEventListener('fullscreenchange', handleFullscreenChange);
-            document.addEventListener('mozfullscreenchange', handleFullscreenChange);
-            document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-            document.addEventListener('msfullscreenchange', handleFullscreenChange);
-            // Settings listeners
-            clearAllDataButton.addEventListener('click', clearAllData);
-            clearCacheButton.addEventListener('click', clearCache);
-            saveApiKeyButton.addEventListener('click', saveCustomApiKey);
-            accentColorPicker1.addEventListener('input', handleAccentColorChange); // Update live
-            accentColorPicker2.addEventListener('input', handleAccentColorChange); // Update live
-            resetColorsButton.addEventListener('click', resetAccentColors);
-        });
+        window.addEventListener('beforeunload', () => { if (currentView === 'watch' && ytPlayer && currentVideoId && typeof ytPlayer.getCurrentTime === 'function') { const state = ytPlayer.getPlayerState(); if (state === YT.PlayerState.PLAYING || state === YT.PlayerState.PAUSED) saveLastSeenPosition(currentVideoId, ytPlayer.getCurrentTime()); } });
+        document.addEventListener('DOMContentLoaded', () => { console.log("DOM Loaded. Init VisionTube v2..."); loadSettings(); handleHashChange(false); mobileMenuButton.addEventListener('click', toggleSidebar); sidebarOverlay.addEventListener('click', closeSidebar); desktopSidebarToggleButton.addEventListener('click', toggleDesktopSidebar); searchFormDesktop.addEventListener('submit', handleSearchSubmit); searchFormMobile.addEventListener('submit', handleSearchSubmit); window.addEventListener('scroll', handleScroll); trendingLoadMoreButton.addEventListener('click', () => { if (currentTrendingPageToken && !isLoadingTrending) loadTrendingVideos(currentTrendingPageToken); }); document.addEventListener('fullscreenchange', handleFullscreenChange); document.addEventListener('mozfullscreenchange', handleFullscreenChange); document.addEventListener('webkitfullscreenchange', handleFullscreenChange); document.addEventListener('msfullscreenchange', handleFullscreenChange); clearAllDataButton.addEventListener('click', clearAllData); clearCacheButton.addEventListener('click', clearCache); saveApiKeyButton.addEventListener('click', saveCustomApiKey); accentColorPicker1.addEventListener('input', handleAccentColorChange); accentColorPicker2.addEventListener('input', handleAccentColorChange); resetColorsButton.addEventListener('click', resetAccentColors); });
         function handleSearchSubmit(e) { e.preventDefault(); const input = e.target.id === 'search-form-mobile' ? searchInputMobile : searchInputDesktop; const q = input.value.trim(); if (q) { navigateTo('search', q); input.value = ''; if (e.target.id === 'search-form-mobile') closeSidebar(); } }
         function handleScroll() { if (currentView === 'search' && !isLoadingSearch && currentSearchPageToken) { const { scrollTop, scrollHeight, clientHeight } = document.documentElement; if (scrollTop + clientHeight >= scrollHeight - 600) { console.log("Scroll load more search..."); searchVideos(currentSearchQuery, currentSearchPageToken); } } }
 
