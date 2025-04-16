@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="zdZMpUR-FZn3NtutmKmKzmPnZIswFsPGKLACq5jj918" />
-    <title>VisionTube - Nex-gen</title>
+    <meta name="description" content="VisionTube V3 – Tempat nongkrong generasi YouTube vibes next-gen!" />
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="VisionTube - Next Gen">
+<meta property="og:description" content="YouTube style masa depan! Super smooth, super kece!" />
+<meta property="og:url" content="https://visiontube-next-gen.vercel.app/">
+    <title>VisionTube - Next-gen</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -215,14 +220,14 @@
 
     <main id="main-content" class="container mx-auto px-4 pt-24 pb-8 relative md:ml-0">
         <div id="trending-view"> <div id="home-loading-animation" class="hidden"><div class="loader inline-block"></div><p class="mt-3 text-[color:var(--accent-text-color)]">Memuat...</p></div> <h2 class="text-2xl font-semibold mb-6 gradient-text">Trending 🔥</h2> <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6"> <div id="trending-loading-placeholder" class="col-span-full text-center py-10 hidden"><div class="loader inline-block"></div><p class="mt-3 text-[color:var(--accent-text-color)]">Mengambil video...</p></div> </div> <div id="trending-load-more-container" class="text-center mt-8 hidden"> <button id="trending-load-more-button" class="px-6 py-2 rounded-lg btn-primary">Muat Lagi</button> </div> </div>
-         <div id="watch-view" class="hidden"> <div class="flex flex-col lg:flex-row gap-6"> <div class="lg:w-2/3"> <div id="youtube-player-container" class="mb-4 glassmorphism p-1 aspect-video bg-black rounded-lg shadow-lg"><div id="youtube-player"></div></div> <div id="video-details" class="glassmorphism p-4 rounded-lg"> <div class="flex justify-between items-start mb-2"> <h1 id="video-title" class="text-xl md:text-2xl font-semibold text-white flex-1 mr-4">Judul...</h1> <button id="save-video-button" onclick="openSaveVideoModal()" class="flex-shrink-0 bg-gradient-to-r from-blue-500 to-[color:var(--accent-color-2)] hover:from-blue-600 hover:to-[color:var(--accent-color-2-hover)] text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center space-x-1.5 transition duration-200" title="Simpan"> <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" /></svg> <span>Simpan</span> </button> </div> <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 text-sm text-gray-400"> <p id="video-uploader" class="mb-1 sm:mb-0 text-[color:var(--accent-text-color)]">Channel...</p> <p id="video-stats">Views...</p> </div> <hr class="border-gray-700/50 my-3"> <p id="video-description" class="text-sm text-gray-300 whitespace-pre-wrap max-h-60 overflow-y-auto">Deskripsi...</p> </div> </div> <div class="lg:w-1/3"> <h3 class="text-lg font-semibold mb-4 gradient-text">Terkait</h3> <div id="related-videos" class="space-y-3"><p class="text-sm text-gray-400">Belum ada.</p></div> </div> </div> </div>
+         <div id="watch-view" class="hidden"> <div class="flex flex-col lg:flex-row gap-6"> <div class="lg:w-2/3"> <div id="youtube-player-container" class="mb-4 glassmorphism p-1 aspect-video bg-black rounded-lg shadow-lg"><div id="youtube-player"></div></div> <div id="video-details" class="glassmorphism p-4 rounded-lg"> <div class="flex justify-between items-start mb-2"> <h1 id="video-title" class="text-xl md:text-2xl font-semibold text-white flex-1 mr-4">Judul...</h1> <button id="save-video-button" onclick="openSaveVideoModal()" class="flex-shrink-0 bg-gradient-to-r from-blue-500 to-[color:var(--accent-color-2)] hover:from-blue-600 hover:to-[color:var(--accent-color-2-hover)] text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center space-x-1.5 transition duration-200" title="Simpan"> <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" /></svg> <span>Simpan</span> </button> </div> <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 text-sm text-gray-400"> <p id="video-uploader" class="mb-1 sm:mb-0 text-[color:var(--accent-text-color)]">Channel...</p> <p id="video-stats">Views...</p> </div> <hr class="border-gray-700/50 my-3"> <p id="video-description" class="text-sm text-gray-300 whitespace-pre-wrap max-h-60 overflow-y-auto">Deskripsi...</p> </div> </div> <div class="lg:w-1/3">  </div> </div> </div>
          <div id="search-view" class="hidden"> <h2 class="text-2xl font-semibold mb-6">Hasil: "<span id="search-query-display" class="gradient-text"></span>"</h2> <div id="search-results-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6"></div> <div id="search-loading-indicator" class="text-center py-6 hidden"><div class="loader inline-block"></div><p class="mt-2 text-[color:var(--accent-text-color)]">Memuat...</p></div> <p id="search-no-results" class="text-center text-gray-400 py-6 hidden">Nggak nemu 😥.</p> </div>
          <div id="recently-viewed-view" class="hidden"> <h2 class="text-2xl font-semibold mb-6 gradient-text">Terakhir Dilihat ⏱️</h2> <div id="recently-viewed-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6"></div> <p id="recently-viewed-empty" class="text-center text-gray-400 py-10 hidden">Kosong 🚀</p> </div>
          <div id="playlists-view" class="hidden"> <div class="flex justify-between items-center mb-6"> <h2 class="text-2xl font-semibold gradient-text">Playlist Saya 📚</h2> <button onclick="openCreatePlaylistModal()" class="px-4 py-2 rounded-lg text-sm font-medium flex items-center space-x-1.5 btn-success"> <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg> <span>Buat Baru</span> </button> </div> <div id="playlists-list" class="space-y-4"></div> <p id="playlists-empty" class="text-center text-gray-400 py-10 hidden">Kosong ✨</p> </div>
          <div id="playlist-detail-view" class="hidden"> <div class="flex items-center mb-6"> <button onclick="navigateTo('playlists')" class="text-[color:var(--accent-text-color)] hover:text-white mr-3 p-1 rounded-full hover:bg-gray-700/50 transition duration-200" title="Kembali"> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg> </button> <h2 id="playlist-detail-name" class="text-2xl font-semibold gradient-text">Playlist...</h2> </div> <div id="playlist-videos-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6"></div> <p id="playlist-videos-empty" class="text-center text-gray-400 py-10 hidden">Kosong 👀</p> </div>
          <div id="about-view" class="hidden glassmorphism p-6 rounded-lg max-w-3xl mx-auto">
              <h2 class="text-2xl font-semibold mb-6 gradient-text">Tentang VisionTube ✨</h2>
-            <p class="mb-4 text-gray-300">Yo, Wazzup! 👋 Selamat datang di VisionTube, tempat nongkrong baru buat nonton YouTube dengan gaya paling kece abad ini! 😎 Kita sulap pengalaman nontonmu jadi lebih asik, mulus, dan pastinya... beda dari yang lain! 😉</p>
+            <p class="mb-4 text-gray-300">Yo, Wazzup! 👋 Selamat datang di VisionTube V3, tempat nongkrong baru buat nonton YouTube dengan gaya paling kece abad ini! 😎 Kita sulap pengalaman nontonmu jadi lebih asik, mulus, dan pastinya... beda dari yang lain! 😉</p>
             <p class="mb-6 text-gray-300">Penasaran ada apa aja di sini? Cekidot fitur-fitur andalan VisionTube:</p>
             <ul class="list-disc list-inside mb-6 text-gray-300 space-y-3">
                 <li><strong>Interface Next-Gen</strong> ✨: Tampilannya? Beuh! Kayak liat masa depan, tapi lebih adem di mata dan gampang dipake. Dijamin betah scroll seharian sampe lupa waktu! 😎 (Warning: bisa bikin nagih!)</li>
@@ -234,6 +239,8 @@
                 <li><strong>Hemat Kuota API (Biar Gak Tekor!)</strong> 💡: Kita pinter loh! Untuk fitur trending, data videonya kita simpen bentar (cache), jadi nggak perlu minta data baru terus ke YouTube. Cerdas kan? 😉 Bikin web tetep ngebut tanpa boros kuota API (dan dompet 💸)!</li>
                 <li><strong>Infinite Scroll (Scroll Sampe Bosen!)</strong> 🖱️👇: Males klik tombol "next page"? Sama! Di halaman pencarian, scroll aja terus ke bawah, video baru bakal muncul otomatis. Kayak feed sosmed, tapi isinya video semua! Scroll sampe jempol pegel! 😂</li>
                  <li><strong>Setelan Kustom (Gaya Kamu Banget!)</strong> ⚙️: Bosen sama tampilan gitu-gitu aja? Atur warna aksen sesukamu! Mau pake API Key YouTube punya sendiri? Bisa juga! VisionTube ngertiin kamu banget deh! 😉</li>
+                 <li><strong>Timer Tidur (Gak bakalan begadang lagi)</strong> 😴:  Suka nonton sampe ketiduran? Aktifkan timer tidur! Pilih durasi, video otomatis berhenti/pause saat waktu habis, dan kamu dapat notifikasi buat istirahat. Timer tetap jalan walau pindah halaman atau refresh, jadi tidurmu makin nyenyak tanpa takut video muter terus! 💤</li></li>
+<li><strong>Feedback Langsung (Baru!)</strong> 📢: Punya saran, kritik, atau nemuin bug? Langsung kirim feedback ke developer lewat menu Setelan!</li>
             </ul>
 
              <p class="text-red-400 text-sm font-semibold mb-4">🚨 AWAS! PERINGATAN PENTING! 🚨</p>
@@ -258,7 +265,44 @@
         <div id="save-video-modal" class="modal hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[10000]"> <div class="modal-content glassmorphism p-6 rounded-lg max-w-md w-full mx-4"> <div class="flex justify-between items-center mb-4"><h3 class="text-lg font-semibold gradient-text">Simpan ke Playlist</h3><button onclick="closeSaveVideoModal()" class="text-gray-400 hover:text-white">×</button></div> <div id="save-modal-video-info" class="mb-4 p-3 bg-gray-800/30 rounded-lg flex items-center space-x-3"><img id="save-modal-thumbnail" src="https://placehold.co/60x34/0f0f1a/7c5cff?text=Thumb" alt="Thumbnail" class="w-16 h-9 object-cover rounded flex-shrink-0"><div><p id="save-modal-title" class="text-sm font-medium text-white line-clamp-1">Judul...</p><p id="save-modal-channel" class="text-xs text-gray-400 line-clamp-1">Channel...</p></div></div> <form id="save-video-form"> <p class="text-sm text-gray-300 mb-2">Pilih playlist:</p><div id="save-modal-playlist-list" class="space-y-2 max-h-40 overflow-y-auto mb-4 pr-2"><p class="text-xs text-gray-400">Loading...</p></div> <div class="border-t border-gray-700/50 pt-4"><label for="new-playlist-name-modal" class="text-sm text-gray-300 block mb-1">Atau buat baru:</label><div class="flex space-x-2"><input type="text" id="new-playlist-name-modal" placeholder="Nama Playlist Baru..." class="flex-grow px-3 py-1.5 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-[var(--focus-ring-color)] focus:ring-0 text-white placeholder-gray-400 text-sm"><button type="button" onclick="createNewPlaylistFromModal()" class="px-3 py-1.5 rounded-lg text-sm flex-shrink-0 btn-success">Buat</button></div></div> <div class="mt-6 flex justify-end space-x-3"><button type="button" onclick="closeSaveVideoModal()" class="px-4 py-1.5 rounded-lg btn-secondary text-sm">Batal</button><button type="submit" class="px-4 py-1.5 rounded-lg btn-primary text-sm">Selesai</button></div> </form> </div> </div>
         <div id="create-playlist-modal" class="modal hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[10000]"> <div class="modal-content glassmorphism p-6 rounded-lg max-w-sm w-full mx-4"> <div class="flex justify-between items-center mb-4"><h3 class="text-lg font-semibold gradient-text">Buat Playlist Baru</h3><button onclick="closeCreatePlaylistModal()" class="text-gray-400 hover:text-white">×</button></div> <form id="create-playlist-form"> <label for="new-playlist-name-main" class="text-sm text-gray-300 block mb-1">Nama Playlist:</label><input type="text" id="new-playlist-name-main" required placeholder="Contoh: Musik Favorit 🎶" class="w-full px-3 py-1.5 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-[var(--focus-ring-color)] focus:ring-0 text-white placeholder-gray-400 text-sm mb-4"> <div class="flex justify-end space-x-3"><button type="button" onclick="closeCreatePlaylistModal()" class="px-4 py-1.5 rounded-lg btn-secondary text-sm">Batal</button><button type="submit" class="px-4 py-1.5 rounded-lg btn-success text-sm">Buat Playlist</button></div> </form> </div> </div>
         <div id="rename-playlist-modal" class="modal hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[10000]"> <div class="modal-content glassmorphism p-6 rounded-lg max-w-sm w-full mx-4"> <div class="flex justify-between items-center mb-4"><h3 class="text-lg font-semibold gradient-text">Ubah Nama Playlist</h3><button onclick="closeRenamePlaylistModal()" class="text-gray-400 hover:text-white">×</button></div> <form id="rename-playlist-form"> <input type="hidden" id="rename-playlist-id"><label for="rename-playlist-name" class="text-sm text-gray-300 block mb-1">Nama Baru:</label><input type="text" id="rename-playlist-name" required class="w-full px-3 py-1.5 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-[var(--focus-ring-color)] focus:ring-0 text-white placeholder-gray-400 text-sm mb-4"> <div class="flex justify-end space-x-3"><button type="button" onclick="closeRenamePlaylistModal()" class="px-4 py-1.5 rounded-lg btn-secondary text-sm">Batal</button><button type="submit" class="px-4 py-1.5 rounded-lg btn-warning text-sm">Simpan</button></div> </form> </div> </div>
+        
+<div id="sleep-timer-modal" class="modal hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[10001]">
+    <div class="modal-content glassmorphism p-6 rounded-lg max-w-sm w-full mx-4">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-semibold gradient-text">Timer Tidur</h3>
+        <button onclick="closeSleepTimerModal()" class="text-gray-400 hover:text-white">×</button>
+      </div>
+      <form id="sleep-timer-form">
+        <label class="block text-gray-300 text-sm mb-1">Durasi Timer (menit):</label>
+        <input type="number" id="sleep-timer-minutes" min="1" max="300" value="30" class="w-full px-3 py-2 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-[var(--focus-ring-color)] focus:ring-0 text-white placeholder-gray-400 text-sm mb-4">
+        <div class="flex items-center mb-4">
+          <input type="checkbox" id="sleep-timer-pause-only" class="mr-2 h-4 w-4 rounded text-[color:var(--accent-color-1)] focus:ring-[color:var(--focus-ring-color)] border-gray-600 bg-gray-700">
+          <label for="sleep-timer-pause-only" class="text-sm text-gray-300">Hanya pause video (tidak stop total)</label>
+        </div>
+        <div class="flex justify-end space-x-3">
+          <button type="button" onclick="closeSleepTimerModal()" class="px-4 py-1.5 rounded-lg btn-secondary text-sm">Batal</button>
+          <button type="submit" class="px-4 py-1.5 rounded-lg btn-primary text-sm">Mulai Timer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <button id="open-sleep-timer-btn" title="Timer Tidur" class="fixed bottom-20 right-4 z-[10002] p-3 rounded-full shadow-lg btn-primary flex items-center justify-center" style="display:none;">
+    <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+  </button>
+  <div id="sleep-timer-countdown" class="fixed bottom-4 right-4 z-[10002] px-4 py-2 rounded-lg glassmorphism border text-white font-semibold shadow-lg hidden"></div>
 
+      <!-- MODAL: Feedback -->
+    <div id="feedback-modal" class="modal hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[10000]">
+      <div class="modal-content glassmorphism p-6 rounded-lg max-w-md w-full mx-2">
+        <h3 class="text-lg font-semibold mb-4 gradient-text">Kirim Feedback</h3>
+        <form id="feedback-form" class="space-y-3">
+          <textarea id="feedback-text" class="w-full p-2 rounded border border-gray-700 bg-gray-800 focus:border-[var(--focus-ring-color)]" rows="4" placeholder="Tulis saran, kritik, atau pesan untuk VisionTube..."></textarea>
+          <button type="submit" class="btn-primary px-4 py-2 rounded w-full">Kirim ke deltaastra24@gmail.com</button>
+          <button type="button" onclick="closeFeedbackModal()" class="btn-secondary px-4 py-2 rounded w-full mt-2">Batal</button>
+        </form>
+      </div>
+    </div>
+    
     <script>
         // --- Configuration ---
         const DEFAULT_YOUTUBE_API_KEY = 'AIzaSyBVBHpsUwOFOUX69sW33l4uZq51Iyz90kE'; // Default API Key
@@ -453,7 +497,7 @@
         function createPlaylist(name) { const p = getPlaylists(); const id = `pl_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`; const tName = name.trim(); if (!tName) { showError("Nama playlist kosong!"); return null; } const exists = Object.values(p).some(i => i.name.toLowerCase() === tName.toLowerCase()); if (exists) { showError(`Playlist "${tName}" sudah ada!`); return null; } p[id] = { id: id, name: tName, createdAt: Date.now(), videos: [] }; savePlaylists(p); console.log("Playlist created:", id, tName); return id; }
         function renamePlaylist(id, newName) { const p = getPlaylists(); const tName = newName.trim(); if (!tName) { showError("Nama baru kosong!"); return false; } if (p[id]) { const exists = Object.values(p).some(i => i.id !== id && i.name.toLowerCase() === tName.toLowerCase()); if (exists) { showError(`Nama "${tName}" sudah dipakai!`); return false; } p[id].name = tName; savePlaylists(p); console.log("Playlist renamed:", id, tName); return true; } else { showError("Playlist tak ditemukan."); return false; } }
         function deletePlaylist(id) { const p = getPlaylists(); if (p[id]) { if (confirm(`Yakin hapus playlist "${p[id].name}"?`)) { delete p[id]; savePlaylists(p); console.log("Playlist deleted:", id); if (currentView === 'playlists') loadPlaylists(); showSuccessMessage("Playlist berhasil dihapus."); } } else { showError("Playlist tak ditemukan."); } }
-        function addVideoToPlaylists(ids, vd) { if (!vd || !vd.videoId) { showError("Data video tak valid."); return; } if (!ids || ids.length === 0) { showError("Pilih playlist tujuan."); return; } const p = getPlaylists(); let count = 0; const vta = { ...vd, addedAt: Date.now() }; ids.forEach(id => { if (p[id]) { const exists = p[id].videos.some(v => v.videoId === vd.videoId); if (!exists) { p[id].videos.unshift(vta); count++; } } }); if (count > 0) { savePlaylists(p); console.log(`Video added to ${count} playlist(s).`); showSuccessMessage(`Video ditambah ke ${count} playlist! ✨`); } else { showError("Video sudah ada di playlist terpilih."); } closeSaveVideoModal(); }
+        function addVideoToPlaylists(ids, vd) { if (!vd || !vd.videoId) { showError("Data video tak valid."); return; } if (!ids || ids.length === 0) { showError("Pilih playlist tujuan."); return; } const p = getPlaylists(); let count = 0; const vta = { ...vd, addedAt: Date.now() };ids.forEach(id => { if (p[id]) { const exists = p[id].videos.some(v => v.videoId === vd.videoId); if (!exists) { p[id].videos.unshift(vta); count++; } } }); if (count > 0) { savePlaylists(p); console.log(`Video added to ${count} playlist(s).`); showSuccessMessage(`Video ditambah ke ${count} playlist! ✨`); } else { showError("Video sudah ada di playlist terpilih."); } closeSaveVideoModal(); }
         function removeVideoFromPlaylist(plId, vId) { const p = getPlaylists(); if (p[plId]) { const len = p[plId].videos.length; p[plId].videos = p[plId].videos.filter(v => v.videoId !== vId); if (p[plId].videos.length < len) { savePlaylists(p); console.log(`Video ${vId} removed from ${plId}`); if (currentView === 'playlist-detail' && currentPlaylistId === plId) loadPlaylistDetails(plId); showSuccessMessage("Video dihapus dari playlist."); } } else { showError("Playlist tak ditemukan."); } }
         function loadPlaylists() { console.log("Loading playlists..."); const p = getPlaylists(); const arr = Object.values(p).sort((a, b) => b.createdAt - a.createdAt); playlistsList.innerHTML = ''; if (arr.length === 0) { playlistsEmpty.classList.remove('hidden'); playlistsList.classList.add('hidden'); } else { playlistsEmpty.classList.add('hidden'); playlistsList.classList.remove('hidden'); arr.forEach(i => playlistsList.appendChild(createPlaylistItem(i))); } }
         function loadPlaylistDetails(id) { console.log("Loading playlist details:", id); const p = getPlaylists(); const pl = p[id]; if (!pl) { showError("Playlist tak ditemukan!"); navigateTo('playlists'); return; } currentPlaylistId = id; playlistDetailName.textContent = pl.name; playlistVideosGrid.innerHTML = ''; if (pl.videos.length === 0) { playlistVideosEmpty.classList.remove('hidden'); playlistVideosGrid.classList.add('hidden'); } else { playlistVideosEmpty.classList.add('hidden'); playlistVideosGrid.classList.remove('hidden'); const sorted = [...pl.videos].sort((a, b) => b.addedAt - a.addedAt); sorted.forEach(v => playlistVideosGrid.appendChild(createPlaylistVideoCard(v, id))); } }
@@ -582,15 +626,261 @@
         // --- Event Listeners ---
         window.addEventListener('hashchange', () => handleHashChange(false));
         window.addEventListener('beforeunload', () => { if (currentView === 'watch' && ytPlayer && currentVideoId && typeof ytPlayer.getCurrentTime === 'function') { const state = ytPlayer.getPlayerState(); if (state === YT.PlayerState.PLAYING || state === YT.PlayerState.PAUSED) saveLastSeenPosition(currentVideoId, ytPlayer.getCurrentTime()); } });
-        document.addEventListener('DOMContentLoaded', () => { console.log("DOM Loaded. Init VisionTube v2..."); loadSettings(); handleHashChange(false); mobileMenuButton.addEventListener('click', toggleSidebar); sidebarOverlay.addEventListener('click', closeSidebar); desktopSidebarToggleButton.addEventListener('click', toggleDesktopSidebar); searchFormDesktop.addEventListener('submit', handleSearchSubmit); searchFormMobile.addEventListener('submit', handleSearchSubmit); window.addEventListener('scroll', handleScroll); trendingLoadMoreButton.addEventListener('click', () => { if (currentTrendingPageToken && !isLoadingTrending) loadTrendingVideos(currentTrendingPageToken); }); document.addEventListener('fullscreenchange', handleFullscreenChange); document.addEventListener('mozfullscreenchange', handleFullscreenChange); document.addEventListener('webkitfullscreenchange', handleFullscreenChange); document.addEventListener('msfullscreenchange', handleFullscreenChange); clearAllDataButton.addEventListener('click', clearAllData); clearCacheButton.addEventListener('click', clearCache); saveApiKeyButton.addEventListener('click', saveCustomApiKey); accentColorPicker1.addEventListener('input', handleAccentColorChange); accentColorPicker2.addEventListener('input', handleAccentColorChange); resetColorsButton.addEventListener('click', resetAccentColors); });
+        document.addEventListener('DOMContentLoaded', () => { console.log("DOM Loaded. Init VisionTube v3..."); loadSettings(); handleHashChange(false); mobileMenuButton.addEventListener('click', toggleSidebar); sidebarOverlay.addEventListener('click', closeSidebar); desktopSidebarToggleButton.addEventListener('click', toggleDesktopSidebar); searchFormDesktop.addEventListener('submit', handleSearchSubmit); searchFormMobile.addEventListener('submit', handleSearchSubmit); window.addEventListener('scroll', handleScroll); trendingLoadMoreButton.addEventListener('click', () => { if (currentTrendingPageToken && !isLoadingTrending) loadTrendingVideos(currentTrendingPageToken); }); document.addEventListener('fullscreenchange', handleFullscreenChange); document.addEventListener('mozfullscreenchange', handleFullscreenChange); document.addEventListener('webkitfullscreenchange', handleFullscreenChange); document.addEventListener('msfullscreenchange', handleFullscreenChange); clearAllDataButton.addEventListener('click', clearAllData); clearCacheButton.addEventListener('click', clearCache); saveApiKeyButton.addEventListener('click', saveCustomApiKey); accentColorPicker1.addEventListener('input', handleAccentColorChange); accentColorPicker2.addEventListener('input', handleAccentColorChange); resetColorsButton.addEventListener('click', resetAccentColors); });
         function handleSearchSubmit(e) { e.preventDefault(); const input = e.target.id === 'search-form-mobile' ? searchInputMobile : searchInputDesktop; const q = input.value.trim(); if (q) { navigateTo('search', q); input.value = ''; if (e.target.id === 'search-form-mobile') closeSidebar(); } }
         function handleScroll() { if (currentView === 'search' && !isLoadingSearch && currentSearchPageToken) { const { scrollTop, scrollHeight, clientHeight } = document.documentElement; if (scrollTop + clientHeight >= scrollHeight - 600) { console.log("Scroll load more search..."); searchVideos(currentSearchQuery, currentSearchPageToken); } } }
 
         // --- Fullscreen Functions ---
         function handleFullscreenChange() { isFullscreen = !!(document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement); console.log("Fullscreen:", isFullscreen); youtubePlayerContainer.classList.toggle('fullscreen', isFullscreen); if (!isFullscreen) { try { if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); } catch (e) { console.warn("Orientation unlock error:", e); } } }
 
-    </script>
+// === Sleep Timer Feature ===
+const SLEEP_TIMER_STORAGE_KEY = 'visiontube_sleep_timer';
+const sleepTimerModal = document.getElementById('sleep-timer-modal');
+const sleepTimerForm = document.getElementById('sleep-timer-form');
+const sleepTimerMinutesInput = document.getElementById('sleep-timer-minutes');
+const sleepTimerPauseOnlyInput = document.getElementById('sleep-timer-pause-only');
+const openSleepTimerBtn = document.getElementById('open-sleep-timer-btn');
+const sleepTimerCountdown = document.getElementById('sleep-timer-countdown');
+let sleepTimerIntervalId = null;
 
+// Show floating button only on watch view
+function updateSleepTimerButtonVisibility() {
+  openSleepTimerBtn.style.display = (currentView === 'watch') ? 'flex' : 'none';
+  sleepTimerCountdown.classList.toggle('hidden', currentView !== 'watch' || !getSleepTimerData());
+}
+function openSleepTimerModal() {
+  // Prefill with last used or default
+  const data = getSleepTimerData();
+  sleepTimerMinutesInput.value = data ? Math.ceil((data.endTime - Date.now())/60000) : 30;
+  sleepTimerPauseOnlyInput.checked = data ? !!data.pauseOnly : false;
+  sleepTimerModal.classList.remove('hidden');
+}
+function closeSleepTimerModal() {
+  sleepTimerModal.classList.add('hidden');
+}
+function getSleepTimerData() {
+  try {
+    const s = localStorage.getItem(SLEEP_TIMER_STORAGE_KEY);
+    if (!s) return null;
+    const d = JSON.parse(s);
+    if (!d || !d.endTime) return null;
+    if (Date.now() > d.endTime) { localStorage.removeItem(SLEEP_TIMER_STORAGE_KEY); return null; }
+    return d;
+  } catch { return null; }
+}
+function setSleepTimer(minutes, pauseOnly) {
+  const endTime = Date.now() + minutes * 60000;
+  localStorage.setItem(SLEEP_TIMER_STORAGE_KEY, JSON.stringify({ endTime, pauseOnly: !!pauseOnly }));
+  showSuccessMessage(`Timer tidur aktif selama ${minutes} menit.`);
+  updateSleepTimerCountdown();
+}
+function clearSleepTimer() {
+  localStorage.removeItem(SLEEP_TIMER_STORAGE_KEY);
+  updateSleepTimerCountdown();
+  showSuccessMessage('Timer tidur dimatikan.');
+}
+function updateSleepTimerCountdown() {
+  const data = getSleepTimerData();
+  if (!data || currentView !== 'watch') {
+    sleepTimerCountdown.classList.add('hidden');
+    if (sleepTimerIntervalId) { clearInterval(sleepTimerIntervalId); sleepTimerIntervalId = null; }
+    return;
+  }
+  sleepTimerCountdown.classList.remove('hidden');
+  function renderCountdown() {
+    const now = Date.now();
+    let sisa = Math.max(0, Math.floor((data.endTime - now)/1000));
+    if (sisa <= 0) {
+      sleepTimerCountdown.textContent = 'Timer selesai!';
+      handleSleepTimerFinish(data.pauseOnly);
+      clearSleepTimer();
+      return;
+    }
+    const m = Math.floor(sisa/60), s = sisa%60;
+    sleepTimerCountdown.innerHTML = `Timer tidur: <span class="text-yellow-300">${m}:${s.toString().padStart(2,'0')}</span> <button onclick="clearSleepTimer()" class="ml-2 px-2 py-0.5 rounded btn-danger text-xs">Stop</button>`;
+  }
+  renderCountdown();
+  if (sleepTimerIntervalId) clearInterval(sleepTimerIntervalId);
+  sleepTimerIntervalId = setInterval(renderCountdown, 1000);
+}
+function handleSleepTimerFinish(pauseOnly) {
+  if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+    if (pauseOnly) ytPlayer.pauseVideo();
+    else if (typeof ytPlayer.stopVideo === 'function') ytPlayer.stopVideo();
+  }
+  showNotification('Timer tidur selesai! Saatnya istirahat 😴', 'success', 10000);
+}
+openSleepTimerBtn.addEventListener('click', openSleepTimerModal);
+sleepTimerForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  const min = parseInt(sleepTimerMinutesInput.value,10);
+  if (isNaN(min) || min < 1) return showError('Durasi minimal 1 menit.');
+  setSleepTimer(min, sleepTimerPauseOnlyInput.checked);
+  closeSleepTimerModal();
+});
+function checkSleepTimerOnLoad() {
+  const data = getSleepTimerData();
+  if (data && Date.now() < data.endTime) updateSleepTimerCountdown();
+}
+function handleSleepTimerOnViewChange() {
+  updateSleepTimerButtonVisibility();
+  updateSleepTimerCountdown();
+}
+document.addEventListener('DOMContentLoaded', checkSleepTimerOnLoad);
+window.addEventListener('hashchange', handleSleepTimerOnViewChange);
+// Juga update saat video player ready
+function sleepTimerPlayerReadyPatch(event) {
+  updateSleepTimerCountdown();
+  if (typeof onPlayerReady === 'function') onPlayerReady(event);
+}
+if (typeof YT !== 'undefined') {
+  YT.ready(() => { updateSleepTimerCountdown(); });
+}
+setInterval(() => { // Keep timer in sync if tab is idle
+  if (currentView === 'watch') updateSleepTimerCountdown();
+}, 10000);
+
+      // ========== FEEDBACK ==========
+    function openFeedbackModal() {
+        document.getElementById('feedback-modal').classList.remove('hidden');
+        document.getElementById('feedback-text').value = '';
+    }
+    function closeFeedbackModal() {
+        document.getElementById('feedback-modal').classList.add('hidden');
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('feedback-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const val = document.getElementById('feedback-text').value.trim();
+            if (!val) {
+                showError('Tulis dulu feedbacknya ya!');
+                return;
+            }
+            window.open(`mailto:deltaastra24@gmail.com?subject=VisionTube Feedback&body=${encodeURIComponent(val)}`);
+            closeFeedbackModal();
+            showSuccessMessage('Terimakasih atas feedback-nya!');
+        });
+    });
+    // ========== END FEEDBACK ==========
+
+    // ========== INJEKSI BUTTON DI SETELAN ==========
+    function injectSettingsButtons() {
+        if (!document.getElementById('sleep-timer-settings-btn')) {
+            const settingsView = document.getElementById('settings-view');
+            const h2 = settingsView ? settingsView.querySelector('h2') : null;
+            if (h2) {
+                const divBtn = document.createElement('div');
+                divBtn.className = "mb-4 flex gap-2";
+                divBtn.innerHTML = `
+                    <button id="sleep-timer-settings-btn" class="btn-warning px-4 py-2 rounded flex-1" onclick="openSleepTimerModal()">Timer Tidur</button>
+                    <button id="feedback-settings-btn" class="btn-primary px-4 py-2 rounded flex-1" onclick="openFeedbackModal()">Kirim Feedback</button>
+                `;
+                h2.after(divBtn);
+            }
+        }
+    }
+    // Patch updateView dan loadSettings agar inject tombol
+    const orig_updateView = typeof updateView !== "undefined" ? updateView : () => {};
+    window.updateView = function() {
+        orig_updateView.apply(this, arguments);
+        if (window.currentView === 'settings') injectSettingsButtons();
+    }
+    const orig_loadSettings = typeof loadSettings !== "undefined" ? loadSettings : () => {};
+    window.loadSettings = function() {
+        orig_loadSettings.apply(this, arguments);
+        injectSettingsButtons();
+    }
+
+// =========== PATCH: Auto-Check Satu Playlist Saat Simpan =============
+// Patch openSaveVideoModal agar auto-centang jika hanya ada satu playlist
+(function() {
+  // Cari fungsi asli
+  const origOpenSaveVideoModal = window.openSaveVideoModal || function() {};
+  window.openSaveVideoModal = function() {
+    origOpenSaveVideoModal.apply(this, arguments);
+    
+    // PATCH: auto-check jika hanya ada 1 playlist
+    setTimeout(() => {
+      var saveModalPlaylistList = document.getElementById('save-modal-playlist-list');
+      if (!saveModalPlaylistList) return;
+      const checkboxes = saveModalPlaylistList.querySelectorAll('input[type="checkbox"][name="playlistSelection"]');
+      if (checkboxes.length === 1) {
+        checkboxes[0].checked = true;
+      }
+    }, 50); // timeout supaya DOM sudah terisi
+  };
+})();
+
+// =========== PATCH: Bug Save ke Playlist Tetap Jalan Meski 1 Playlist =============
+// Fungsi override addVideoToPlaylists (pastikan getPlaylists, savePlaylists, dsb sudah ada)
+window.addVideoToPlaylists = function(ids, vd) {
+  if (!vd || !vd.videoId) {
+    showError("Data video tak valid.");
+    return;
+  }
+  if (!ids || ids.length === 0) {
+    showError("Pilih playlist tujuan.");
+    return;
+  }
+  const p = getPlaylists();
+  let added = 0;
+  ids.forEach(id => {
+    if (!p[id]) return;
+    if (!Array.isArray(p[id].videos)) p[id].videos = [];
+    if (!p[id].videos.some(v => v.videoId === vd.videoId)) {
+      p[id].videos.unshift({ ...vd, savedAt: Date.now() });
+      added++;
+    }
+  });
+  savePlaylists(p);
+  if (added > 0) {
+    showSuccessMessage("Video berhasil disimpan ke playlist!");
+  } else {
+    showError("Video sudah ada di playlist!");
+  }
+  loadPlaylists && loadPlaylists();
+  if (typeof loadPlaylistDetails === 'function' && window.currentPlaylistId) loadPlaylistDetails(window.currentPlaylistId);
+}
+
+  // PATCH: Fix Save to Playlist - support single or multiple playlist checkbox
+(function() {
+  var saveVideoForm = document.getElementById('save-video-form');
+  if (saveVideoForm) {
+    // Remove previous submit listeners to avoid double execution
+    saveVideoForm.onsubmit = null;
+    saveVideoForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var selections = e.target.elements.playlistSelection;
+      var sel = [];
+      if (!selections) sel = [];
+      else if (selections.length === undefined) { // hanya satu checkbox
+        if (selections.checked && !selections.disabled) sel = [selections.value];
+      } else { // lebih dari satu
+        sel = Array.from(selections)
+          .filter(cb => cb.checked && !cb.disabled)
+          .map(cb => cb.value);
+      }
+      if (sel.length === 0) {
+        showError("Pilih playlist tujuan.");
+        return;
+      }
+      addVideoToPlaylists(sel, window.currentVideoDataForSave);
+      closeSaveVideoModal();
+    });
+  }
+})();
+
+  window.addEventListener("hashchange", function() {
+  if (location.hash === "#about") {
+    document.title = "Tentang VisionTube ✨ - Next Gen YouTube";
+  } else {
+    document.title = "VisionTube - Next Gen";
+  }
+});
+
+
+    </script>
+    
 </body>
 </html>
 
